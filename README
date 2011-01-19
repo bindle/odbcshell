@@ -1,0 +1,87 @@
+
+ODBC Shell
+==========
+
+   ODBC Shell is a command line ODBC client for Unix environments. The goal
+   of ODBC Shell is to provide an easy and polished utility for accessing
+   databases from the commandline.
+
+
+Contents
+--------
+
+   1. Disclaimer
+   2. Software Requirements
+   6. Maintainers
+   7. Community
+   8. Source Code
+
+
+Disclaimer
+==========
+
+   This software is provided by the copyright holders and contributors "as
+   is" and any express or implied warranties, including, but not limited to,
+   the implied warranties of merchantability and fitness for a particular
+   purpose are disclaimed. In no event shall Bindle Binaries be liable for
+   any direct, indirect, incidental, special, exemplary, or consequential
+   damages (including, but not limited to, procurement of substitute goods or
+   services; loss of use, data, or profits; or business interruption) however
+   caused and on any theory of liability, whether in contract, strict
+   liability, or tort (including negligence or otherwise) arising in any way
+   out of the use of this software, even if advised of the possibility of
+   such damage.
+
+
+Software Requirements
+=====================
+
+   Git 1.7.2.3
+   iODBC 2.52.6
+   GNU Readline 6.1
+
+
+Maintainers
+===========
+
+   David M. Syzdek
+   Bindle Binaries
+   syzdek@bindlebinaries.com
+
+
+Community
+=========
+
+   Mailing List:
+      odbc-shell@lists.bindlebinaries.com
+      https://lists.bindlebinaries.com/mailman/listinfo/odbc-shell
+
+
+Source Code
+===========
+
+The source code for this project is maintained using git (http://git-scm.com).
+The following contains information to checkout the source code from the git
+repository.
+
+   Git URLs:
+      git://github.com/bindle/odbc-shell.git
+      git://git.scm.bindlebinaries.com/pub/scm/com.bindlebinaries/odbc-shell.git
+      http://http.scm.bindlebinaries.com/pub/scm/com.bindlebinaries/odbc-shell.git
+      ssh://ssh.scm.bindlebinaries.com/pub/scm/com.bindlebinaries/odbc-shell.git
+
+   Downloading Source:
+
+      $ git clone git://github.com/bindle/odbc-shell.git
+
+   Preparing Source:
+
+      $ cd odbc-shell
+      $ autoreconf -i -f -I m4
+
+   Git Branches:
+      master - Current release of packages.
+      next   - changes staged for next release
+      pu     - proposed updates for next release
+      xx/yy+ - branch for testing new changes before merging to 'pu' branch
+
