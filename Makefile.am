@@ -141,7 +141,6 @@ install-data-local:
 uninstall-local:
 
 clean-local:
-	rm -fR $(srcdir)/build
 
 distclean-local:
 	rm -fR $(srcdir)/autom4te.cache
