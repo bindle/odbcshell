@@ -1,0 +1,98 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 42;
+	objects = {
+
+/* Begin PBXFileReference section */
+		A06CE3DD12E7BBD500AD1C66 /* acinclude.m4 */ = {isa = PBXFileReference; explicitFileType = text.script; fileEncoding = 4; path = acinclude.m4; sourceTree = "<group>"; };
+		A06CE3DE12E7BBD500AD1C66 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
+		A06CE3DF12E7BBD500AD1C66 /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
+		A06CE3E012E7BBD500AD1C66 /* configure.ac */ = {isa = PBXFileReference; explicitFileType = text.script; fileEncoding = 4; path = configure.ac; sourceTree = "<group>"; };
+		A06CE3E112E7BBD500AD1C66 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
+		A06CE3E212E7BBD500AD1C66 /* Makefile.am */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; fileEncoding = 4; indentWidth = 8; path = Makefile.am; sourceTree = "<group>"; tabWidth = 8; };
+		A06CE3E312E7BBD500AD1C66 /* NEWS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NEWS; sourceTree = "<group>"; };
+		A06CE3E412E7BBD500AD1C66 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		A06CE3E712E7BBD500AD1C66 /* odbc-shell.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "odbc-shell.c"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		A06CE3CA12E7BBAB00AD1C66 = {
+			isa = PBXGroup;
+			children = (
+				A06CE3DD12E7BBD500AD1C66 /* acinclude.m4 */,
+				A06CE3DE12E7BBD500AD1C66 /* AUTHORS */,
+				A06CE3DF12E7BBD500AD1C66 /* ChangeLog */,
+				A06CE3E012E7BBD500AD1C66 /* configure.ac */,
+				A06CE3E112E7BBD500AD1C66 /* COPYING */,
+				A06CE3E212E7BBD500AD1C66 /* Makefile.am */,
+				A06CE3E312E7BBD500AD1C66 /* NEWS */,
+				A06CE3E412E7BBD500AD1C66 /* README */,
+				A06CE3E512E7BBD500AD1C66 /* src */,
+			);
+			sourceTree = "<group>";
+		};
+		A06CE3E512E7BBD500AD1C66 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				A06CE3E712E7BBD500AD1C66 /* odbc-shell.c */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		A06CE3CC12E7BBAB00AD1C66 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = A06CE3CF12E7BBAB00AD1C66 /* Build configuration list for PBXProject "ODBC Shell" */;
+			compatibilityVersion = "Xcode 2.4";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+			);
+			mainGroup = A06CE3CA12E7BBAB00AD1C66;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		A06CE3CD12E7BBAB00AD1C66 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			name = Debug;
+		};
+		A06CE3CE12E7BBAB00AD1C66 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A06CE3CF12E7BBAB00AD1C66 /* Build configuration list for PBXProject "ODBC Shell" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A06CE3CD12E7BBAB00AD1C66 /* Debug */,
+				A06CE3CE12E7BBAB00AD1C66 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A06CE3CC12E7BBAB00AD1C66 /* Project object */;
+}
