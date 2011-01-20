@@ -15,7 +15,7 @@
 		A06CE3E212E7BBD500AD1C66 /* Makefile.am */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; fileEncoding = 4; indentWidth = 8; path = Makefile.am; sourceTree = "<group>"; tabWidth = 8; };
 		A06CE3E312E7BBD500AD1C66 /* NEWS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NEWS; sourceTree = "<group>"; };
 		A06CE3E412E7BBD500AD1C66 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
-		A06CE3E712E7BBD500AD1C66 /* odbc-shell.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "odbc-shell.c"; sourceTree = "<group>"; };
+		A06CE3E712E7BBD500AD1C66 /* odbcshell.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = odbcshell.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -37,7 +37,7 @@
 		A06CE3E512E7BBD500AD1C66 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				A06CE3E712E7BBD500AD1C66 /* odbc-shell.c */,
+				A06CE3E712E7BBD500AD1C66 /* odbcshell.c */,
 			);
 			path = src;
 			sourceTree = "<group>";

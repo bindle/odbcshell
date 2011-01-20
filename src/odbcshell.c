@@ -161,6 +161,8 @@ int main(int argc, char * argv[])
 {
    int           c;
    int           opt_index;
+   char        * input;
+   char          histfile[2048];
 
    static char   short_opt[] = "hqVv";
    static struct option long_opt[] =
@@ -198,6 +200,33 @@ int main(int argc, char * argv[])
             fprintf(stderr, "Try `%s --help' for more information.\n", PROGRAM_NAME);
             return(1);
       };
+   };
+
+   histfile[0] = '\0';
+   if (getenv("HOME"))
+      snprintf(histfile, 2048L, "%s/.odbcshell_history", getenv("HOME"));
+
+   using_history();
+   if ((histfile[0]))
+      read_history(histfile);
+
+   printf("Type \"help\" for usage information.\n");
+   while((input = readline("odbcshell> ")))
+   {
+      if ((input[0]))
+         add_history(input);
+
+      if ( (!(strcmp(input, "exit"))) || (!(strcmp(input, "quit"))) )
+      {
+         printf("bye.\n");
+         free(input);
+         if ((histfile[0]))
+            if ((write_history(histfile)))
+               perror("write_history()");
+         return(0);
+      };
+
+      free(input);
    };
 
    return(0);
