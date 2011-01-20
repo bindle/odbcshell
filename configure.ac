@@ -129,6 +129,26 @@ AM_CONDITIONAL([COMPILE_LINUX],   [test "x$COMPILE_LINUX"   == "xtrue"])
 AM_CONDITIONAL([COMPILE_MINGW],   [test "x$COMPILE_MINGW"   == "xtrue"])
 AM_CONDITIONAL([COMPILE_SOLARIS], [test "x$COMPILE_SOLARIS" == "xtrue"])
 
+# check for iODBC
+have_iodbc=yes
+AC_CHECK_HEADERS([sql.h]                                   ,,[have_iodbc=no])
+AC_CHECK_HEADERS([sqlext.h]                                ,,[have_iodbc=no])
+AC_CHECK_HEADERS([sqlucode.h]                              ,,[have_iodbc=no])
+AC_CHECK_HEADERS([iodbcext.h]                              ,,[have_iodbc=no])
+AC_SEARCH_LIBS([SQLAllocHandle],          [iodbc iodbcinst],,[have_iodbc=no])
+AC_SEARCH_LIBS([SQLSetEnvAttr],           [iodbc iodbcinst],,[have_iodbc=no])
+AC_SEARCH_LIBS([SQLGetInfo],              [iodbc iodbcinst],,[have_iodbc=no])
+AC_SEARCH_LIBS([SQLSetConnectOption],     [iodbc iodbcinst],,[have_iodbc=no])
+AC_SEARCH_LIBS([SQLDriverConnectW],       [iodbc iodbcinst],,[have_iodbc=no])
+AC_SEARCH_LIBS([SQLGetFunctions],         [iodbc iodbcinst],,[have_iodbc=no])
+AC_SEARCH_LIBS([SQLCloseCursor],          [iodbc iodbcinst],,[have_iodbc=no])
+AC_SEARCH_LIBS([SQLFreeHandle],           [iodbc iodbcinst],,[have_iodbc=no])
+AC_SEARCH_LIBS([SQLDisconnect],           [iodbc iodbcinst],,[have_iodbc=no])
+AC_SEARCH_LIBS([SQLGetDiagRec],           [iodbc iodbcinst],,[have_iodbc=no])
+if test "x${have_iodbc}" == "xno";then
+   AC_MSG_ERROR([ODBC Shell requires iODBC.])
+fi
+
 # check for GNU readline
 have_readline=yes
 AC_CHECK_HEADERS([readline/readline.h]      ,,[have_readline=no])
@@ -137,15 +157,20 @@ AC_SEARCH_LIBS([add_history],     [readline],,[have_readline=no])
 AC_SEARCH_LIBS([read_history],    [readline],,[have_readline=no])
 AC_SEARCH_LIBS([write_history],   [readline],,[have_readline=no])
 AC_SEARCH_LIBS([readline],        [readline],,[have_readline=no])
-AM_CONDITIONAL([HAVE_READLINE], [test x$have_readline = xyes])
+if test "x${have_readline}" == "xno";then
+   AC_MSG_ERROR([ODBC Shell requires GNU Readline library.])
+fi
 
 # check for regular expressions
 have_regex=yes
+AC_CHECK_HEADERS([regex.h]         ,,[have_regex=no])
 AC_SEARCH_LIBS([regcomp],   [regex],,[have_regex=no])
 AC_SEARCH_LIBS([regexec],   [regex],,[have_regex=no])
 AC_SEARCH_LIBS([regfree],   [regex],,[have_regex=no])
 AC_SEARCH_LIBS([regerror],  [regex],,[have_regex=no])
-AM_CONDITIONAL([HAVE_REGEX], [test x$have_regex = xyes])
+if test "x${have_regex}" == "xno";then
+   AC_MSG_ERROR([ODBC Shell requires POSIX regular expressions.])
+fi
 
 # Creates outputs
 AC_CONFIG_FILES([Makefile])
