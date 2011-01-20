@@ -129,6 +129,16 @@ AM_CONDITIONAL([COMPILE_LINUX],   [test "x$COMPILE_LINUX"   == "xtrue"])
 AM_CONDITIONAL([COMPILE_MINGW],   [test "x$COMPILE_MINGW"   == "xtrue"])
 AM_CONDITIONAL([COMPILE_SOLARIS], [test "x$COMPILE_SOLARIS" == "xtrue"])
 
+# check for GNU readline
+have_readline=yes
+AC_CHECK_HEADERS([readline/readline.h]      ,,[have_readline=no])
+AC_CHECK_HEADERS([readline/history.h]       ,,[have_readline=no])
+AC_SEARCH_LIBS([add_history],     [readline],,[have_readline=no])
+AC_SEARCH_LIBS([read_history],    [readline],,[have_readline=no])
+AC_SEARCH_LIBS([write_history],   [readline],,[have_readline=no])
+AC_SEARCH_LIBS([readline],        [readline],,[have_readline=no])
+AM_CONDITIONAL([HAVE_READLINE], [test x$have_readline = xyes])
+
 # check for regular expressions
 have_regex=yes
 AC_SEARCH_LIBS([regcomp],   [regex],,[have_regex=no])
