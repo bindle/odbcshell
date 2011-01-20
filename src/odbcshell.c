@@ -64,13 +64,12 @@
 #include <string.h>
 #include <getopt.h>
 
-#include <readline/readline.h>
-#include <readline/history.h>
-
 #include <sql.h>
 #include <sqlext.h>
 #include <sqlucode.h>
 #include <iodbcext.h>
+
+#include "odbcshell-cli.h"
 
 
 //////////////////
@@ -135,8 +134,8 @@ int main(int argc, char * argv[])
 {
    int           c;
    int           opt_index;
-   char        * input;
-   char          histfile[2048];
+   size_t        len;
+   ODBCShellConfig * cnf;
 
    static char   short_opt[] = "hqVv";
    static struct option long_opt[] =
@@ -149,6 +148,13 @@ int main(int argc, char * argv[])
       {NULL,            0,           0, 0  }
    };
 
+   if (!(cnf = malloc(sizeof(ODBCShellConfig))))
+   {
+      fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
+      return(1);
+   };
+   memset(cnf, 0, sizeof(ODBCShellConfig));
+
    while((c = getopt_long(argc, argv, short_opt, long_opt, &opt_index)) != -1)
    {
       switch(c)
@@ -160,6 +166,7 @@ int main(int argc, char * argv[])
             odbcshell_usage();
             return(0);
          case 'q':
+            cnf->silent = 1;
             break;
          case 'V':
             odbcshell_version();
@@ -176,31 +183,23 @@ int main(int argc, char * argv[])
       };
    };
 
-   histfile[0] = '\0';
    if (getenv("HOME"))
-      snprintf(histfile, 2048L, "%s/.odbcshell_history", getenv("HOME"));
-
-   using_history();
-   if ((histfile[0]))
-      read_history(histfile);
-
-   printf("Type \"help\" for usage information.\n");
-   while((input = readline("odbcshell> ")))
    {
-      if ((input[0]))
-         add_history(input);
-
-      if ( (!(strcmp(input, "exit"))) || (!(strcmp(input, "quit"))) )
+      len = strlen(getenv("HOME")) + strlen("/.odbcshell_history") + 1;
+      if (!(cnf->histfile = malloc(len)))
       {
-         printf("bye.\n");
-         free(input);
-         if ((histfile[0]))
-            if ((write_history(histfile)))
-               perror("write_history()");
-         return(0);
+         fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
+         return(1);
       };
+      memset(cnf, 0, sizeof(len));
+      snprintf(cnf->histfile, len, "%s/.odbcshell_history", getenv("HOME"));
+   };
 
-      free(input);
+   cnf->prompt = strdup("odbcshell> ");
+
+   if (odbcshell_cli_loop(cnf))
+   {
+      return(1);
    };
 
    return(0);

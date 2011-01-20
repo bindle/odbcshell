@@ -44,9 +44,9 @@ DIST_SUBDIRS				=
 AM_LIBS					=
 AM_LDFLAGS				=
 AM_CFLAGS				= -O2 -W -Wall -Werror $(CFLAGS_WARNINGS)
-AM_CXXFLAGS				= -O2 -W -Wall -Werror
-AM_OBJCFLAGS				= -O2 -W -Wall -Werror
-AM_CPPFLAGS				= -O2 -W -Wall -Werror -I$(top_builddir)/include -I$(top_srcdir)/include
+AM_CXXFLAGS				= -O2 -W -Wall -Werror @AM_CXXFLAGS@
+AM_OBJCFLAGS				= -O2 -W -Wall -Werror @AM_OBJCFLAGS@
+AM_CPPFLAGS				= -O2 -W -Wall -Werror -DHAVE_CONFIG_H=1 -I$(top_builddir)/include -I$(top_srcdir)/include
 ACLOCAL_AMFLAGS				= -I m4
 DEFS					=
 
@@ -67,7 +67,9 @@ src_odbcshell_DEPENDENCIES		= $(lib_LTLIBRARIES) Makefile
 src_odbcshell_CPPFLAGS			= -DPROGRAM_NAME="\"odbcshell\"" $(AM_CPPFLAGS)
 src_odbcshell_SOURCES			= $(noinst_HEADERS) \
 					  src/odbcshell.c \
-					  src/odbcshell.h
+					  src/odbcshell.h \
+					  src/odbcshell-cli.c \
+					  src/odbcshell-cli.h
 
 
 # substitution routine

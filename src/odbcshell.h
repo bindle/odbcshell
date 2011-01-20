@@ -48,6 +48,8 @@
 #include <config.h>
 #endif
 
+#include <inttypes.h>
+
 
 ///////////////////
 //               //
@@ -72,6 +74,54 @@
 #ifndef PACKAGE_VERSION
 #define PACKAGE_VERSION ""
 #endif
+
+// command IDs
+#define ODBCSHELL_CMD_ALIAS       0x01
+#define ODBCSHELL_CMD_CONNECT     0x02
+#define ODBCSHELL_CMD_DISCONNECT  0x03
+#define ODBCSHELL_CMD_LOADCONF    0x04
+#define ODBCSHELL_CMD_HELP        0x05
+#define ODBCSHELL_CMD_QUIT        0x06
+#define ODBCSHELL_CMD_RECONNECT   0x07
+#define ODBCSHELL_CMD_RESETCONF   0x08
+#define ODBCSHELL_CMD_SAVECONF    0x09
+#define ODBCSHELL_CMD_SET         0x0A
+#define ODBCSHELL_CMD_SILENT      0x0B
+#define ODBCSHELL_CMD_UNALIAS     0x0C
+#define ODBCSHELL_CMD_UNSET       0x0D
+#define ODBCSHELL_CMD_VERBOSE     0x0E
+#define ODBCSHELL_CMD_VERSION     0x0F
+
+
+/////////////////
+//             //
+//  Datatypes  //
+//             //
+/////////////////
+#pragma mark -
+#pragma mark Datatypes
+
+typedef struct odbcshell_config_data ODBCShellConfig;
+struct odbcshell_config_data
+{
+   long long    verbose;    ///< toggle for verbose mode
+   long long    silent;     ///< toggle for silent mode
+   char       * conffile;   ///< odbcshell configuration file
+   char       * histfile;   ///< GNU readline history file
+   char       * prompt;     ///< shell prompt
+};
+
+
+typedef struct odbcshell_option_data ODBCShellOption;
+struct odbcshell_option_data
+{
+   long long    identifier; ///< option ID
+   long long    min_arg;    ///< minimum arguments allowed
+   long long    max_arg;    ///< maximum arguments allowed
+   const char * name;       ///< option description
+   const char * desc;       ///< option description
+   const char * usage;      ///< option usage
+};
 
 
 //////////////////
