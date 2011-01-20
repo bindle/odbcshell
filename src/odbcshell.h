@@ -34,8 +34,8 @@
 /**
  *  @file src/odbcshell.h ODBC command line client
  */
- #ifndef _ODBCSHELL_SRC_ODBCSHELL_H
- #define _ODBCSHELL_SRC_ODBCSHELL_H 1
+#ifndef _ODBCSHELL_SRC_ODBCSHELL_H
+#define _ODBCSHELL_SRC_ODBCSHELL_H 1
 
 ///////////////
 //           //
