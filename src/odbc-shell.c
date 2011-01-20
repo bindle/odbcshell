@@ -65,10 +65,11 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
-#import <sql.h>
-#import <sqlext.h>
-#import <sqlucode.h>
-#import <iodbcext.h>
+#include <sql.h>
+#include <sqlext.h>
+#include <sqlucode.h>
+#include <iodbcext.h>
+
 
 ///////////////////
 //               //
