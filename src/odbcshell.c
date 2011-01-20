@@ -57,6 +57,8 @@
 ///////////////
 #pragma mark Headers
 
+#include "odbcshell.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -71,31 +73,6 @@
 #include <iodbcext.h>
 
 
-///////////////////
-//               //
-//  Definitions  //
-//               //
-///////////////////
-#pragma mark -
-#pragma mark Definitions & Macros
-
-#ifndef PROGRAM_NAME
-#define PROGRAM_NAME "odbcshell"
-#endif
-
-#ifndef PACKAGE_BUGREPORT
-#define PACKAGE_BUGREPORT "syzdek@bindlebinaries.com"
-#endif
-
-#ifndef PACKAGE_NAME
-#define PACKAGE_NAME "ODBC Shell"
-#endif
-
-#ifndef PACKAGE_VERSION
-#define PACKAGE_VERSION ""
-#endif
-
-
 //////////////////
 //              //
 //  Prototypes  //
@@ -106,9 +83,6 @@
 
 // displays usage
 void odbcshell_usage(void);
-
-// displays version information
-void odbcshell_version(void);
 
 // main statement
 int main(int argc, char * argv[]);

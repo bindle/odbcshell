@@ -66,7 +66,8 @@ bin_PROGRAMS				= src/odbcshell
 src_odbcshell_DEPENDENCIES		= $(lib_LTLIBRARIES) Makefile
 src_odbcshell_CPPFLAGS			= -DPROGRAM_NAME="\"odbcshell\"" $(AM_CPPFLAGS)
 src_odbcshell_SOURCES			= $(noinst_HEADERS) \
-					  src/odbcshell.c
+					  src/odbcshell.c \
+					  src/odbcshell.h
 
 
 # substitution routine

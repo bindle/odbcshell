@@ -16,6 +16,7 @@
 		A06CE3E312E7BBD500AD1C66 /* NEWS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = NEWS; sourceTree = "<group>"; };
 		A06CE3E412E7BBD500AD1C66 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
 		A06CE3E712E7BBD500AD1C66 /* odbcshell.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = odbcshell.c; sourceTree = "<group>"; };
+		A06CE40C12E7C7AB00AD1C66 /* odbcshell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = odbcshell.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -38,6 +39,7 @@
 			isa = PBXGroup;
 			children = (
 				A06CE3E712E7BBD500AD1C66 /* odbcshell.c */,
+				A06CE40C12E7C7AB00AD1C66 /* odbcshell.h */,
 			);
 			path = src;
 			sourceTree = "<group>";
