@@ -32,22 +32,22 @@
  *  @BINDLE_BINARIES_BSD_LICENSE_END@
  */
 /**
- *  @file src/odbc-shell.c ODBC command line client
+ *  @file src/odbcshell.c ODBC command line client
  */
 /*
  *  Simple Build:
- *     gcc -W -Wall -O2 -c odbc-shell.c
- *     gcc -W -Wall -O2 -lodbc -o odbcshell odbc-shell.o
+ *     gcc -W -Wall -O2 -c odbcshell.c
+ *     gcc -W -Wall -O2 -lodbc -o odbcshell odbcshell.o
  *
  *  GNU Libtool Build:
- *     libtool --mode=compile gcc -W -Wall -g -O2 -c odbc-shell.c
- *     libtool --mode=link    gcc -W -Wall -g -O2 -o odbc-shell odbc-shell.lo
+ *     libtool --mode=compile gcc -W -Wall -g -O2 -c odbcshell.c
+ *     libtool --mode=link    gcc -W -Wall -g -O2 -o odbcshell odbcshell.lo
  *
  *  GNU Libtool Install:
  *     libtool --mode=install install -c odbcshell /usr/local/bin/odbcshell
  *
  *  GNU Libtool Clean:
- *     libtool --mode=clean rm -f odbc-shell.lo odbcshell
+ *     libtool --mode=clean rm -f odbcshell.lo odbcshell
  */
 
 ///////////////
