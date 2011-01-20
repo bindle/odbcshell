@@ -70,6 +70,7 @@
 #include <iodbcext.h>
 
 #include "odbcshell-cli.h"
+#include "odbcshell-options.h"
 
 
 //////////////////
@@ -133,6 +134,7 @@ void odbcshell_version(void)
 int main(int argc, char * argv[])
 {
    int           c;
+   int           ival;
    int           opt_index;
    size_t        len;
    ODBCShellConfig * cnf;
@@ -166,12 +168,16 @@ int main(int argc, char * argv[])
             odbcshell_usage();
             return(0);
          case 'q':
-            cnf->silent = 1;
+            ival = 1;
+            odbcshell_set_option(cnf, ODBCSHELL_OPT_SILENT, &ival);
             break;
          case 'V':
             odbcshell_version();
             return(0);
          case 'v':
+            ival = 1;
+            odbcshell_set_option(cnf, ODBCSHELL_OPT_VERBOSE, &ival);
+            break;
             break;
          case '?':
             fprintf(stderr, "Try `%s --help' for more information.\n", PROGRAM_NAME);

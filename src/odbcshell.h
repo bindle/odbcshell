@@ -75,6 +75,13 @@
 #define PACKAGE_VERSION ""
 #endif
 
+// option IDs
+#define ODBCSHELL_OPT_VERBOSE     0x01
+#define ODBCSHELL_OPT_SILENT      0x02
+#define ODBCSHELL_OPT_CONFFILE    0x03
+#define ODBCSHELL_OPT_HISTFILE    0x04
+#define ODBCSHELL_OPT_PROMPT      0x05
+
 // command IDs
 #define ODBCSHELL_CMD_ALIAS       0x01
 #define ODBCSHELL_CMD_CONNECT     0x02

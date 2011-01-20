@@ -69,7 +69,9 @@ src_odbcshell_SOURCES			= $(noinst_HEADERS) \
 					  src/odbcshell.c \
 					  src/odbcshell.h \
 					  src/odbcshell-cli.c \
-					  src/odbcshell-cli.h
+					  src/odbcshell-cli.h \
+					  src/odbcshell-options.c \
+					  src/odbcshell-options.h
 
 
 # substitution routine
