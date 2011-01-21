@@ -45,6 +45,10 @@
 
 #include "odbcshell.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 
 //////////////////
 //              //
@@ -71,6 +75,161 @@
 /////////////////
 #pragma mark -
 #pragma mark Functions
+
+/// splits a line into multiple arguments
+/// @param[in]  line
+/// @param[out] argcp
+/// @param[out] argvp
+/// @param[out] eolp
+int odbcshell_parse_line(const char * line, int * argcp, char *** argvp,
+   size_t * eolp)
+{
+   int       i;
+   char    * arg;
+   char    * str;    // mutable buffer
+   void    * ptr;
+   size_t    len;    // line length
+   size_t    pos;    // position within line
+   size_t    start;  // start of argument within line
+   size_t    arglen; // length of argument
+
+   if ( (!(line)) || (!(argcp)) || (!(argvp)) || (!(eolp)) )
+   {
+      fprintf(stderr, "%s: internal error\n", PROGRAM_NAME);
+      return(-1);
+   };
+
+   if (!(len = strlen(line)))
+      return(0);
+
+   if (!(str = strdup(line)))
+   {
+      fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
+      return(-1);
+   };
+
+
+   // frees old argc/argv data
+   for(i = 0; i < *argcp; i++)
+      free((*argvp)[i]);
+   *argcp = 0;
+   *eolp  = 0;
+
+   for(pos = 0; pos < len; pos++)
+   {
+      arg = NULL;
+      switch(str[pos])
+      {
+         // exit if end of command is found
+         case ';':
+            *eolp = pos;
+            free(str);
+            return(0);
+
+         // skip white space between arguments
+         case ' ':
+         case '\t':
+            break;
+
+         case '\r':
+         case '\n':
+            str[pos] = ' ';
+            break;
+
+         // skip comments
+         case '#':
+            while((str[pos] != '\n') && (str[pos] != '\r') && (pos < len))
+               pos++;
+            if (pos >= len)
+            {
+               *eolp = pos;
+               free(str);
+               return(0);
+            };
+            break;
+
+         // processes arguments contained within single quotes
+         case '\'':
+            start = pos + 1;
+            pos += 2;
+            while((str[pos] != '\'') && (pos < len))
+               pos++;
+            if (pos >= len)
+            {
+               free(str);
+               return(0);
+            };
+            arglen = pos - start;
+            if (!(arg = malloc(arglen)))
+            {
+               fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
+               return(1);
+            };
+            memset(arg, 0, arglen);
+            strncat(arg, &line[start], arglen);
+            break;
+
+         // processes arguments contained within double quotes
+         case '"':
+            start = pos + 1;
+            pos += 2;
+            while((str[pos] != '"') && (pos < len))
+               pos++;
+            if (pos >= len)
+            {
+               free(str);
+               return(0);
+            };
+            arglen = pos - start;
+            if (!(arg = malloc(arglen)))
+            {
+               fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
+               return(1);
+            };
+            memset(arg, 0, arglen);
+            strncat(arg, &line[start], arglen);
+            break;
+
+         // processes unquoted arguments
+         default:
+            start = pos;
+            while ( ((pos+1) < len) &&
+                    (str[pos+1] != ';') &&
+                    (str[pos+1] != '#') &&
+                    (str[pos+1] != ' ') &&
+                    (str[pos+1] != '\t') &&
+                    (str[pos+1] != '\n') &&
+                    (str[pos+1] != '\r') )
+               pos++;
+            arglen = 1 + pos - start;
+            if (!(arg = malloc(arglen)))
+            {
+               fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
+               return(1);
+            };
+            memset(arg, 0, arglen);
+            strncat(arg, &line[start], arglen);
+            break;
+      };
+
+      // if an argument is not defined, skip to next character in string.
+      if (!(arg))
+      {
+         continue;
+      };
+
+      if (!(ptr = realloc(*argvp, sizeof(char *) * ((*argcp)+1))))
+      {
+         fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
+         return(1);
+      };
+      *argvp = ptr;
+      (*argvp)[(*argcp)] = arg;
+      (*argcp)++;
+   };
+
+   return(0);
+}
 
 
 /* end of source */

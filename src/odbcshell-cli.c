@@ -51,6 +51,8 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+#include "odbcshell-parse.h"
+
 
 //////////////////
 //              //
@@ -76,6 +78,10 @@ int odbcshell_cli_loop(ODBCShellConfig * cnf)
    char        * ptr;
    char        * input;
    char        * buffer;
+   char       ** argv;
+   int           argc;
+   size_t        offset;
+   size_t        bufflen;
 
    buffer = NULL;
 
@@ -92,30 +98,46 @@ int odbcshell_cli_loop(ODBCShellConfig * cnf)
       printf("Type \"help;\" for usage information.\n\n");
    };
 
-   while((input = readline(buffer ? "> " : cnf->prompt)))
+   argv   = NULL;
+   argc   = 0;
+   buffer = strdup("");
+
+   while((input = readline((!(buffer[0])) ? cnf->prompt : "> ")))
    {
       if (strlen(input))
       {
-         if (!(buffer))
-            buffer = strdup(input);
-         else
-         {
-            ptr = realloc(buffer, (strlen(buffer) + strlen(input) + 2));
-            strcat(ptr, " ");
-            strcat(ptr, input);
-            buffer = ptr;
-         };
+         ptr = realloc(buffer, (strlen(buffer) + strlen(input) + 2));
+         buffer = ptr;
+         if ((bufflen = strlen(buffer)))
+            if ( (buffer[bufflen-1] != ' ') && (buffer[bufflen-1] != '\t') )
+            strcat(buffer, " ");
+         strcat(buffer, input);
          free(input);
-      };
-      if (!(index(buffer, ';')))
+      } else {
+         free(input);
          continue;
-   
-      if ((buffer[0]))
-         add_history(buffer);
+      };
 
-      if ( (!(strcmp(buffer, "exit;"))) ||
-           (!(strcmp(buffer, "quit;"))) ||
-           (!(strcmp(buffer, "logout;"))) )
+      if (odbcshell_parse_line(buffer, &argc, &argv, &offset))
+      {
+         free(buffer);
+         return(1);
+      };
+
+      if (!(offset))
+         continue;
+
+      if (!(argc))
+      {
+         buffer[0] = '\0';
+         continue;
+      };
+
+      add_history(buffer);
+
+      if ( (!(strcmp(argv[0], "exit"))) ||
+           (!(strcmp(argv[0], "quit"))) ||
+           (!(strcmp(argv[0], "logout"))) )
       {
          if (cnf->histfile)
             write_history(cnf->histfile);
@@ -124,12 +146,9 @@ int odbcshell_cli_loop(ODBCShellConfig * cnf)
          return(0);
       };
 
+      printf("command: %s\n", argv[0]);
 
-      if ((buffer[0]))
-         printf("%s\n", buffer);
-
-      free(buffer);
-      buffer = NULL;
+      buffer[0] = '\0';;
    };
 
    return(0);
