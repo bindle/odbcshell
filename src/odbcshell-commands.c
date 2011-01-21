@@ -44,6 +44,9 @@
 #pragma mark Headers
 
 #include "odbcshell.h"
+
+#include <stdio.h>
+
 #include "odbcshell-commands.h"
 
 
@@ -55,6 +58,27 @@
 #pragma mark -
 #pragma mark Functions
 
+/// displays information stating the function is incomplete
+int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv, char * line)
+{
+   printf("WARNING: \"%s\" is not implemented.\n", argv[0]);
+   if ( (!(argc)) || (!(cnf)) || (!(argv)) || (!(line)) )
+      return(0);
+   return(0);
+}
+
+
+/// exits from shell
+int odbcshell_cmd_quit(ODBCShell * cnf)
+{
+   if (!(cnf))
+      return(1);
+
+   if (!(cnf->silent))
+      printf("bye.\n");
+
+   return(1);
+}
 
 /* end of source */
 

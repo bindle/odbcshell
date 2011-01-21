@@ -51,6 +51,7 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 
+#include "odbcshell-commands.h"
 #include "odbcshell-parse.h"
 #include "odbcshell-variables.h"
 
@@ -76,6 +77,7 @@
 /// @param[in]  cnf      pointer to configuration struct
 int odbcshell_cli_loop(ODBCShell * cnf)
 {
+   int           code;
    char        * ptr;
    char        * input;
    char        * buffer;
@@ -158,18 +160,38 @@ int odbcshell_cli_loop(ODBCShell * cnf)
 
       switch(cmd->val)
       {
-         case ODBCSHELL_CMD_QUIT:
-            if (cnf->histfile)
-               write_history(cnf->histfile);
-            if (!(cnf->silent))
-               printf("bye.\n");
-            return(0);
-         default:
-            printf(">>>>: %s\n", buffer);
-            break;
+         case ODBCSHELL_CMD_ALIAS:      code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
+         case ODBCSHELL_CMD_CONNECT:    code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
+         case ODBCSHELL_CMD_DISCONNECT: code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
+         case ODBCSHELL_CMD_LOADCONF:   code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
+         case ODBCSHELL_CMD_HELP:       code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
+         case ODBCSHELL_CMD_QUIT:       code = odbcshell_cmd_quit(cnf); break;
+         case ODBCSHELL_CMD_RECONNECT:  code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
+         case ODBCSHELL_CMD_RESETCONF:  code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
+         case ODBCSHELL_CMD_SAVECONF:   code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
+         case ODBCSHELL_CMD_SET:        code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
+         case ODBCSHELL_CMD_SILENT:     code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
+         case ODBCSHELL_CMD_UNALIAS:    code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
+         case ODBCSHELL_CMD_UNSET:      code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
+         case ODBCSHELL_CMD_VERBOSE:    code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
+         case ODBCSHELL_CMD_VERSION:    code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
+         default:                       code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
       };
 
-      buffer[0] = '\0';;
+      buffer[0] = '\0';
+
+      switch(code)
+      {
+         case 1:
+            code = 0;
+         case -1:
+            if (cnf->histfile)
+               write_history(cnf->histfile);
+            free(buffer);
+            return(code);
+         default:
+            break;
+      };
    };
 
    return(0);

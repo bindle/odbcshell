@@ -55,5 +55,12 @@
 #pragma mark -
 #pragma mark Prototypes
 
+// displays information stating the function is incomplete
+int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv, char * line);
+
+// exits from shell
+int odbcshell_cmd_quit(ODBCShell * cnf);
+
+
 #endif
 /* end of header */
