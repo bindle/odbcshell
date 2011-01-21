@@ -60,14 +60,14 @@
 /// numeric values for command names
 ODBCShellOption odbcshell_cmd_strings[] =
 {
-   { ODBCSHELL_CMD_CONNECT,     1,  1, "connect",    "connects to a database",        NULL },
-   { ODBCSHELL_CMD_DISCONNECT,  0, -1, "disconnect", "disconnects from a database",   NULL },
-   { ODBCSHELL_CMD_HELP,        0,  1, "help",       "displays help information",     NULL },
-   { ODBCSHELL_CMD_QUIT,        0, -1, "quit",       "exits ODBC Shell",              NULL },
-   { ODBCSHELL_CMD_RECONNECT,   0, -1, "reconnect",  "reconnects to a database",      NULL },
-   { ODBCSHELL_CMD_SET,         0,  2, "set",        "sets configuration option",     NULL },
-   { ODBCSHELL_CMD_UNSET,       1,  1, "unset",      "unsets configuration option",   NULL },
-   { ODBCSHELL_CMD_VERSION,     0, -1, "version",    "displays version information",  NULL }, 
+   { ODBCSHELL_CMD_CONNECT,     2,  2, "connect",    "connects to a database",        NULL },
+   { ODBCSHELL_CMD_DISCONNECT,  1,  1, "disconnect", "disconnects from a database",   NULL },
+   { ODBCSHELL_CMD_HELP,        1,  2, "help",       "displays help information",     NULL },
+   { ODBCSHELL_CMD_QUIT,        1,  1, "quit",       "exits ODBC Shell",              NULL },
+   { ODBCSHELL_CMD_RECONNECT,   1,  1, "reconnect",  "reconnects to a database",      NULL },
+   { ODBCSHELL_CMD_SET,         1,  3, "set",        "sets configuration option",     NULL },
+   { ODBCSHELL_CMD_UNSET,       2,  2, "unset",      "unsets configuration option",   NULL },
+   { ODBCSHELL_CMD_VERSION,     1,  1, "version",    "displays version information",  NULL },
    { -1, -1, -1, NULL, NULL, NULL }
 };
 
