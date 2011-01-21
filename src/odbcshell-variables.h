@@ -55,6 +55,8 @@
 #pragma mark -
 #pragma mark Prototypes
 
+extern ODBCShellOption odbcshell_cmd_strings[];
+
 
 #endif
 /* end of header */

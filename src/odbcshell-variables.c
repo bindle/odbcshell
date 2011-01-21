@@ -44,7 +44,8 @@
 #pragma mark Headers
 
 #include "odbcshell.h"
-#include "odbcshell-variables.h"
+
+#include <stdio.h>
 
 
 /////////////////
@@ -55,5 +56,18 @@
 #pragma mark -
 #pragma mark Variables
 
+/// numeric values for command names
+ODBCShellOption odbcshell_cmd_strings[] =
+{
+   { ODBCSHELL_CMD_CONNECT,     1,  1, "connect",    "connects to a database",        NULL },
+   { ODBCSHELL_CMD_DISCONNECT,  0,  0, "disconnect", "disconnects from a database",   NULL },
+   { ODBCSHELL_CMD_HELP,        0,  1, "help",       "displays help information",     NULL },
+   { ODBCSHELL_CMD_QUIT,        0,  0, "quit",       "exits ODBC Shell",              NULL },
+   { ODBCSHELL_CMD_RECONNECT,   0,  0, "reconnect",  "reconnects to a database",      NULL },
+   { ODBCSHELL_CMD_SET,         0,  2, "set",        "sets configuration option",     NULL },
+   { ODBCSHELL_CMD_UNSET,       1,  1, "unset",      "unsets configuration option",   NULL },
+   { ODBCSHELL_CMD_VERSION,     0,  0, "version",    "displays version information",  NULL }, 
+   { -1, -1, -1, NULL, NULL, NULL }
+};
 
 /* end of source */

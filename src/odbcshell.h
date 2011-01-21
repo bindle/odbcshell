@@ -108,6 +108,7 @@
 #pragma mark -
 #pragma mark Datatypes
 
+/// contains configuration data
 typedef struct odbcshell_config_data ODBCShellConfig;
 struct odbcshell_config_data
 {
@@ -119,15 +120,16 @@ struct odbcshell_config_data
 };
 
 
+/// internal map for switching between an directive's ASCII and numeric values
 typedef struct odbcshell_option_data ODBCShellOption;
 struct odbcshell_option_data
 {
-   long long    identifier; ///< option ID
-   long long    min_arg;    ///< minimum arguments allowed
-   long long    max_arg;    ///< maximum arguments allowed
-   const char * name;       ///< option description
-   const char * desc;       ///< option description
-   const char * usage;      ///< option usage
+   long long     identifier; ///< option ID
+   long long     min_arg;    ///< minimum arguments allowed
+   long long     max_arg;    ///< maximum arguments allowed
+   const char  * name;       ///< option description
+   const char  * desc;       ///< option description
+   const char ** usage;      ///< option usage
 };
 
 
