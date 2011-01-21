@@ -70,6 +70,8 @@ src_odbcshell_SOURCES			= $(noinst_HEADERS) \
 					  src/odbcshell.h \
 					  src/odbcshell-cli.c \
 					  src/odbcshell-cli.h \
+					  src/odbcshell-commands.c \
+					  src/odbcshell-commands.h \
 					  src/odbcshell-options.c \
 					  src/odbcshell-options.h \
 					  src/odbcshell-parse.c \
