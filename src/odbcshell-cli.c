@@ -52,6 +52,7 @@
 #include <readline/history.h>
 
 #include "odbcshell-parse.h"
+#include "odbcshell-variables.h"
 
 
 //////////////////
@@ -82,6 +83,7 @@ int odbcshell_cli_loop(ODBCShellConfig * cnf)
    int           argc;
    size_t        offset;
    size_t        bufflen;
+   ODBCShellOption * cmd;
 
    buffer = NULL;
 
@@ -135,18 +137,37 @@ int odbcshell_cli_loop(ODBCShellConfig * cnf)
 
       add_history(buffer);
 
-      if ( (!(strcmp(argv[0], "exit"))) ||
-           (!(strcmp(argv[0], "quit"))) ||
-           (!(strcmp(argv[0], "logout"))) )
+      if (!(cmd = odbcshell_lookup_opt_by_name(odbcshell_cmd_strings, argv[0])))
       {
-         if (cnf->histfile)
-            write_history(cnf->histfile);
-         if (!(cnf->silent))
-            printf("bye.\n");
-         return(0);
+         buffer[0] = '\0';;
+         continue;
       };
 
-      printf("command: %s\n", argv[0]);
+      if (cmd->min_arg > argc)
+      {
+         printf("error: invalid syntax for %s\n", argv[0]);
+         buffer[0] = '\0';
+         continue;
+      };
+      if ( (cmd->max_arg < argc) && (cmd->max_arg != -1) )
+      {
+         printf("error: invalid syntax for %s\n", argv[0]);
+         buffer[0] = '\0';
+         continue;
+      };
+
+      switch(cmd->val)
+      {
+         case ODBCSHELL_CMD_QUIT:
+            if (cnf->histfile)
+               write_history(cnf->histfile);
+            if (!(cnf->silent))
+               printf("bye.\n");
+            return(0);
+         default:
+            printf(">>>>: %s\n", buffer);
+            break;
+      };
 
       buffer[0] = '\0';;
    };

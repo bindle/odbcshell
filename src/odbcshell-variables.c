@@ -46,6 +46,7 @@
 #include "odbcshell.h"
 
 #include <stdio.h>
+#include <strings.h>
 
 
 /////////////////
@@ -60,14 +61,54 @@
 ODBCShellOption odbcshell_cmd_strings[] =
 {
    { ODBCSHELL_CMD_CONNECT,     1,  1, "connect",    "connects to a database",        NULL },
-   { ODBCSHELL_CMD_DISCONNECT,  0,  0, "disconnect", "disconnects from a database",   NULL },
+   { ODBCSHELL_CMD_DISCONNECT,  0, -1, "disconnect", "disconnects from a database",   NULL },
    { ODBCSHELL_CMD_HELP,        0,  1, "help",       "displays help information",     NULL },
-   { ODBCSHELL_CMD_QUIT,        0,  0, "quit",       "exits ODBC Shell",              NULL },
-   { ODBCSHELL_CMD_RECONNECT,   0,  0, "reconnect",  "reconnects to a database",      NULL },
+   { ODBCSHELL_CMD_QUIT,        0, -1, "quit",       "exits ODBC Shell",              NULL },
+   { ODBCSHELL_CMD_RECONNECT,   0, -1, "reconnect",  "reconnects to a database",      NULL },
    { ODBCSHELL_CMD_SET,         0,  2, "set",        "sets configuration option",     NULL },
    { ODBCSHELL_CMD_UNSET,       1,  1, "unset",      "unsets configuration option",   NULL },
-   { ODBCSHELL_CMD_VERSION,     0,  0, "version",    "displays version information",  NULL }, 
+   { ODBCSHELL_CMD_VERSION,     0, -1, "version",    "displays version information",  NULL }, 
    { -1, -1, -1, NULL, NULL, NULL }
 };
+
+
+/////////////////
+//             //
+//  Functions  //
+//             //
+/////////////////
+#pragma mark -
+#pragma mark Functions
+
+/// looks up option by name
+/// @param[in]  opts   array of optins to search
+/// @param[in]  name   name to use as lookup key
+ODBCShellOption * odbcshell_lookup_opt_by_name(ODBCShellOption * opts,
+   const char * name)
+{
+   unsigned u;
+   if (!(opts))
+      return(NULL);
+   for(u = 0; opts[u].name; u++)
+      if (!(strcasecmp(name, opts[u].name)))
+         return(&opts[u]);
+   return(&opts[u]);
+}
+
+
+/// looks up option by value
+/// @param[in]  opts   array of optins to search
+/// @param[in]  val    value to use as lookup key
+ODBCShellOption * odbcshell_lookup_opt_by_value(ODBCShellOption * opts,
+   int val)
+{
+   unsigned u;
+   if (!(opts))
+      return(NULL);
+   for(u = 0; opts[u].name; u++)
+      if (val == opts[u].val)
+         return(&opts[u]);
+   return(&opts[u]);
+}
 
 /* end of source */

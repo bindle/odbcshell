@@ -57,6 +57,13 @@
 
 extern ODBCShellOption odbcshell_cmd_strings[];
 
+// looks up option by name
+ODBCShellOption * odbcshell_lookup_opt_by_name(ODBCShellOption * opts,
+   const char * name);
+
+// looks up option by value
+ODBCShellOption * odbcshell_lookup_opt_by_value(ODBCShellOption * opts,
+   int val);
 
 #endif
 /* end of header */

@@ -98,6 +98,7 @@
 #define ODBCSHELL_CMD_UNSET       0x0D
 #define ODBCSHELL_CMD_VERBOSE     0x0E
 #define ODBCSHELL_CMD_VERSION     0x0F
+#define ODBCSHELL_CMD_SQL         -1
 
 
 /////////////////
@@ -124,7 +125,7 @@ struct odbcshell_config_data
 typedef struct odbcshell_option_data ODBCShellOption;
 struct odbcshell_option_data
 {
-   long long     identifier; ///< option ID
+   long long     val;        ///< option ID
    long long     min_arg;    ///< minimum arguments allowed
    long long     max_arg;    ///< maximum arguments allowed
    const char  * name;       ///< option description
