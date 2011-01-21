@@ -69,7 +69,7 @@
 
 /// frees resources
 /// @param[in]  cnf      pointer to configuration struct
-void odbcshell_free(ODBCShellConfig * cnf)
+void odbcshell_free(ODBCShell * cnf)
 {
    if (!(cnf))
       return;
@@ -96,7 +96,7 @@ void odbcshell_free(ODBCShellConfig * cnf)
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  opt      numeric ID of option to retrieve
 /// @param[out] ptr      pointer buffer to store value of option
-int odbcshell_get_option(ODBCShellConfig * cnf, int opt, void * ptr)
+int odbcshell_get_option(ODBCShell * cnf, int opt, void * ptr)
 {
    switch(opt)
    {
@@ -134,22 +134,22 @@ int odbcshell_get_option(ODBCShellConfig * cnf, int opt, void * ptr)
 
 /// initializes ODBC Shell options
 /// @param[in]  cnfp     pointer to configuration struct
-int odbcshell_initialize(ODBCShellConfig ** cnfp)
+int odbcshell_initialize(ODBCShell ** cnfp)
 {
    //int               ival;
    char              ibuff[2048];
    //size_t            len;
-   ODBCShellConfig * cnf;
+   ODBCShell       * cnf;
 
    if (!(cnfp))
       return(1);
 
-   if (!(cnf = malloc(sizeof(ODBCShellConfig))))
+   if (!(cnf = malloc(sizeof(ODBCShell))))
    {
       fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
       return(1);
    };
-   memset(cnf, 0, sizeof(ODBCShellConfig));
+   memset(cnf, 0, sizeof(ODBCShell));
 
    if (getenv("HOME"))
    {
@@ -168,7 +168,7 @@ int odbcshell_initialize(ODBCShellConfig ** cnfp)
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  opt      numeric ID of option to retrieve
 /// @param[in]  ptr      pointer buffer containing new value of option
-int odbcshell_set_option(ODBCShellConfig * cnf, int opt, void * ptr)
+int odbcshell_set_option(ODBCShell * cnf, int opt, void * ptr)
 {
    switch(opt)
    {

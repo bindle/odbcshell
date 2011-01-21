@@ -56,7 +56,7 @@
 #pragma mark Prototypes
 
 // master loop for interactive shell
-int odbcshell_cli_loop(ODBCShellConfig * cnf);
+int odbcshell_cli_loop(ODBCShell * cnf);
 
 #endif
 /* end of header */

@@ -74,7 +74,7 @@
 
 /// master loop for interactive shell
 /// @param[in]  cnf      pointer to configuration struct
-int odbcshell_cli_loop(ODBCShellConfig * cnf)
+int odbcshell_cli_loop(ODBCShell * cnf)
 {
    char        * ptr;
    char        * input;

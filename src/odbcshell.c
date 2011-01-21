@@ -137,7 +137,7 @@ int main(int argc, char * argv[])
    int           ival;
    int           opt_index;
    size_t        len;
-   ODBCShellConfig * cnf;
+   ODBCShell   * cnf;
 
    static char   short_opt[] = "hqVv";
    static struct option long_opt[] =
@@ -150,12 +150,12 @@ int main(int argc, char * argv[])
       {NULL,            0,           0, 0  }
    };
 
-   if (!(cnf = malloc(sizeof(ODBCShellConfig))))
+   if (!(cnf = malloc(sizeof(ODBCShell))))
    {
       fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
       return(1);
    };
-   memset(cnf, 0, sizeof(ODBCShellConfig));
+   memset(cnf, 0, sizeof(ODBCShell));
 
    while((c = getopt_long(argc, argv, short_opt, long_opt, &opt_index)) != -1)
    {

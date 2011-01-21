@@ -56,16 +56,16 @@
 #pragma mark Prototypes
 
 // frees resources
-void odbcshell_free(ODBCShellConfig * cnf);
+void odbcshell_free(ODBCShell * cnf);
 
 // retrieves configuration option
-int odbcshell_get_option(ODBCShellConfig * cnf, int opt, void * ptr);
+int odbcshell_get_option(ODBCShell * cnf, int opt, void * ptr);
 
 // initializes ODBC Shell options
-int odbcshell_initialize(ODBCShellConfig ** cnfp);
+int odbcshell_initialize(ODBCShell ** cnfp);
 
 // sets configuration option
-int odbcshell_set_option(ODBCShellConfig * cnf, int opt, void * ptr);
+int odbcshell_set_option(ODBCShell * cnf, int opt, void * ptr);
 
 #endif
 /* end of header */

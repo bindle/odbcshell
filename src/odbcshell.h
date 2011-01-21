@@ -110,7 +110,7 @@
 #pragma mark Datatypes
 
 /// contains configuration data
-typedef struct odbcshell_config_data ODBCShellConfig;
+typedef struct odbcshell_config_data ODBCShell;
 struct odbcshell_config_data
 {
    long long    verbose;    ///< toggle for verbose mode
