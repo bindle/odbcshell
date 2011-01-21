@@ -67,7 +67,8 @@
 #pragma mark -
 #pragma mark Functions
 
-// frees resources
+/// frees resources
+/// @param[in]  cnf      pointer to configuration struct
 void odbcshell_free(ODBCShellConfig * cnf)
 {
    if (!(cnf))
@@ -91,7 +92,10 @@ void odbcshell_free(ODBCShellConfig * cnf)
 }
 
 
-// retrieves configuration option
+/// retrieves configuration option
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  opt      numeric ID of option to retrieve
+/// @param[out] ptr      pointer buffer to store value of option
 int odbcshell_get_option(ODBCShellConfig * cnf, int opt, void * ptr)
 {
    switch(opt)
@@ -128,7 +132,8 @@ int odbcshell_get_option(ODBCShellConfig * cnf, int opt, void * ptr)
 }
 
 
-// initializes ODBC Shell options
+/// initializes ODBC Shell options
+/// @param[in]  cnfp     pointer to configuration struct
 int odbcshell_initialize(ODBCShellConfig ** cnfp)
 {
    //int               ival;
@@ -159,7 +164,10 @@ int odbcshell_initialize(ODBCShellConfig ** cnfp)
 }
 
 
-// sets configuration option
+/// sets configuration option
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  opt      numeric ID of option to retrieve
+/// @param[in]  ptr      pointer buffer containing new value of option
 int odbcshell_set_option(ODBCShellConfig * cnf, int opt, void * ptr)
 {
    switch(opt)

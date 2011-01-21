@@ -69,7 +69,8 @@
 #pragma mark -
 #pragma mark Functions
 
-// master loop for interactive shell
+/// master loop for interactive shell
+/// @param[in]  cnf      pointer to configuration struct
 int odbcshell_cli_loop(ODBCShellConfig * cnf)
 {
    char        * ptr;
