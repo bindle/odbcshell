@@ -59,6 +59,10 @@
 #pragma mark Functions
 
 /// displays information stating the function is incomplete
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  argc     number of arguments passed to command
+/// @param[in]  argv     array of arguments passed to command
+/// @param[in]  line     unmodified line sent to ODBC shell
 int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv, char * line)
 {
    printf("WARNING: \"%s\" is not implemented.\n", argv[0]);
@@ -69,6 +73,7 @@ int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv, char * lin
 
 
 /// exits from shell
+/// @param[in]  cnf      pointer to configuration struct
 int odbcshell_cmd_quit(ODBCShell * cnf)
 {
    if (!(cnf))
