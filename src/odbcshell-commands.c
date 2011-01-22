@@ -152,5 +152,16 @@ int odbcshell_cmd_quit(ODBCShell * cnf)
    return(1);
 }
 
+
+/// displays version information
+/// @param[in]  cnf      pointer to configuration struct
+int odbcshell_cmd_version(ODBCShell * cnf)
+{
+   if (!(cnf))
+      return(0);
+   odbcshell_version();
+   return(0);
+}
+
 /* end of source */
 

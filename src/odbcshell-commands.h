@@ -64,6 +64,9 @@ int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv, char * lin
 // exits from shell
 int odbcshell_cmd_quit(ODBCShell * cnf);
 
+// displays version information
+int odbcshell_cmd_version(ODBCShell * cnf);
+
 
 #endif
 /* end of header */
