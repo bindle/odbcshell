@@ -48,6 +48,7 @@
 #include <stdio.h>
 
 #include "odbcshell-commands.h"
+#include "odbcshell-variables.h"
 
 
 /////////////////
@@ -57,6 +58,72 @@
 /////////////////
 #pragma mark -
 #pragma mark Functions
+
+/// displays usage information
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  argc     number of arguments passed to command
+/// @param[in]  argv     array of arguments passed to command
+int odbcshell_cmd_help(ODBCShell * cnf, int argc, char ** argv)
+{
+   unsigned          u;
+   ODBCShellOption * cmd;
+
+   if (!(cnf))
+      return(0);
+   if (!(argv))
+      return(0);
+
+   // prints list of help topics
+   if (argc == 1)
+   {
+      printf("This is %s version %s\n", PROGRAM_NAME, PACKAGE_VERSION);
+      printf("Topics:\n");
+      for(u = 0; odbcshell_cmd_strings[u].name; u++)
+      {
+         if ((u%5) == 0)
+            printf("       ");
+         printf("%-12s", odbcshell_cmd_strings[u].name);
+         if ((u%5) == 4)
+            printf("\n");
+      };
+      if ((u%5) != 0)
+         printf("\n");
+
+      printf("For more info use \"HELP <topic>;\".\n");
+      printf("End of HELP info.\n");
+      return(0);
+   };
+
+   if (!(cmd = odbcshell_lookup_opt_by_name(odbcshell_cmd_strings, argv[1])))
+   {
+      printf("HELP topic \"%s\" unknown.\n", argv[1]);
+      return(0);
+   };
+   if (!(cmd->name))
+   {
+      printf("HELP topic \"%s\" unknown.\n", argv[1]);
+      return(0);
+   };
+
+   printf("%s Command:\n", cmd->name);
+   if (cmd->desc)
+   {
+      printf("Description:\n");
+      printf("       %s\n", cmd->desc);
+   };
+   if (cmd->usage)
+   {
+      printf("Usage:\n");
+      for(u = 0; cmd->usage[u]; u++)
+         printf("       %s%s\n", cmd->name, cmd->usage[u]);
+   };
+   if ( (!(cmd->usage)) && (!(cmd->desc)) )
+      printf("       Help information for this topic is unavailable.\n");
+   printf("End of HELP info.\n");
+
+   return(0);
+}
+
 
 /// displays information stating the function is incomplete
 /// @param[in]  cnf      pointer to configuration struct

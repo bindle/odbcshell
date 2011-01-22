@@ -60,14 +60,16 @@
 /// numeric values for command names
 ODBCShellOption odbcshell_cmd_strings[] =
 {
-   { ODBCSHELL_CMD_CONNECT,     2,  2, "connect",    "connects to a database",        NULL },
-   { ODBCSHELL_CMD_DISCONNECT,  1,  1, "disconnect", "disconnects from a database",   NULL },
-   { ODBCSHELL_CMD_HELP,        1,  2, "help",       "displays help information",     NULL },
-   { ODBCSHELL_CMD_QUIT,        1,  1, "quit",       "exits ODBC Shell",              NULL },
-   { ODBCSHELL_CMD_RECONNECT,   1,  1, "reconnect",  "reconnects to a database",      NULL },
-   { ODBCSHELL_CMD_SET,         1,  3, "set",        "sets configuration option",     NULL },
-   { ODBCSHELL_CMD_UNSET,       2,  2, "unset",      "unsets configuration option",   NULL },
-   { ODBCSHELL_CMD_VERSION,     1,  1, "version",    "displays version information",  NULL },
+   { ODBCSHELL_CMD_CONNECT,     2,  2, "CONNECT",    "connects to a database",        (const char *[3]){" alias;", " \"DSN=My Database;UID=John Doe;PWD=password\";", NULL} },
+   { ODBCSHELL_CMD_DISCONNECT,  1,  1, "DISCONNECT", "disconnects from a database",   (const char *[2]){";", NULL} },
+   { ODBCSHELL_CMD_QUIT,        1,  1, "EXIT",       "exits ODBC Shell",              (const char *[2]){";", NULL} },
+   { ODBCSHELL_CMD_HELP,        1,  2, "HELP",       "displays help information",     (const char *[4]){";", " topic;", " topic subtopic;", NULL} },
+   { ODBCSHELL_CMD_QUIT,        1,  1, "LOGOUT",     "exits ODBC Shell",              (const char *[2]){";", NULL} },
+   { ODBCSHELL_CMD_QUIT,        1,  1, "QUIT",       "exits ODBC Shell",              (const char *[2]){";", NULL} },
+   { ODBCSHELL_CMD_RECONNECT,   1,  1, "RECONNECT",  "reconnects to a database",      (const char *[2]){";", NULL} },
+   { ODBCSHELL_CMD_SET,         1,  3, "SET",        "sets configuration option",     (const char *[3]){";", " variable value;", NULL} },
+   { ODBCSHELL_CMD_UNSET,       2,  2, "UNSET",      "unsets configuration option",   (const char *[2]){" variable;", NULL} },
+   { ODBCSHELL_CMD_VERSION,     1,  1, "VERSION",    "displays version information",  (const char *[2]){";", NULL} },
    { -1, -1, -1, NULL, NULL, NULL }
 };
 

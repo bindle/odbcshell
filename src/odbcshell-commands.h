@@ -55,6 +55,9 @@
 #pragma mark -
 #pragma mark Prototypes
 
+// displays usage information
+int odbcshell_cmd_help(ODBCShell * cnf, int argc, char ** argv);
+
 // displays information stating the function is incomplete
 int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv, char * line);
 

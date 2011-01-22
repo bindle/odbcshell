@@ -164,7 +164,7 @@ int odbcshell_cli_loop(ODBCShell * cnf)
          case ODBCSHELL_CMD_CONNECT:    code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
          case ODBCSHELL_CMD_DISCONNECT: code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
          case ODBCSHELL_CMD_LOADCONF:   code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
-         case ODBCSHELL_CMD_HELP:       code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
+         case ODBCSHELL_CMD_HELP:       code = odbcshell_cmd_help(cnf, argc, argv); break;
          case ODBCSHELL_CMD_QUIT:       code = odbcshell_cmd_quit(cnf); break;
          case ODBCSHELL_CMD_RECONNECT:  code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
          case ODBCSHELL_CMD_RESETCONF:  code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
