@@ -74,6 +74,21 @@ ODBCShellOption odbcshell_cmd_strings[] =
 };
 
 
+/// numeric values for command names
+ODBCShellOption odbcshell_opt_strings[] =
+{
+   { ODBCSHELL_OPT_CONFFILE,  1,  1, "conffile",   NULL, NULL },
+   { ODBCSHELL_OPT_CONTINUE,  1,  1, "continue",   NULL, NULL },
+   { ODBCSHELL_OPT_HISTFILE,  1,  1, "histfile",   NULL, NULL },
+   { ODBCSHELL_OPT_HISTORY,   1,  1, "history",    NULL, NULL },
+   { ODBCSHELL_OPT_NOSHELL,   1,  1, "noshell",    NULL, NULL },
+   { ODBCSHELL_OPT_PROMPT,    1,  1, "prompt",     NULL, NULL },
+   { ODBCSHELL_OPT_SILENT,    1,  1, "silent",     NULL, NULL },
+   { ODBCSHELL_OPT_VERBOSE,   1,  1, "verbose",    NULL, NULL },
+   { -1, -1, -1, NULL, NULL, NULL }
+};
+
+
 /////////////////
 //             //
 //  Functions  //

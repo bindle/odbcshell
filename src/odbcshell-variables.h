@@ -56,6 +56,7 @@
 #pragma mark Prototypes
 
 extern ODBCShellOption odbcshell_cmd_strings[];
+extern ODBCShellOption odbcshell_opt_strings[];
 
 // looks up option by name
 ODBCShellOption * odbcshell_lookup_opt_by_name(ODBCShellOption * opts,
