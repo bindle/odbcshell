@@ -181,9 +181,11 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, void * ptr)
             return(1);
          };
          break;
+
       case ODBCSHELL_OPT_CONTINUE:
          cnf->continues = *((int *)ptr);
          break;
+
       case ODBCSHELL_OPT_HISTFILE:
          if (cnf->histfile)
             free(cnf->histfile);
@@ -193,12 +195,15 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, void * ptr)
             return(1);
          };
          break;
+
       case ODBCSHELL_OPT_HISTORY:
          cnf->history = *((int *)ptr);
          break;
+
       case ODBCSHELL_OPT_NOSHELL:
          cnf->noshell = 1;
          break;
+
       case ODBCSHELL_OPT_PROMPT:
          if (cnf->prompt)
             free(cnf->prompt);
@@ -208,12 +213,15 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, void * ptr)
             return(1);
          };
          break;
+
       case ODBCSHELL_OPT_SILENT:
          cnf->silent = *((int *)ptr);
          break;
+
       case ODBCSHELL_OPT_VERBOSE:
          cnf->verbose = *((int *)ptr);
          break;
+
       default:
          fprintf(stderr, "%s: unknown option\n", PROGRAM_NAME);
          return(1);
