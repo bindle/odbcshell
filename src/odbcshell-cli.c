@@ -169,7 +169,7 @@ int odbcshell_cli_loop(ODBCShell * cnf)
          case ODBCSHELL_CMD_RECONNECT:  code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
          case ODBCSHELL_CMD_RESETCONF:  code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
          case ODBCSHELL_CMD_SAVECONF:   code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
-         case ODBCSHELL_CMD_SET:        code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
+         case ODBCSHELL_CMD_SET:        code = odbcshell_cmd_set(cnf, argc, argv); break;
          case ODBCSHELL_CMD_SILENT:     code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
          case ODBCSHELL_CMD_UNALIAS:    code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;
          case ODBCSHELL_CMD_UNSET:      code = odbcshell_cmd_incomplete(cnf, argc, argv, buffer); break;

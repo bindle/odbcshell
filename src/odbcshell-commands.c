@@ -46,8 +46,10 @@
 #include "odbcshell.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "odbcshell-commands.h"
+#include "odbcshell-options.h"
 #include "odbcshell-variables.h"
 
 
@@ -135,6 +137,51 @@ int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv, char * lin
    printf("WARNING: \"%s\" is not implemented.\n", argv[0]);
    if ( (!(argc)) || (!(cnf)) || (!(argv)) || (!(line)) )
       return(0);
+   return(0);
+}
+
+
+/// sets internal value of configuration parameter
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  argc     number of arguments passed to command
+/// @param[in]  argv     array of arguments passed to command
+int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv)
+{
+   int               ival;
+   ODBCShellOption * opt;
+
+   if (argc < 3)
+   {
+      printf("%-15s %s\n",     "continue", cnf->continues  ? "yes" : "no");
+      printf("%-15s \"%s\"\n", "histfile", cnf->histfile   ? cnf->histfile : "");
+      printf("%-15s %s\n",     "history",  cnf->history    ? "yes" : "no");
+      printf("%-15s %s\n",     "noshell",  cnf->noshell    ? "yes" : "no");
+      printf("%-15s \"%s\"\n", "prompt",   cnf->prompt);
+      printf("%-15s %s\n",     "silent",   cnf->silent     ? "yes" : "no");
+      printf("%-15s %s\n",     "verbose",  cnf->verbose    ? "yes" : "no");
+      return(0);
+   };
+
+   if (!(opt = odbcshell_lookup_opt_by_name(odbcshell_opt_strings, argv[1])))
+      return(1);
+
+   switch(opt->val & ODBSHELL_OTYPE_MASK)
+   {
+      case ODBSHELL_OTYPE_BOOL:
+         ival = odbcshell_strtob(argv[2]);
+         return(odbcshell_set_option(cnf, (int)opt->val, &ival));
+
+      case ODBSHELL_OTYPE_CHAR:
+         return(odbcshell_set_option(cnf, (int)opt->val, argv[2]));
+
+      case ODBSHELL_OTYPE_INT:
+         ival = strtol(argv[2], NULL, 0);
+         return(odbcshell_set_option(cnf, (int)opt->val, &ival));
+
+      default:
+         return(0);
+   };
+
    return(0);
 }
 
