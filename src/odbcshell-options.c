@@ -58,6 +58,9 @@
 #pragma mark -
 #pragma mark Prototypes
 
+// converts a string to a boolean value
+int odbcshell_strtob(const char * str);
+
 
 /////////////////
 //             //
@@ -227,6 +230,30 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, void * ptr)
          return(1);
    };
    return(0);
+}
+
+
+/// converts a string to a boolean value
+/// @param[in]  str      string to convert
+int odbcshell_strtob(const char * str)
+{
+   if (!(strcasecmp(str, "TRUE")))
+      return(1);
+   if (!(strcasecmp(str, "YES")))
+      return(1);
+   if (!(strcasecmp(str, "ON")))
+      return(1);
+   if (!(strcasecmp(str, "1")))
+      return(1);
+   if (!(strcasecmp(str, "FALSE")))
+      return(0);
+   if (!(strcasecmp(str, "NO")))
+      return(0);
+   if (!(strcasecmp(str, "OFF")))
+      return(0);
+   if (!(strcasecmp(str, "0")))
+      return(0);
+   return(-1);
 }
 
 /* end of source */
