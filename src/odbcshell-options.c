@@ -161,11 +161,15 @@ int odbcshell_initialize(ODBCShell ** cnfp)
 /// @param[in]  ptr      pointer buffer containing new value of option
 int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
 {
+   char   buff[2048];
    switch(opt)
    {
       case ODBCSHELL_OPT_CONFFILE:
          if (cnf->conffile)
             free(cnf->conffile);
+         cnf->conffile = NULL;
+         if (!(ptr))
+            return(0);
          if (!(cnf->conffile = strdup((const char *)ptr)))
          {
             fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
@@ -174,12 +178,23 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
          break;
 
       case ODBCSHELL_OPT_CONTINUE:
-         cnf->continues = *((const int *)ptr);
+         if (!(ptr))
+            cnf->continues = 0;
+         else
+            cnf->continues = *((const int *)ptr);
          break;
 
       case ODBCSHELL_OPT_HISTFILE:
          if (cnf->histfile)
             free(cnf->histfile);
+         cnf->histfile = NULL;
+         if (!(ptr))
+         {
+            if (!(getenv("HOME")))
+               return(0);
+            snprintf(buff, 2048L, "%s/.odbcshell_history", getenv("HOME"));
+            ptr = buff;
+         };
          if (!(cnf->histfile = strdup((const char *)ptr)))
          {
             fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
@@ -188,16 +203,24 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
          break;
 
       case ODBCSHELL_OPT_HISTORY:
-         cnf->history = *((const int *)ptr);
-         break;
+         if (!(ptr))
+            cnf->history = 1;
+         else
+            cnf->history = *((const int *)ptr);
+         return(0);
 
       case ODBCSHELL_OPT_NOSHELL:
-         cnf->noshell = 1;
-         break;
+         if (!(ptr))
+            return(0);
+         if ( *((const int *)ptr) )
+            cnf->noshell = 1;
+         return(0);
 
       case ODBCSHELL_OPT_PROMPT:
          if (cnf->prompt)
             free(cnf->prompt);
+         if (!(ptr))
+            ptr = "odbcshell> ";
          if (!(cnf->prompt = strdup((const char *)ptr)))
          {
             fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
@@ -206,11 +229,17 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
          break;
 
       case ODBCSHELL_OPT_SILENT:
-         cnf->silent = *((const int *)ptr);
+         if (!(ptr))
+            cnf->silent = 0;
+         else
+            cnf->silent = *((const int *)ptr);
          break;
 
       case ODBCSHELL_OPT_VERBOSE:
-         cnf->verbose = *((const int *)ptr);
+         if (!(ptr))
+            cnf->verbose = 0;
+         else
+            cnf->verbose = *((const int *)ptr);
          break;
 
       default:
