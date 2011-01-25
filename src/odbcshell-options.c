@@ -155,6 +155,21 @@ int odbcshell_initialize(ODBCShell ** cnfp)
 }
 
 
+// sets default values for configuration options
+int odbcshell_set_defaults(ODBCShell * cnf)
+{
+   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_CONFFILE, NULL)) return(1);
+   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_CONTINUE, NULL)) return(1);
+   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_HISTFILE, NULL)) return(1);
+   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_HISTORY,  NULL)) return(1);
+   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_NOSHELL,  NULL)) return(1);
+   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_PROMPT,   NULL)) return(1);
+   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_SILENT,   NULL)) return(1);
+   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_VERBOSE,  NULL)) return(1);
+   return(0);
+}
+
+
 /// sets configuration option
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  opt      numeric ID of option to retrieve

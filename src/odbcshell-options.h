@@ -64,6 +64,9 @@ int odbcshell_get_option(ODBCShell * cnf, int opt, void * ptr);
 // initializes ODBC Shell options
 int odbcshell_initialize(ODBCShell ** cnfp);
 
+// sets default values for configuration options
+int odbcshell_set_defaults(ODBCShell * cnf);
+
 // sets configuration option
 int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr);
 
