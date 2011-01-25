@@ -123,11 +123,14 @@
 typedef struct odbcshell_config_data ODBCShell;
 struct odbcshell_config_data
 {
-   long long    verbose;    ///< toggle for verbose mode
-   long long    silent;     ///< toggle for silent mode
-   char       * conffile;   ///< odbcshell configuration file
-   char       * histfile;   ///< GNU readline history file
-   char       * prompt;     ///< shell prompt
+   long long    continues;   ///< toggle for continue one error mode
+   long long    history;     ///< disables storing history
+   long long    noshell;     ///< disables ability to call shell commands
+   long long    silent;      ///< toggle for silent mode
+   long long    verbose;     ///< toggle for verbose mode
+   char       * conffile;    ///< odbcshell configuration file
+   char       * histfile;    ///< GNU readline history file
+   char       * prompt;      ///< shell prompt
 };
 
 
