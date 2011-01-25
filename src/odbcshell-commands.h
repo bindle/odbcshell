@@ -67,6 +67,9 @@ int odbcshell_cmd_quit(ODBCShell * cnf);
 // sets internal value of configuration parameter
 int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv);
 
+// unsets internal value of configuration parameter
+int odbcshell_cmd_unset(ODBCShell * cnf, char ** argv);
+
 // displays version information
 int odbcshell_cmd_version(ODBCShell * cnf);
 

@@ -186,6 +186,18 @@ int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv)
 }
 
 
+// unsets internal value of configuration parameter
+int odbcshell_cmd_unset(ODBCShell * cnf, char ** argv)
+{
+   ODBCShellOption * opt;
+
+   if (!(opt = odbcshell_lookup_opt_by_name(odbcshell_opt_strings, argv[1])))
+      return(1);
+
+   return(odbcshell_set_option(cnf, (int)opt->val, NULL));
+}
+
+
 /// exits from shell
 /// @param[in]  cnf      pointer to configuration struct
 int odbcshell_cmd_quit(ODBCShell * cnf)

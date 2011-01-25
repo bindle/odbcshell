@@ -68,7 +68,7 @@ ODBCShellOption odbcshell_cmd_strings[] =
    { ODBCSHELL_CMD_QUIT,        1,  1, "QUIT",       "exits ODBC Shell",              (const char *[2]){";", NULL} },
    //{ ODBCSHELL_CMD_RECONNECT,   1,  1, "RECONNECT",  "reconnects to a database",      (const char *[2]){";", NULL} },
    { ODBCSHELL_CMD_SET,         1,  3, "SET",        "sets configuration option",     (const char *[3]){";", " variable value;", NULL} },
-   //{ ODBCSHELL_CMD_UNSET,       2,  2, "UNSET",      "unsets configuration option",   (const char *[2]){" variable;", NULL} },
+   { ODBCSHELL_CMD_UNSET,       2,  2, "UNSET",      "unsets configuration option",   (const char *[2]){" variable;", NULL} },
    { ODBCSHELL_CMD_VERSION,     1,  1, "VERSION",    "displays version information",  (const char *[2]){";", NULL} },
    { -1, -1, -1, NULL, NULL, NULL }
 };
