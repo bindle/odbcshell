@@ -50,18 +50,6 @@
 #include <string.h>
 
 
-//////////////////
-//              //
-//  Prototypes  //
-//              //
-//////////////////
-#pragma mark -
-#pragma mark Prototypes
-
-// converts a string to a boolean value
-int odbcshell_strtob(const char * str);
-
-
 /////////////////
 //             //
 //  Functions  //
