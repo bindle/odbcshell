@@ -147,13 +147,15 @@ int odbcshell_cli_loop(ODBCShell * cnf)
 
       if (cmd->min_arg > argc)
       {
-         printf("error: invalid syntax for %s\n", argv[0]);
+         printf("%s: missing required arguments.\n", argv[0]);
+         printf("try `help %s;' for more information.\n", argv[0]);
          buffer[0] = '\0';
          continue;
       };
       if ( (cmd->max_arg < argc) && (cmd->max_arg != -1) )
       {
-         printf("error: invalid syntax for %s\n", argv[0]);
+         printf("%s: unknown arguments\n", argv[0]);
+         printf("try `help %s;' for more information.\n", argv[0]);
          buffer[0] = '\0';
          continue;
       };
