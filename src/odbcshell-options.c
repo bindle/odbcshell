@@ -159,14 +159,14 @@ int odbcshell_initialize(ODBCShell ** cnfp)
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  opt      numeric ID of option to retrieve
 /// @param[in]  ptr      pointer buffer containing new value of option
-int odbcshell_set_option(ODBCShell * cnf, int opt, void * ptr)
+int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
 {
    switch(opt)
    {
       case ODBCSHELL_OPT_CONFFILE:
          if (cnf->conffile)
             free(cnf->conffile);
-         if (!(cnf->conffile = strdup((char *)ptr)))
+         if (!(cnf->conffile = strdup((const char *)ptr)))
          {
             fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
             return(1);
@@ -174,13 +174,13 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, void * ptr)
          break;
 
       case ODBCSHELL_OPT_CONTINUE:
-         cnf->continues = *((int *)ptr);
+         cnf->continues = *((const int *)ptr);
          break;
 
       case ODBCSHELL_OPT_HISTFILE:
          if (cnf->histfile)
             free(cnf->histfile);
-         if (!(cnf->histfile = strdup((char *)ptr)))
+         if (!(cnf->histfile = strdup((const char *)ptr)))
          {
             fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
             return(1);
@@ -188,7 +188,7 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, void * ptr)
          break;
 
       case ODBCSHELL_OPT_HISTORY:
-         cnf->history = *((int *)ptr);
+         cnf->history = *((const int *)ptr);
          break;
 
       case ODBCSHELL_OPT_NOSHELL:
@@ -198,7 +198,7 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, void * ptr)
       case ODBCSHELL_OPT_PROMPT:
          if (cnf->prompt)
             free(cnf->prompt);
-         if (!(cnf->prompt = strdup((char *)ptr)))
+         if (!(cnf->prompt = strdup((const char *)ptr)))
          {
             fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
             return(1);
@@ -206,11 +206,11 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, void * ptr)
          break;
 
       case ODBCSHELL_OPT_SILENT:
-         cnf->silent = *((int *)ptr);
+         cnf->silent = *((const int *)ptr);
          break;
 
       case ODBCSHELL_OPT_VERBOSE:
-         cnf->verbose = *((int *)ptr);
+         cnf->verbose = *((const int *)ptr);
          break;
 
       default:

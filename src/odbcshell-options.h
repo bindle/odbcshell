@@ -65,7 +65,7 @@ int odbcshell_get_option(ODBCShell * cnf, int opt, void * ptr);
 int odbcshell_initialize(ODBCShell ** cnfp);
 
 // sets configuration option
-int odbcshell_set_option(ODBCShell * cnf, int opt, void * ptr);
+int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr);
 
 // converts a string to a boolean value
 int odbcshell_strtob(const char * str);
