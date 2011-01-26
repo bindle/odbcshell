@@ -38,7 +38,7 @@ AC_PREREQ(2.61)
 
 AC_COPYRIGHT([Copyright (c) 2011 Bindle Binaries <syzdek@bindlebinaries.com>.])
 AC_REVISION(0.1)
-AC_INIT([ODBC Shell],[0.1],[syzdek@bindlebinaries.com],[odbc-shell])
+AC_INIT([ODBC Shell],[0.1],[syzdek@bindlebinaries.com],[odbcshell])
 
 AC_SUBST([RELEASE_MONTH],["January 2011"])
 
