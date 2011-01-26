@@ -112,7 +112,7 @@ ODBCShellOption * odbcshell_lookup_opt_by_name(ODBCShellOption * opts,
    for(u = 0; opts[u].name; u++)
       if (!(strcasecmp(name, opts[u].name)))
          return(&opts[u]);
-   return(&opts[u]);
+   return(NULL);
 }
 
 
@@ -128,7 +128,7 @@ ODBCShellOption * odbcshell_lookup_opt_by_value(ODBCShellOption * opts,
    for(u = 0; opts[u].name; u++)
       if (val == opts[u].val)
          return(&opts[u]);
-   return(&opts[u]);
+   return(NULL);
 }
 
 /* end of source */

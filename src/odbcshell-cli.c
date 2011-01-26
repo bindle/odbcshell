@@ -142,6 +142,7 @@ int odbcshell_cli_loop(ODBCShell * cnf)
 
       if (!(cmd = odbcshell_lookup_opt_by_name(odbcshell_cmd_strings, argv[0])))
       {
+         printf("%s: %s: unknown command\n", PROGRAM_NAME, argv[0]);
          buffer[0] = '\0';;
          continue;
       };
