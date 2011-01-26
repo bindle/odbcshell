@@ -34,6 +34,44 @@
 #   acinclude.m4 - custom m4 macros used by configure.ac
 #
 
+# AC_DMS_GIT_PACKAGE_VERSION()
+# -----------------------------------
+AC_DEFUN([AC_DMS_GIT_PACKAGE_VERSION],[dnl
+
+   if test -f ${srcdir}/.git/config;then
+      GPV=$(${ac_aux_dir}/git-package-version.sh "${srcdir}")
+      if test "x${GPV}" != "x";then
+         AC_MSG_NOTICE([using git package version ${GPV}])
+      fi
+   elif test -f ${ac_aux_dir}/git-package-version;then
+      GPV=$(cat ${ac_aux_dir}/git-package-version 2> /dev/null)
+      if test "x${GPV}" != "x";then
+         AC_MSG_NOTICE([using cached git package version ${GPV}])
+      fi
+   fi
+
+   if test "x${GPV}" = "x";then
+      AC_MSG_WARN([unable to determine package version from Git tags])
+   else
+      #
+      # set internal variables
+      GIT_PACKAGE_VERSION=${GPV}
+      PACKAGE_VERSION=${GPV}
+      VERSION=${GPV}
+      #
+      # set substitution variables
+      AC_SUBST([GIT_PACKAGE_VERSION], [${GPV}])
+      AC_SUBST([PACKAGE_VERSION], [${GPV}])
+      AC_SUBST([VERSION], [${GPV}])
+      #
+      # set C/C++/Objc preprocessor macros
+      AC_DEFINE_UNQUOTED([GIT_PACKAGE_VERSION], ["${GIT_PACKAGE_VERSION}"], [package version determined from git repository])
+      AC_DEFINE_UNQUOTED([PACKAGE_VERSION], ["${GIT_PACKAGE_VERSION}"], [package version determined from git repository])
+      AC_DEFINE_UNQUOTED([VERSION], ["${GIT_PACKAGE_VERSION}"], [package version determined from git repository])
+   fi
+])dnl
+
+
 # AC_ODBCSHELL_ENABLE_WARNINGS()
 # ______________________________________________________________________________
 AC_DEFUN([AC_ODBCSHELL_ENABLE_WARNINGS],[dnl

@@ -172,6 +172,9 @@ if test "x${have_regex}" == "xno";then
    AC_MSG_ERROR([ODBC Shell requires POSIX regular expressions.])
 fi
 
+# determine PACKAGE_VERSION via Git
+AC_DMS_GIT_PACKAGE_VERSION
+
 # Creates outputs
 AC_CONFIG_FILES([Makefile])
 AC_OUTPUT

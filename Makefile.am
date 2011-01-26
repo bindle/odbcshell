@@ -119,7 +119,8 @@ BUILT_SOURCES				=
 TESTS					=
 XFAIL_TESTS				=
 EXTRA_MANS				=
-EXTRA_DIST				=
+EXTRA_DIST				= build-aux/git-package-version \
+					  build-aux/git-package-version.sh
 CLEANFILES				= \
 					  $(builddir)/a.out   $(srcdir)/a.out \
 					  $(builddir)/*/a.out $(srcdir)/*/a.out \
@@ -127,21 +128,34 @@ CLEANFILES				= \
 					  $(man_MANS) \
 					  @PACKAGE_TARNAME@-*.tar.* \
 					  @PACKAGE_TARNAME@-*.zip
+DISTCHECK_CONFIGURE_FLAGS		= --enable-strictwarnings
 
 
 # custom targets
+.PHONY: autoreconf update gitclean build-aux/git-package-version
+
+build-aux/git-package-version:
+	$(top_srcdir)/build-aux/git-package-version.sh $(top_srcdir)
+
 autoreconf:
-	autoreconf -i -f $(ACLOCAL_AMFLAGS)
+	autoreconf -i -f $(ACLOCAL_AMFLAGS) $(top_srcdir)
+
+update:
+	git --git-dir=$(top_srcdir)/.git pull 2> /dev/null || exit 0
+	autoreconf -i -f $(ACLOCAL_AMFLAGS) $(top_srcdir)
 
 gitclean:
 	$(MAKE) -f Makefile distclean
-	rm -fR INSTALL
-	rm -fR Makefile.in
-	rm -fR aclocal.m4
-	rm -fR build-aux/*
-	rm -fR config.h.in
-	rm -fR configure
-	rm -fR m4/*
+	rm -f  $(top_srcdir)/INSTALL
+	rm -f  $(top_srcdir)/Makefile.in
+	rm -f  $(top_srcdir)/aclocal.m4
+	rm -f  $(top_srcdir)/config.h.in
+	rm -f  $(top_srcdir)/configure
+	rm -f  $(top_srcdir)/m4/*
+	rm -f  $(top_srcdir)/build-aux/c* $(top_srcdir)/build-aux/d*
+	rm -f  $(top_srcdir)/build-aux/i* $(top_srcdir)/build-aux/l*
+	rm -f  $(top_srcdir)/build-aux/m*
+	rm -f  $(top_srcdir)/build-aux/git-package-version
 
 
 # local targets

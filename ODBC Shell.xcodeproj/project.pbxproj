@@ -27,6 +27,7 @@
 		A0B80EE912EA0D56005A119F /* odbcshell-variables.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "odbcshell-variables.c"; sourceTree = "<group>"; };
 		A0B80F2212EA46D8005A119F /* odbcshell-commands.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "odbcshell-commands.h"; sourceTree = "<group>"; };
 		A0B80F2312EA46D8005A119F /* odbcshell-commands.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "odbcshell-commands.c"; sourceTree = "<group>"; };
+		A0D7191F12F0D2C0004AFD89 /* git-package-version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "git-package-version.sh"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -35,6 +36,7 @@
 			children = (
 				A06CE3DD12E7BBD500AD1C66 /* acinclude.m4 */,
 				A06CE3DE12E7BBD500AD1C66 /* AUTHORS */,
+				A0D7191712F0D2C0004AFD89 /* build-aux */,
 				A06CE3DF12E7BBD500AD1C66 /* ChangeLog */,
 				A06CE3E012E7BBD500AD1C66 /* configure.ac */,
 				A06CE3E112E7BBD500AD1C66 /* COPYING */,
@@ -62,6 +64,14 @@
 				A0B80EE812EA0D56005A119F /* odbcshell-variables.h */,
 			);
 			path = src;
+			sourceTree = "<group>";
+		};
+		A0D7191712F0D2C0004AFD89 /* build-aux */ = {
+			isa = PBXGroup;
+			children = (
+				A0D7191F12F0D2C0004AFD89 /* git-package-version.sh */,
+			);
+			path = "build-aux";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
