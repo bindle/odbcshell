@@ -150,20 +150,26 @@ int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv)
    int               ival;
    ODBCShellOption * opt;
 
-   if (argc < 3)
+   if (argc < 2)
    {
-      printf("%-15s %s\n",     "continue", cnf->continues  ? "yes" : "no");
-      printf("%-15s \"%s\"\n", "histfile", cnf->histfile   ? cnf->histfile : "");
-      printf("%-15s %s\n",     "history",  cnf->history    ? "yes" : "no");
-      printf("%-15s %s\n",     "noshell",  cnf->noshell    ? "yes" : "no");
-      printf("%-15s \"%s\"\n", "prompt",   cnf->prompt);
-      printf("%-15s %s\n",     "silent",   cnf->silent     ? "yes" : "no");
-      printf("%-15s %s\n",     "verbose",  cnf->verbose    ? "yes" : "no");
+      odbcshell_show_option(cnf, ODBCSHELL_OPT_CONTINUE);
+      odbcshell_show_option(cnf, ODBCSHELL_OPT_HISTFILE);
+      odbcshell_show_option(cnf, ODBCSHELL_OPT_HISTORY);
+      odbcshell_show_option(cnf, ODBCSHELL_OPT_NOSHELL);
+      odbcshell_show_option(cnf, ODBCSHELL_OPT_PROMPT);
+      odbcshell_show_option(cnf, ODBCSHELL_OPT_SILENT);
+      odbcshell_show_option(cnf, ODBCSHELL_OPT_VERBOSE);
       return(0);
    };
 
    if (!(opt = odbcshell_lookup_opt_by_name(odbcshell_opt_strings, argv[1])))
       return(1);
+
+   if (argc < 3)
+   {
+      odbcshell_show_option(cnf, (int)opt->val);
+      return(0);
+   };
 
    switch(opt->val & ODBSHELL_OTYPE_MASK)
    {

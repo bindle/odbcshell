@@ -265,6 +265,52 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
 }
 
 
+/// displays configuration option value
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  opt      numeric ID of option to retrieve
+int odbcshell_show_option(ODBCShell * cnf, int opt)
+{
+   switch(opt)
+   {
+      case ODBCSHELL_OPT_CONFFILE:
+         printf("%-15s %s\n", "conffile", cnf->conffile  ? cnf->conffile : "");
+         break;
+
+      case ODBCSHELL_OPT_CONTINUE:
+         printf("%-15s %s\n", "continue", cnf->continues ? "yes" : "no");
+         break;
+
+      case ODBCSHELL_OPT_HISTFILE:
+         printf("%-15s \"%s\"\n", "histfile", cnf->histfile ? cnf->histfile : "");
+         break;
+
+      case ODBCSHELL_OPT_HISTORY:
+         printf("%-15s %s\n", "history", cnf->history ? "yes" : "no");
+         break;
+
+      case ODBCSHELL_OPT_NOSHELL:
+         printf("%-15s %s\n", "noshell", cnf->noshell ? "yes" : "no");
+         break;
+
+      case ODBCSHELL_OPT_PROMPT:
+         printf("%-15s \"%s\"\n", "prompt", cnf->prompt);
+         break;
+
+      case ODBCSHELL_OPT_SILENT:
+         printf("%-15s %s\n", "silent", cnf->silent ? "yes" : "no");
+         break;
+
+      case ODBCSHELL_OPT_VERBOSE:
+         printf("%-15s %s\n", "verbose", cnf->verbose ? "yes" : "no");
+         break;
+
+      default:
+         break;
+   };
+   return(0);
+}
+
+
 /// converts a string to a boolean value
 /// @param[in]  str      string to convert
 int odbcshell_strtob(const char * str)
