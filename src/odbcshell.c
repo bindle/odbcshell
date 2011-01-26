@@ -136,7 +136,6 @@ int main(int argc, char * argv[])
    int           c;
    int           ival;
    int           opt_index;
-   size_t        len;
    ODBCShell   * cnf;
 
    static char   short_opt[] = "hqVv";
@@ -156,6 +155,8 @@ int main(int argc, char * argv[])
       return(1);
    };
    memset(cnf, 0, sizeof(ODBCShell));
+   if (odbcshell_set_defaults(cnf))
+      return(1);
 
    while((c = getopt_long(argc, argv, short_opt, long_opt, &opt_index)) != -1)
    {
@@ -188,20 +189,6 @@ int main(int argc, char * argv[])
             return(1);
       };
    };
-
-   if (getenv("HOME"))
-   {
-      len = strlen(getenv("HOME")) + strlen("/.odbcshell_history") + 1;
-      if (!(cnf->histfile = malloc(len)))
-      {
-         fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-         return(1);
-      };
-      memset(cnf, 0, sizeof(len));
-      snprintf(cnf->histfile, len, "%s/.odbcshell_history", getenv("HOME"));
-   };
-
-   cnf->prompt = strdup("odbcshell> ");
 
    if (odbcshell_cli_loop(cnf))
    {
