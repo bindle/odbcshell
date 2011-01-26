@@ -108,6 +108,7 @@
 #define ODBCSHELL_CMD_VERBOSE     0x0E
 #define ODBCSHELL_CMD_VERSION     0x0F
 #define ODBCSHELL_CMD_CLEAR       0x10
+#define ODBCSHELL_CMD_ECHO        0x11
 #define ODBCSHELL_CMD_SQL         -1
 
 

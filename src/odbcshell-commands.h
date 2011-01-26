@@ -58,6 +58,9 @@
 // clears the screen
 int odbcshell_cmd_clear(void);
 
+// prints strings to screen
+int odbcshell_cmd_echo(ODBCShell * cnf, int argc, char ** argv);
+
 // displays usage information
 int odbcshell_cmd_help(ODBCShell * cnf, int argc, char ** argv);
 

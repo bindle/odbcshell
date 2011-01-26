@@ -69,6 +69,26 @@ int odbcshell_cmd_clear(void)
 }
 
 
+/// prints strings to screen
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  argc     number of arguments passed to command
+/// @param[in]  argv     array of arguments passed to command
+int odbcshell_cmd_echo(ODBCShell * cnf, int argc, char ** argv)
+{
+   int i;
+   if (cnf->silent)
+      return(0);
+   if (argc < 2)
+   {
+      printf("\n");
+      return(0);
+   };
+   for(i = 1; i < argc; i++)
+      printf("%s\n", argv[i]);
+   return(0);
+}
+
+
 /// displays usage information
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  argc     number of arguments passed to command
