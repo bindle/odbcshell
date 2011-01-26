@@ -58,7 +58,7 @@
 #pragma mark Prototypes
 
 // splits a line into multiple arguments
-int odbcshell_parse_line(const char * line, int * argcp, char *** argvp,
+int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
    size_t * eolp);
 
 

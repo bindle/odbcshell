@@ -81,12 +81,11 @@
 /// @param[out] argcp
 /// @param[out] argvp
 /// @param[out] eolp
-int odbcshell_parse_line(const char * line, int * argcp, char *** argvp,
+int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
    size_t * eolp)
 {
    int       i;
    char    * arg;
-   char    * str;    // mutable buffer
    void    * ptr;
    size_t    len;    // line length
    size_t    pos;    // position within line
@@ -108,21 +107,14 @@ int odbcshell_parse_line(const char * line, int * argcp, char *** argvp,
    if (!(len = strlen(line)))
       return(0);
 
-   if (!(str = strdup(line)))
-   {
-      fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-      return(-1);
-   };
-
    for(pos = 0; pos < len; pos++)
    {
       arg = NULL;
-      switch(str[pos])
+      switch(line[pos])
       {
          // exit if end of command is found
          case ';':
             *eolp = pos;
-            free(str);
             return(0);
 
          // skip white space between arguments
@@ -132,17 +124,16 @@ int odbcshell_parse_line(const char * line, int * argcp, char *** argvp,
 
          case '\r':
          case '\n':
-            str[pos] = ' ';
+            line[pos] = ' ';
             break;
 
          // skip comments
          case '#':
-            while((str[pos] != '\n') && (str[pos] != '\r') && (pos < len))
+            while((line[pos] != '\n') && (line[pos] != '\r') && (pos < len))
                pos++;
             if (pos >= len)
             {
                *eolp = pos;
-               free(str);
                return(0);
             };
             break;
@@ -151,13 +142,10 @@ int odbcshell_parse_line(const char * line, int * argcp, char *** argvp,
          case '\'':
             start = pos + 1;
             pos += 2;
-            while((str[pos] != '\'') && (pos < len))
+            while((line[pos] != '\'') && (pos < len))
                pos++;
             if (pos >= len)
-            {
-               free(str);
                return(0);
-            };
             arglen = pos - start;
             if (!(arg = malloc(arglen)))
             {
@@ -172,13 +160,10 @@ int odbcshell_parse_line(const char * line, int * argcp, char *** argvp,
          case '"':
             start = pos + 1;
             pos += 2;
-            while((str[pos] != '"') && (pos < len))
+            while((line[pos] != '"') && (pos < len))
                pos++;
             if (pos >= len)
-            {
-               free(str);
                return(0);
-            };
             arglen = pos - start;
             if (!(arg = malloc(arglen)))
             {
@@ -193,12 +178,13 @@ int odbcshell_parse_line(const char * line, int * argcp, char *** argvp,
          default:
             start = pos;
             while ( ((pos+1) < len) &&
-                    (str[pos+1] != ';') &&
-                    (str[pos+1] != '#') &&
-                    (str[pos+1] != ' ') &&
-                    (str[pos+1] != '\t') &&
-                    (str[pos+1] != '\n') &&
-                    (str[pos+1] != '\r') )
+                    (line[pos+1] != ';') &&
+                    (line[pos+1] != '#') &&
+                    (line[pos+1] != ' ') &&
+                    (line[pos+1] != '\t') &&
+                    (line[pos+1] != '\\') &&
+                    (line[pos+1] != '\n') &&
+                    (line[pos+1] != '\r') )
                pos++;
             arglen = 1 + pos - start;
             if (!(arg = malloc(arglen)))
@@ -213,9 +199,7 @@ int odbcshell_parse_line(const char * line, int * argcp, char *** argvp,
 
       // if an argument is not defined, skip to next character in string.
       if (!(arg))
-      {
          continue;
-      };
 
       if (!(ptr = realloc(*argvp, sizeof(char *) * ((*argcp)+1))))
       {
