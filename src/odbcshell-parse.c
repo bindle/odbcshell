@@ -107,15 +107,27 @@ int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
    if (!(len = strlen(line)))
       return(0);
 
-   for(pos = 0; pos < len; pos++)
+   for(pos = 0; pos < len+1; pos++)
    {
       arg = NULL;
       switch(line[pos])
       {
          // exit if end of command is found
+         case '\n':
+         case '\0':
          case ';':
             *eolp = pos;
             return(0);
+
+         case '\\':
+            line[pos] = ' ';
+            if ((line[pos+1] != '\n') && (line[pos+1] != '\0'))
+               continue;
+            if (line[pos+1] == '\n')
+               line[pos+1] = ' ';
+            if (line[pos+1] == '\0')
+               return(0);
+            break;
 
          // skip white space between arguments
          case ' ':
@@ -123,7 +135,6 @@ int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
             break;
 
          case '\r':
-         case '\n':
             line[pos] = ' ';
             break;
 
@@ -201,6 +212,7 @@ int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
       if (!(arg))
          continue;
 
+      // stores argument in array
       if (!(ptr = realloc(*argvp, sizeof(char *) * ((*argcp)+1))))
       {
          fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
