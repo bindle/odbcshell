@@ -65,7 +65,7 @@ int odbcshell_cmd_echo(ODBCShell * cnf, int argc, char ** argv);
 int odbcshell_cmd_help(ODBCShell * cnf, int argc, char ** argv);
 
 // displays information stating the function is incomplete
-int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv, char * line);
+int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv);
 
 // exits from shell
 int odbcshell_cmd_quit(ODBCShell * cnf);

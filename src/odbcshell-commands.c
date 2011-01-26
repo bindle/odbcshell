@@ -160,10 +160,10 @@ int odbcshell_cmd_help(ODBCShell * cnf, int argc, char ** argv)
 /// @param[in]  argc     number of arguments passed to command
 /// @param[in]  argv     array of arguments passed to command
 /// @param[in]  line     unmodified line sent to ODBC shell
-int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv, char * line)
+int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv)
 {
    printf("WARNING: \"%s\" is not implemented.\n", argv[0]);
-   if ( (!(argc)) || (!(cnf)) || (!(argv)) || (!(line)) )
+   if ( (!(argc)) || (!(cnf)) || (!(argv)) )
       return(0);
    return(0);
 }

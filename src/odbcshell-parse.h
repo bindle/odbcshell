@@ -57,6 +57,9 @@
 #pragma mark -
 #pragma mark Prototypes
 
+// interprets the arguments from a command line
+int odbcshell_interpret_line(ODBCShell * cnf, int argc, char ** argv);
+
 // splits a line into multiple arguments
 int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
    size_t * eolp);

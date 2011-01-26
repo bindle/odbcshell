@@ -49,6 +49,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "odbcshell-commands.h"
+#include "odbcshell-variables.h"
+
 
 //////////////////
 //              //
@@ -75,6 +78,63 @@
 /////////////////
 #pragma mark -
 #pragma mark Functions
+
+/// interprets the arguments from a command line
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[out] argcp
+/// @param[out] argvp
+int odbcshell_interpret_line(ODBCShell * cnf, int argc, char ** argv)
+{
+   int               code;
+   ODBCShellOption * cmd;
+
+   if (!(argc))
+      return(0);
+
+   if (!(cmd = odbcshell_lookup_opt_by_name(odbcshell_cmd_strings, argv[0])))
+   {
+      printf("%s: %s: unknown command\n", PROGRAM_NAME, argv[0]);
+      return(0);
+   };
+
+   if (cmd->min_arg > argc)
+   {
+      printf("%s: missing required arguments.\n", argv[0]);
+      printf("try `help %s;' for more information.\n", argv[0]);
+      return(0);
+   };
+   if ( (cmd->max_arg < argc) && (cmd->max_arg != -1) )
+   {
+      printf("%s: unknown arguments\n", argv[0]);
+      printf("try `help %s;' for more information.\n", argv[0]);
+      return(0);
+   };
+
+   switch(cmd->val)
+   {
+      case ODBCSHELL_CMD_ALIAS:      code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
+      case ODBCSHELL_CMD_CLEAR:      code = odbcshell_cmd_clear(); break;
+      case ODBCSHELL_CMD_CONNECT:    code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
+      case ODBCSHELL_CMD_DISCONNECT: code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
+      case ODBCSHELL_CMD_ECHO:       code = odbcshell_cmd_echo(cnf, argc, argv); break;
+      case ODBCSHELL_CMD_LOADCONF:   code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
+      case ODBCSHELL_CMD_HELP:       code = odbcshell_cmd_help(cnf, argc, argv); break;
+      case ODBCSHELL_CMD_QUIT:       code = odbcshell_cmd_quit(cnf); break;
+      case ODBCSHELL_CMD_RECONNECT:  code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
+      case ODBCSHELL_CMD_RESETCONF:  code = odbcshell_cmd_resetconf(cnf); break;
+      case ODBCSHELL_CMD_SAVECONF:   code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
+      case ODBCSHELL_CMD_SET:        code = odbcshell_cmd_set(cnf, argc, argv); break;
+      case ODBCSHELL_CMD_SILENT:     code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
+      case ODBCSHELL_CMD_UNALIAS:    code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
+      case ODBCSHELL_CMD_UNSET:      code = odbcshell_cmd_unset(cnf, argv); break;
+      case ODBCSHELL_CMD_VERBOSE:    code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
+      case ODBCSHELL_CMD_VERSION:    code = odbcshell_cmd_version(cnf); break;
+      default:                       code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
+   };
+
+   return(code);
+}
+
 
 /// splits a line into multiple arguments
 /// @param[in]  line
