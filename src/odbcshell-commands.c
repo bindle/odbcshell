@@ -199,7 +199,10 @@ int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv)
    };
 
    if (!(opt = odbcshell_lookup_opt_by_name(odbcshell_opt_strings, argv[1])))
+   {
+      printf("%s: set %s: unknown option\n", PROGRAM_NAME, argv[1]);
       return(-1);
+   };
 
    if (argc < 3)
    {
