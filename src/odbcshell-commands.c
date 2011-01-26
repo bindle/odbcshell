@@ -141,6 +141,14 @@ int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv, char * lin
 }
 
 
+/// resets internal configuration
+/// @param[in]  cnf      pointer to configuration struct
+int odbcshell_cmd_resetconf(ODBCShell * cnf)
+{
+   return(odbcshell_set_defaults(cnf));
+}
+
+
 /// sets internal value of configuration parameter
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  argc     number of arguments passed to command
