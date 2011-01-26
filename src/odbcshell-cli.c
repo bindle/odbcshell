@@ -111,7 +111,7 @@ int odbcshell_cli_loop(ODBCShell * cnf)
    {
       if (strlen(input))
       {
-         ptr = realloc(buffer, (strlen(buffer) + strlen(input) + 2));
+         ptr = realloc(buffer, (strlen(buffer) + strlen(input) + 1));
          buffer = ptr;
          if ((bufflen = strlen(buffer)))
             if ( (buffer[bufflen-1] != ' ') && (buffer[bufflen-1] != '\t') )
