@@ -12,9 +12,10 @@ Contents
 
    1. Disclaimer
    2. Software Requirements
-   6. Maintainers
-   7. Community
-   8. Source Code
+   3. Maintainers
+   4. Community
+   5. Source Code
+   6. Package Maintence Notes
 
 
 Disclaimer
@@ -60,23 +61,23 @@ Community
 Source Code
 ===========
 
-The source code for this project is maintained using git (http://git-scm.com).
-The following contains information to checkout the source code from the git
-repository.
+   The source code for this project is maintained using git
+   (http://git-scm.com).  The following contains information to checkout the
+   source code from the git repository.
 
    Git URLs:
-      git://github.com/bindle/odbc-shell.git
-      git://git.scm.bindlebinaries.com/pub/scm/com.bindlebinaries/odbc-shell.git
-      http://http.scm.bindlebinaries.com/pub/scm/com.bindlebinaries/odbc-shell.git
-      ssh://ssh.scm.bindlebinaries.com/pub/scm/com.bindlebinaries/odbc-shell.git
+      git://github.com/bindle/odbcshell.git
+      git://git.scm.bindlebinaries.com/pub/scm/com.bindlebinaries/odbcshell.git
+      http://http.scm.bindlebinaries.com/pub/scm/com.bindlebinaries/odbcshell.git
+      ssh://ssh.scm.bindlebinaries.com/pub/scm/com.bindlebinaries/odbcshell.git
 
    Downloading Source:
 
-      $ git clone git://github.com/bindle/odbc-shell.git
+      $ git clone git://github.com/bindle/odbcshell.git
 
    Preparing Source:
 
-      $ cd odbc-shell
+      $ cd odbcshell
       $ autoreconf -i -f -I m4
 
    Git Branches:
@@ -85,3 +86,27 @@ repository.
       pu     - proposed updates for next release
       xx/yy+ - branch for testing new changes before merging to 'pu' branch
 
+
+Package Maintence Notes
+=======================
+
+   This is a collection of notes for developers to use when maintaining this
+   package.
+
+   New Release Checklist:
+
+      - Switch to 'master' branch in Git repository.
+      - Update version in configure.ac.
+      - Update date and version in ChangeLog.
+      - Commit configure.ac and ChangeLog changes to repository.
+      - Create tag in git repository:
+           $ git tag -s v${MAJOR}.${MINOR}
+      - Push repository to publishing server:
+           $ git push --tags origin master:master next:next pu:pu
+
+   Creating Source Distribution Archives:
+
+      $ ./configure
+      $ make autoreconf
+      $ make distcheck
+      $ make dist-bzip2
