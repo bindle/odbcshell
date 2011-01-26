@@ -191,10 +191,13 @@ int odbcshell_cli_loop(ODBCShell * cnf)
          case 1:
             code = 0;
          case -1:
-            if (cnf->history)
-               write_history(cnf->histfile);
-            free(buffer);
-            return(code);
+            if ( (!(code)) || (!(cnf->continues)) )
+            {
+               if (cnf->history)
+                  write_history(cnf->histfile);
+               free(buffer);
+               return(code);
+            };
          default:
             break;
       };
