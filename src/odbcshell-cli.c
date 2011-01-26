@@ -95,6 +95,7 @@ int odbcshell_cli_loop(ODBCShell * cnf)
    using_history();
    if (cnf->histfile)
       read_history(cnf->histfile);
+   stifle_history(500);
 
    if (!(cnf->silent))
    {
