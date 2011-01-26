@@ -99,6 +99,12 @@ int odbcshell_parse_line(const char * line, int * argcp, char *** argvp,
       return(-1);
    };
 
+   // frees old argc/argv data
+   for(i = 0; i < *argcp; i++)
+      free((*argvp)[i]);
+   *argcp = 0;
+   *eolp  = 0;
+
    if (!(len = strlen(line)))
       return(0);
 
@@ -107,13 +113,6 @@ int odbcshell_parse_line(const char * line, int * argcp, char *** argvp,
       fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
       return(-1);
    };
-
-
-   // frees old argc/argv data
-   for(i = 0; i < *argcp; i++)
-      free((*argvp)[i]);
-   *argcp = 0;
-   *eolp  = 0;
 
    for(pos = 0; pos < len; pos++)
    {
