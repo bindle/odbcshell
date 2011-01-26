@@ -163,7 +163,7 @@ int odbcshell_parse_line(const char * line, int * argcp, char *** argvp,
             if (!(arg = malloc(arglen)))
             {
                fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-               return(1);
+               return(-1);
             };
             memset(arg, 0, arglen);
             strncat(arg, &line[start], arglen);
@@ -184,7 +184,7 @@ int odbcshell_parse_line(const char * line, int * argcp, char *** argvp,
             if (!(arg = malloc(arglen)))
             {
                fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-               return(1);
+               return(-1);
             };
             memset(arg, 0, arglen);
             strncat(arg, &line[start], arglen);
@@ -205,7 +205,7 @@ int odbcshell_parse_line(const char * line, int * argcp, char *** argvp,
             if (!(arg = malloc(arglen)))
             {
                fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-               return(1);
+               return(-1);
             };
             memset(arg, 0, arglen);
             strncat(arg, &line[start], arglen);
@@ -221,7 +221,7 @@ int odbcshell_parse_line(const char * line, int * argcp, char *** argvp,
       if (!(ptr = realloc(*argvp, sizeof(char *) * ((*argcp)+1))))
       {
          fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-         return(1);
+         return(-1);
       };
       *argvp = ptr;
       (*argvp)[(*argcp)] = arg;

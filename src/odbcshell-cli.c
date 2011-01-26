@@ -90,7 +90,7 @@ int odbcshell_cli_loop(ODBCShell * cnf)
    buffer = NULL;
 
    if (!(cnf))
-      return(1);
+      return(-1);
 
    using_history();
    if (cnf->histfile)
@@ -126,7 +126,7 @@ int odbcshell_cli_loop(ODBCShell * cnf)
       if (odbcshell_parse_line(buffer, &argc, &argv, &offset))
       {
          free(buffer);
-         return(1);
+         return(-1);
       };
 
       if (!(offset))

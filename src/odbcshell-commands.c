@@ -199,7 +199,7 @@ int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv)
    };
 
    if (!(opt = odbcshell_lookup_opt_by_name(odbcshell_opt_strings, argv[1])))
-      return(1);
+      return(-1);
 
    if (argc < 3)
    {
@@ -234,7 +234,7 @@ int odbcshell_cmd_unset(ODBCShell * cnf, char ** argv)
    ODBCShellOption * opt;
 
    if (!(opt = odbcshell_lookup_opt_by_name(odbcshell_opt_strings, argv[1])))
-      return(1);
+      return(-1);
 
    return(odbcshell_set_option(cnf, (int)opt->val, NULL));
 }
@@ -245,7 +245,7 @@ int odbcshell_cmd_unset(ODBCShell * cnf, char ** argv)
 int odbcshell_cmd_quit(ODBCShell * cnf)
 {
    if (!(cnf))
-      return(1);
+      return(-1);
 
    if (!(cnf->silent))
       printf("bye.\n");

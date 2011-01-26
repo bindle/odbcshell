@@ -117,7 +117,7 @@ int odbcshell_get_option(ODBCShell * cnf, int opt, void * ptr)
          break;
       default:
          fprintf(stderr, "%s: unknown option\n", PROGRAM_NAME);
-         return(1);
+         return(-1);
    };
    return(0);
 }
@@ -133,12 +133,12 @@ int odbcshell_initialize(ODBCShell ** cnfp)
    ODBCShell       * cnf;
 
    if (!(cnfp))
-      return(1);
+      return(-1);
 
    if (!(cnf = malloc(sizeof(ODBCShell))))
    {
       fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-      return(1);
+      return(-1);
    };
    memset(cnf, 0, sizeof(ODBCShell));
 
@@ -146,7 +146,7 @@ int odbcshell_initialize(ODBCShell ** cnfp)
    {
       snprintf(ibuff, 2048L, "%s/.odbcshell_history", getenv("HOME"));
       if (odbcshell_set_option(cnf, ODBCSHELL_OPT_HISTFILE, ibuff))
-         return(1);
+         return(-1);
    };
 
    *cnfp = cnf;
@@ -158,14 +158,14 @@ int odbcshell_initialize(ODBCShell ** cnfp)
 // sets default values for configuration options
 int odbcshell_set_defaults(ODBCShell * cnf)
 {
-   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_CONFFILE, NULL)) return(1);
-   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_CONTINUE, NULL)) return(1);
-   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_HISTFILE, NULL)) return(1);
-   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_HISTORY,  NULL)) return(1);
-   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_NOSHELL,  NULL)) return(1);
-   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_PROMPT,   NULL)) return(1);
-   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_SILENT,   NULL)) return(1);
-   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_VERBOSE,  NULL)) return(1);
+   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_CONFFILE, NULL)) return(-1);
+   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_CONTINUE, NULL)) return(-1);
+   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_HISTFILE, NULL)) return(-1);
+   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_HISTORY,  NULL)) return(-1);
+   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_NOSHELL,  NULL)) return(-1);
+   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_PROMPT,   NULL)) return(-1);
+   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_SILENT,   NULL)) return(-1);
+   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_VERBOSE,  NULL)) return(-1);
    return(0);
 }
 
@@ -188,7 +188,7 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
          if (!(cnf->conffile = strdup((const char *)ptr)))
          {
             fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-            return(1);
+            return(-1);
          };
          break;
 
@@ -213,7 +213,7 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
          if (!(cnf->histfile = strdup((const char *)ptr)))
          {
             fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-            return(1);
+            return(-1);
          };
          break;
 
@@ -239,7 +239,7 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
          if (!(cnf->prompt = strdup((const char *)ptr)))
          {
             fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-            return(1);
+            return(-1);
          };
          break;
 
@@ -259,7 +259,7 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
 
       default:
          fprintf(stderr, "%s: unknown option\n", PROGRAM_NAME);
-         return(1);
+         return(-1);
    };
    return(0);
 }
