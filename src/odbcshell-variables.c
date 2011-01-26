@@ -60,6 +60,7 @@
 /// numeric values for command names
 ODBCShellOption odbcshell_cmd_strings[] =
 {
+   { ODBCSHELL_CMD_CLEAR,       1,  1, "CLEAR",      "clears screen",        (const char *[2]){";", NULL} },
    //{ ODBCSHELL_CMD_CONNECT,     2,  2, "CONNECT",    "connects to a database",        (const char *[3]){" alias;", " \"DSN=My Database;UID=John Doe;PWD=password\";", NULL} },
    //{ ODBCSHELL_CMD_DISCONNECT,  1,  1, "DISCONNECT", "disconnects from a database",   (const char *[2]){";", NULL} },
    { ODBCSHELL_CMD_QUIT,        1,  1, "EXIT",       "exits ODBC Shell",              (const char *[2]){";", NULL} },

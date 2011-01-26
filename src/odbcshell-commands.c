@@ -61,6 +61,14 @@
 #pragma mark -
 #pragma mark Functions
 
+/// clears the screen
+int odbcshell_cmd_clear(void)
+{
+   printf("\033[2J\033[1;1H");
+   return(0);
+}
+
+
 /// displays usage information
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  argc     number of arguments passed to command

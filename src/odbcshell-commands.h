@@ -55,6 +55,9 @@
 #pragma mark -
 #pragma mark Prototypes
 
+// clears the screen
+int odbcshell_cmd_clear(void);
+
 // displays usage information
 int odbcshell_cmd_help(ODBCShell * cnf, int argc, char ** argv);
 
