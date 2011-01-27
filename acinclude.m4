@@ -155,7 +155,7 @@ AC_DEFUN([AC_ODBCSHELL_ENABLE_WARNINGS],[dnl
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wparentheses"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wreturn-type"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wswitch"
-      #ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wswitch-default"   # for some reason any call to memset() fails with this flag
+      ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wswitch-default"   # for some reason any call to memset() fails with this flag
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wtrigraphs"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wunused"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wunknown-pragmas"
@@ -170,7 +170,7 @@ AC_DEFUN([AC_ODBCSHELL_ENABLE_WARNINGS],[dnl
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wcast-qual"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wcast-align"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wwrite-strings"
-      ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wconversion"
+      #ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wconversion" # prototypes with "short" or "unsigned short" cause warning: passing argument ?? with different width due to prototype
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wsign-compare"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Waggregate-return"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wstrict-prototypes"
@@ -178,7 +178,7 @@ AC_DEFUN([AC_ODBCSHELL_ENABLE_WARNINGS],[dnl
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wmissing-prototypes"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wmissing-declarations"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wmissing-noreturn"
-      #ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wmissing-format-attribute" # vprintf is failing this warning
+      ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wmissing-format-attribute"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wredundant-decls"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wunreachable-code"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Winvalid-pch"
