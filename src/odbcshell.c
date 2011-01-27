@@ -149,6 +149,12 @@ int main(int argc, char * argv[])
       {NULL,            0,           0, 0  }
    };
 
+   if (ODBCVER < 0x0300)
+   {
+      fprintf(stderr, "%s: unsupported version of iODBC\n", PROGRAM_NAME);
+      return(1);
+   };
+
    if (!(cnf = malloc(sizeof(ODBCShell))))
    {
       fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
