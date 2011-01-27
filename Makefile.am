@@ -74,6 +74,8 @@ src_odbcshell_SOURCES			= $(noinst_HEADERS) \
 					  src/odbcshell-commands.h \
 					  src/odbcshell-odbc.c \
 					  src/odbcshell-odbc.h \
+					  src/odbcshell-odbcw.c \
+					  src/odbcshell-odbcw.h \
 					  src/odbcshell-options.c \
 					  src/odbcshell-options.h \
 					  src/odbcshell-parse.c \
