@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXFileReference section */
+		A061EE4512F108E900277649 /* odbcshell-odbc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "odbcshell-odbc.h"; sourceTree = "<group>"; };
+		A061EE4612F108E900277649 /* odbcshell-odbc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "odbcshell-odbc.c"; sourceTree = "<group>"; };
 		A06CE3DD12E7BBD500AD1C66 /* acinclude.m4 */ = {isa = PBXFileReference; explicitFileType = text.script; fileEncoding = 4; path = acinclude.m4; sourceTree = "<group>"; };
 		A06CE3DE12E7BBD500AD1C66 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
 		A06CE3DF12E7BBD500AD1C66 /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
@@ -56,6 +58,8 @@
 				A06CE44212E7D6F500AD1C66 /* odbcshell-cli.h */,
 				A0B80F2312EA46D8005A119F /* odbcshell-commands.c */,
 				A0B80F2212EA46D8005A119F /* odbcshell-commands.h */,
+				A061EE4612F108E900277649 /* odbcshell-odbc.c */,
+				A061EE4512F108E900277649 /* odbcshell-odbc.h */,
 				A06CE4C312E8C8A800AD1C66 /* odbcshell-options.c */,
 				A06CE4C212E8C8A800AD1C66 /* odbcshell-options.h */,
 				A0B80EE212EA0C7D005A119F /* odbcshell-parse.c */,
