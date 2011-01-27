@@ -38,7 +38,7 @@
 
 # Sub directories
 SUBDIRS					=
-DIST_SUBDIRS				= 
+DIST_SUBDIRS				=
 
 # Global flags
 AM_LIBS					=
@@ -51,13 +51,13 @@ ACLOCAL_AMFLAGS				= -I m4
 DEFS					=
 
 
-# automake targets 
-check_PROGRAMS				= 
-doc_DATA				= 
-include_HEADERS				= 
-lib_LTLIBRARIES				= 
+# automake targets
+check_PROGRAMS				=
+doc_DATA				=
+include_HEADERS				=
+lib_LTLIBRARIES				=
 man_MANS				=
-noinst_LTLIBRARIES			= 
+noinst_LTLIBRARIES			=
 noinst_HEADERS				=
 bin_PROGRAMS				= src/odbcshell
 
@@ -163,7 +163,7 @@ gitclean:
 # local targets
 install-exec-local:
 
-install-data-local: 
+install-data-local:
 
 uninstall-local:
 
