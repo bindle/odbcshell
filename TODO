@@ -1,0 +1,11 @@
+
+ODBC Shell
+Copyright (C) 2011 Bindle Binaries <syzdek@bindlebinaries.com>.
+
+* Add ODBC code since odbcshell is currently a fancy Hello World. (syzdek)
+- Add support for .odbcshellrc settings. (syzdek)
+- Add ability to list drivers. (syzdek)
+- Add ability to list available databases. (syzdek)
+- Add ability to source commands/settings from external file. (syzdek)
+- Add ability to name connections for multi-connection sessions. (syzdek)
+- Add support for variables. (syzdek)
