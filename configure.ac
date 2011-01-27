@@ -34,7 +34,7 @@
 #   configure.in - automate compiling on a unix platform
 #
 
-AC_PREREQ(2.61)
+AC_PREREQ([2.68])
 
 AC_COPYRIGHT([Copyright (c) 2011 Bindle Binaries <syzdek@bindlebinaries.com>.])
 AC_REVISION(0.1)
@@ -94,10 +94,7 @@ AM_PROG_LEX
 AC_PROG_LN_S
 
 # GNU Libtool Support
-AC_LIBTOOL_DLOPEN
-AC_DISABLE_FAST_INSTALL
-AC_LIBTOOL_WIN32_DLL
-AC_PROG_LIBTOOL
+LT_INIT(dlopen disable-fast-install win32-dll)
 
 # custom configure options
 AC_ODBCSHELL_ENABLE_WARNINGS
