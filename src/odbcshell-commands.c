@@ -51,6 +51,7 @@
 #include "odbcshell-commands.h"
 #include "odbcshell-options.h"
 #include "odbcshell-variables.h"
+#include "odbcshell-odbc.h"
 
 
 /////////////////
@@ -263,7 +264,11 @@ int odbcshell_cmd_version(ODBCShell * cnf)
 {
    if (!(cnf))
       return(0);
-   odbcshell_version();
+
+   printf(("%s (%s) %s\n"), PROGRAM_NAME, PACKAGE_NAME, PACKAGE_VERSION);
+
+   odbcshell_odbc_version(cnf);
+
    return(0);
 }
 

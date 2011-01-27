@@ -72,4 +72,20 @@ int odbcshell_odbc_initialize(ODBCShell * cnf)
    return(0);
 }
 
+
+/// displays ODBC version
+/// @param[in]  cnf      pointer to configuration struct
+int odbcshell_odbc_version(ODBCShell * cnf)
+{
+   int         status;
+   SQLTCHAR    info[255];
+   SQLSMALLINT len1;
+
+   status = SQLGetInfo(cnf->hdbc, SQL_DM_VER, info, sizeof(info), &len1);
+   if (status == SQL_SUCCESS)
+      printf ("iODBC Driver Manager %s\n", info);
+
+   return(0);
+}
+
 /* end of source */

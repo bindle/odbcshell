@@ -58,6 +58,8 @@
 // initializes ODBC library
 int odbcshell_odbc_initialize(ODBCShell * cnf);
 
+// displays ODBC version
+int odbcshell_odbc_version(ODBCShell * cnf);
 
 #endif
 /* end of header */
