@@ -54,4 +54,22 @@
 #pragma mark -
 #pragma mark Functions
 
+/// initializes ODBC library
+/// @param[in]  cnf      pointer to configuration struct
+int odbcshell_odbc_initialize(ODBCShell * cnf)
+{
+   if (SQLAllocHandle((SQLSMALLINT)SQL_HANDLE_ENV, NULL, &cnf->henv) != SQL_SUCCESS)
+      return(-1);
+
+   SQLSetEnvAttr (cnf->henv, SQL_ATTR_ODBC_VERSION, (SQLPOINTER) SQL_OV_ODBC3,
+      SQL_IS_UINTEGER);
+
+   if (SQLAllocHandle(SQL_HANDLE_DBC, cnf->henv, &cnf->hdbc) != SQL_SUCCESS)
+      return(-1);
+
+  SQLSetConnectOption(cnf->hdbc, SQL_APPLICATION_NAME, (SQLULEN)"odbctest");
+
+   return(0);
+}
+
 /* end of source */

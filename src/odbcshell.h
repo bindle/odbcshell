@@ -50,6 +50,11 @@
 
 #include <inttypes.h>
 
+#include <sql.h>
+#include <sqlext.h>
+#include <sqlucode.h>
+#include <iodbcext.h>
+
 
 ///////////////////
 //               //
@@ -132,6 +137,8 @@ struct odbcshell_config_data
    char       * conffile;    ///< odbcshell configuration file
    char       * histfile;    ///< GNU readline history file
    char       * prompt;      ///< shell prompt
+   HENV         henv;
+   HDBC         hdbc;
 };
 
 

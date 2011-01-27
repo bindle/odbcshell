@@ -166,6 +166,8 @@ int odbcshell_set_defaults(ODBCShell * cnf)
    if (odbcshell_set_option(cnf, ODBCSHELL_OPT_PROMPT,   NULL)) return(-1);
    if (odbcshell_set_option(cnf, ODBCSHELL_OPT_SILENT,   NULL)) return(-1);
    if (odbcshell_set_option(cnf, ODBCSHELL_OPT_VERBOSE,  NULL)) return(-1);
+   cnf->henv = SQL_NULL_HANDLE;
+   cnf->hdbc = SQL_NULL_HANDLE;
    return(0);
 }
 

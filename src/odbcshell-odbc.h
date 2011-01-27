@@ -55,6 +55,9 @@
 #pragma mark -
 #pragma mark Prototypes
 
+// initializes ODBC library
+int odbcshell_odbc_initialize(ODBCShell * cnf);
+
 
 #endif
 /* end of header */
