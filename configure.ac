@@ -94,10 +94,7 @@ AM_PROG_LEX
 AC_PROG_LN_S
 
 # GNU Libtool Support
-AC_LIBTOOL_DLOPEN
-AC_DISABLE_FAST_INSTALL
-AC_LIBTOOL_WIN32_DLL
-AC_PROG_LIBTOOL
+LT_INIT(dlopen disable-fast-install win32-dll)
 
 # custom configure options
 AC_ODBCSHELL_ENABLE_WARNINGS

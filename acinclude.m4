@@ -90,21 +90,21 @@ AC_DEFUN([AC_ODBCSHELL_ENABLE_WARNINGS],[dnl
    enableval=""
    AC_ARG_ENABLE(
       debug,
-      [AC_HELP_STRING([--enable-debug], [enable debug messages in binaries])],
+      [AS_HELP_STRING([--enable-debug], [enable debug messages in binaries])],
       [ EDEBUG=$enableval ],
       [ EDEBUG=$enableval ]
    )
    enableval=""
    AC_ARG_ENABLE(
       warnings,
-      [AC_HELP_STRING([--disable-warnings], [disable compiler warnings])],
+      [AS_HELP_STRING([--disable-warnings], [disable compiler warnings])],
       [ EWARNINGS=$enableval ],
       [ EWARNINGS=$enableval ]
    )
    enableval=""
    AC_ARG_ENABLE(
       strictwarnings,
-      [AC_HELP_STRING([--enable-strictwarnings], [disable compiler warnings])],
+      [AS_HELP_STRING([--enable-strictwarnings], [disable compiler warnings])],
       [ ESTRICTWARNINGS=$enableval ],
       [ ESTRICTWARNINGS=$enableval ]
    )
