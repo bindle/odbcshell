@@ -76,7 +76,7 @@ int odbcshell_cmd_clear(void)
 int odbcshell_cmd_echo(ODBCShell * cnf, int argc, char ** argv)
 {
    int i;
-   if (cnf->silent)
+   if (!(cnf))
       return(0);
    if (argc < 2)
    {
