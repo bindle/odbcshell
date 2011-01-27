@@ -34,7 +34,7 @@
 #   configure.in - automate compiling on a unix platform
 #
 
-AC_PREREQ(2.61)
+AC_PREREQ([2.68])
 
 AC_COPYRIGHT([Copyright (c) 2011 Bindle Binaries <syzdek@bindlebinaries.com>.])
 AC_REVISION(0.1)
