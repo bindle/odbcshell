@@ -122,6 +122,9 @@ int odbcshell_cli_loop(ODBCShell * cnf)
          continue;
       };
 
+      if (buffer[strlen(buffer)-1] == '\\')
+         continue;
+
       if (odbcshell_parse_line(buffer, &argc, &argv, &offset))
       {
          free(buffer);
