@@ -79,6 +79,49 @@
 #pragma mark -
 #pragma mark Functions
 
+/// interprets the string buffer
+int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,
+   size_t * offsetp)
+{
+   int           code;
+   int           argc;
+   char       ** argv;
+   size_t        pos;
+   size_t        offset;
+
+   argc     = 0;
+   argv     = NULL;
+   len      = strlen(buff);
+   pos      = 0L;
+   *offsetp = 0L;
+
+   while(pos < len)
+   {
+      if (odbcshell_parse_line(&buff[pos], &argc, &argv, &offset))
+         return(-1);
+      if (!(offset))
+         return(2);
+      if (!(argc))
+         return(0);
+
+      *offsetp += offset;
+
+      switch((code = odbcshell_interpret_line(cnf, argc, argv)))
+      {
+         case 1:
+            return(code);
+         case -1:
+            if ( (!(code)) || (!(cnf->continues)) )
+               return(code);
+         default:
+            break;
+      };
+
+      pos += offset+1;
+   };
+   return(0);
+}
+
 /// interprets the arguments from a command line
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[out] argcp

@@ -142,7 +142,7 @@ int odbcshell_cli_loop(ODBCShell * cnf)
 
       add_history(buffer);
 
-      switch((code = odbcshell_interpret_line(cnf, argc, argv)))
+      switch((code = odbcshell_interpret_buffer(cnf, buffer, 0L, &offset)))
       {
          case 1:
             code = 0;
@@ -151,9 +151,11 @@ int odbcshell_cli_loop(ODBCShell * cnf)
             {
                if (cnf->history)
                   write_history(cnf->histfile);
-               free(buffer);
+               //free(buffer);
                return(code);
             };
+         case 2:
+            continue;
          default:
             break;
       };
