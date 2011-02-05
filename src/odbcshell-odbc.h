@@ -58,6 +58,9 @@
 // initializes ODBC library
 int odbcshell_odbc_initialize(ODBCShell * cnf);
 
+// displays list of ODBC data sources
+int odbcshell_odbc_list_dsn(ODBCShell * cnf);
+
 // displays ODBC version
 int odbcshell_odbc_version(ODBCShell * cnf);
 

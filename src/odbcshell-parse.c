@@ -159,6 +159,7 @@ int odbcshell_interpret_line(ODBCShell * cnf, int argc, char ** argv)
       case ODBCSHELL_CMD_CLEAR:      code = odbcshell_cmd_clear(); break;
       case ODBCSHELL_CMD_CONNECT:    code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
       case ODBCSHELL_CMD_DISCONNECT: code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
+      case ODBCSHELL_CMD_DSN:        code = odbcshell_cmd_dsn(cnf); break;
       case ODBCSHELL_CMD_ECHO:       code = odbcshell_cmd_echo(cnf, argc, argv); break;
       case ODBCSHELL_CMD_LOADCONF:   code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
       case ODBCSHELL_CMD_HELP:       code = odbcshell_cmd_help(cnf, argc, argv); break;

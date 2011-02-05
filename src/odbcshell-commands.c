@@ -70,6 +70,14 @@ int odbcshell_cmd_clear(void)
 }
 
 
+/// displays ODBC data sources
+/// @param[in]  cnf      pointer to configuration struct
+int odbcshell_cmd_dsn(ODBCShell * cnf)
+{
+   return(odbcshell_odbc_list_dsn(cnf));
+}
+
+
 /// prints strings to screen
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  argc     number of arguments passed to command
