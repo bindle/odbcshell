@@ -59,7 +59,12 @@ lib_LTLIBRARIES				=
 man_MANS				=
 noinst_LTLIBRARIES			=
 noinst_HEADERS				=
-bin_PROGRAMS				= src/odbcshell
+bin_PROGRAMS				= src/odbcshell src/odbc-example
+
+
+# macros for src/odbc-example
+src_odbc_example_DEPENDENCIES		= Makefile
+src_odbc_example_SOURCES		= src/odbc-example.c
 
 
 # macros for src/odbcshell
