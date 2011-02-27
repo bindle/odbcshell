@@ -126,6 +126,16 @@
 #pragma mark -
 #pragma mark Datatypes
 
+/// ODBC connection information
+typedef struct odbcshell_connection ODBCShellConn;
+struct odbcshell_connection
+{
+   char  * name;
+   HDBC    hdbc;
+   HSTMT   hstmt;
+};
+
+
 /// contains configuration data
 typedef struct odbcshell_config_data ODBCShell;
 struct odbcshell_config_data
@@ -135,11 +145,14 @@ struct odbcshell_config_data
    long long    noshell;     ///< disables ability to call shell commands
    long long    silent;      ///< toggle for silent mode
    long long    verbose;     ///< toggle for verbose mode
+   long long    conns_count; ///< toggle for verbose mode
    char       * conffile;    ///< odbcshell configuration file
    char       * histfile;    ///< GNU readline history file
    char       * prompt;      ///< shell prompt
    HENV         henv;
    HDBC         hdbc;
+   ODBCShellConn  * current;       ///< current connection to use for SQL
+   ODBCShellConn ** conns;         ///< list of active connections
 };
 
 
