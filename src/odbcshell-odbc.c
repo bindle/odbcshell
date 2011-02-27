@@ -45,6 +45,8 @@
 
 #include "odbcshell.h"
 
+#include <string.h>
+
 
 /////////////////
 //             //
@@ -53,6 +55,47 @@
 /////////////////
 #pragma mark -
 #pragma mark Functions
+
+// frees resources from an iODBC connection
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  connp    pointer to pointer to connection struct
+void odbcshell_odbc_conn_free(ODBCShell * cnf, ODBCShellConn  ** connp)
+{
+   if (!(connp))
+      return;
+
+   if (cnf)
+      if (cnf->current == (*connp))
+         cnf->current = NULL;
+
+   if ((*connp)->hstmt)
+   {
+      SQLCloseCursor((*connp)->hstmt);
+      SQLFreeHandle(SQL_HANDLE_STMT, (*connp)->hstmt);
+   };
+   (*connp)->hstmt = NULL;
+
+   if ((*connp)->hdbc)
+   {
+      SQLDisconnect((*connp)->hdbc);
+      SQLFreeHandle(SQL_HANDLE_DBC, (*connp)->hdbc);
+   };
+   (*connp)->hdbc = NULL;
+
+   if ((*connp)->name)
+      free((*connp)->name);
+   (*connp)->name = NULL;
+
+   if ((*connp)->dsn)
+      free((*connp)->dsn);
+   (*connp)->dsn = NULL;
+
+   free(*connp);
+   (*connp) = NULL;
+
+   return;
+}
+
 
 /// initializes ODBC library
 /// @param[in]  cnf      pointer to configuration struct

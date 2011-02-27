@@ -55,6 +55,9 @@
 #pragma mark -
 #pragma mark Prototypes
 
+// frees resources from an iODBC connection
+void odbcshell_odbc_conn_free(ODBCShell * cnf, ODBCShellConn  ** connp);
+
 // initializes ODBC library
 int odbcshell_odbc_initialize(ODBCShell * cnf);
 
