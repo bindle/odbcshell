@@ -131,6 +131,7 @@ typedef struct odbcshell_connection ODBCShellConn;
 struct odbcshell_connection
 {
    char  * name;
+   char  * dsn;
    HDBC    hdbc;
    HSTMT   hstmt;
 };
