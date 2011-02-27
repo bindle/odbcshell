@@ -62,12 +62,12 @@ int odbcshell_odbc_initialize(ODBCShell * cnf)
       return(-1);
 
    SQLSetEnvAttr (cnf->henv, SQL_ATTR_ODBC_VERSION, (SQLPOINTER) SQL_OV_ODBC3,
-      SQL_IS_UINTEGER);
+                  SQL_IS_UINTEGER);
 
    if (SQLAllocHandle(SQL_HANDLE_DBC, cnf->henv, &cnf->hdbc) != SQL_SUCCESS)
       return(-1);
 
-  SQLSetConnectOption(cnf->hdbc, SQL_APPLICATION_NAME, (SQLULEN)"odbctest");
+   SQLSetConnectOption(cnf->hdbc, SQL_APPLICATION_NAME, (SQLULEN)PROGRAM_NAME);
 
    return(0);
 }
