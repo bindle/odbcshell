@@ -107,13 +107,27 @@ int odbcshell_odbc_list_dsn(ODBCShell * cnf)
 /// @param[in]  cnf      pointer to configuration struct
 int odbcshell_odbc_version(ODBCShell * cnf)
 {
-   int         status;
    SQLTCHAR    info[255];
-   SQLSMALLINT len1;
+   SQLSMALLINT len;
+   SQLRETURN   sts;
 
-   status = SQLGetInfo(cnf->hdbc, SQL_DM_VER, info, sizeof(info), &len1);
-   if (status == SQL_SUCCESS)
+   sts = SQLGetInfo(cnf->hdbc, SQL_DM_VER, info, sizeof(info), &len);
+   if (sts == SQL_SUCCESS)
       printf ("iODBC Driver Manager %s\n", info);
+
+   if (cnf->current)
+   {
+      if (cnf->current->name)
+         printf("Connection: %s\n", cnf->current->name);
+      sts = SQLGetInfo(cnf->current->hdbc, SQL_DRIVER_VER, info, sizeof(info), &len);
+      if (sts == SQL_SUCCESS)
+      {
+         printf ("Driver: %s", info);
+         sts = SQLGetInfo (cnf->current->hdbc, SQL_DRIVER_NAME, info, sizeof(info), &len);
+         if (sts == SQL_SUCCESS)
+            printf (" (%s)", info);
+      };
+   };
 
    return(0);
 }
