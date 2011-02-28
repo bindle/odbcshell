@@ -344,10 +344,10 @@ int odbcshell_odbc_list_dsn(ODBCShell * cnf)
       return(0);
    };
 
-   fprintf (stderr, "%-32s   %-40s\n", "DSN:", "Driver:");
+   printf("%-32s   %-40s\n", "DSN:", "Driver:");
    while (err == SQL_SUCCESS)
    {
-      fprintf (stderr, "%-32s   %-40s\n", dsn, desc);
+      printf("%-32s   %-40s\n", dsn, desc);
       err = SQLDataSources(cnf->henv, SQL_FETCH_NEXT, dsn,  sizeof(dsn), &len1,
                                                       desc, sizeof(desc), &len2);
    };
