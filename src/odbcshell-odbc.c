@@ -226,6 +226,8 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
 
 
 /// disconnects a session
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  name     internal name of connect
 int odbcshell_odbc_disconnect(ODBCShell * cnf, const char * name)
 {
    int             conn_index;
@@ -250,6 +252,7 @@ int odbcshell_odbc_disconnect(ODBCShell * cnf, const char * name)
 
 
 /// displays iODBC errors
+/// @param[in]  s        descriptive string
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  conn     pointer to connection struct
 void odbcshell_odbc_errors(const char * s, ODBCShell * cnf,
