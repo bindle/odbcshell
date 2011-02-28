@@ -82,6 +82,21 @@ int odbcshell_odbc_conn_add(ODBCShell * cnf, ODBCShellConn * conn)
 }
 
 
+/// retrieves an ODBC connection from the list
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  name     internal name of connection
+int odbcshell_odbc_conn_findindex(ODBCShell * cnf, const char * name)
+{
+   int i;
+   if (!(cnf->conns))
+      return(-1);
+   for(i = 0; i < (int)cnf->conns_count; i++)
+      if (!(strcasecmp(cnf->conns[i]->name, name)))
+         return(i);
+   return(-1);
+}
+
+
 // frees resources from an iODBC connection
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  connp    pointer to pointer to connection struct
