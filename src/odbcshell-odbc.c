@@ -366,7 +366,7 @@ int odbcshell_odbc_version(ODBCShell * cnf)
 
    sts = SQLGetInfo(cnf->hdbc, SQL_DM_VER, info, sizeof(info), &len);
    if (sts == SQL_SUCCESS)
-      printf ("iODBC Driver Manager %s\n", info);
+      printf("iODBC Driver Manager %s\n", info);
 
    if (cnf->current)
    {
@@ -378,7 +378,8 @@ int odbcshell_odbc_version(ODBCShell * cnf)
          printf ("Driver: %s", info);
          sts = SQLGetInfo (cnf->current->hdbc, SQL_DRIVER_NAME, info, sizeof(info), &len);
          if (sts == SQL_SUCCESS)
-            printf (" (%s)", info);
+            printf(" (%s)", info);
+         printf("\n");
       };
    };
 
