@@ -97,47 +97,6 @@ int odbcshell_odbc_conn_findindex(ODBCShell * cnf, const char * name)
 }
 
 
-// frees resources from an iODBC connection
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  connp    pointer to pointer to connection struct
-void odbcshell_odbc_conn_free(ODBCShell * cnf, ODBCShellConn  ** connp)
-{
-   if (!(connp))
-      return;
-
-   if (cnf)
-      if (cnf->current == (*connp))
-         cnf->current = NULL;
-
-   if ((*connp)->hstmt)
-   {
-      SQLCloseCursor((*connp)->hstmt);
-      SQLFreeHandle(SQL_HANDLE_STMT, (*connp)->hstmt);
-   };
-   (*connp)->hstmt = NULL;
-
-   if ((*connp)->hdbc)
-   {
-      SQLDisconnect((*connp)->hdbc);
-      SQLFreeHandle(SQL_HANDLE_DBC, (*connp)->hdbc);
-   };
-   (*connp)->hdbc = NULL;
-
-   if ((*connp)->name)
-      free((*connp)->name);
-   (*connp)->name = NULL;
-
-   if ((*connp)->dsn)
-      free((*connp)->dsn);
-   (*connp)->dsn = NULL;
-
-   free(*connp);
-   (*connp) = NULL;
-
-   return;
-}
-
-
 /// removes an ODBC connection from the list
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  name     internal name of connection
@@ -199,7 +158,7 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
    if (SQLAllocHandle(SQL_HANDLE_DBC, cnf->henv, &conn->hdbc) != SQL_SUCCESS)
    {
       odbcshell_odbc_errors("SQLAllocHandle", cnf, conn);
-      odbcshell_odbc_conn_free(cnf, &conn);
+      odbcshell_odbc_free(cnf, &conn);
       return(0);
    };
    SQLSetConnectOption(conn->hdbc, SQL_APPLICATION_NAME, (SQLULEN)PROGRAM_NAME);
@@ -210,13 +169,13 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
    if ((sts != SQL_SUCCESS) && (sts != SQL_SUCCESS_WITH_INFO))
    {
       odbcshell_odbc_errors("SQLDriverConnect", cnf, conn);
-      odbcshell_odbc_conn_free(cnf, &conn);
+      odbcshell_odbc_free(cnf, &conn);
       return(0);
    };
 
    if ((odbcshell_odbc_conn_add(cnf, conn)))
    {
-      odbcshell_odbc_conn_free(cnf, &conn);
+      odbcshell_odbc_free(cnf, &conn);
       return(1);
    };
    cnf->current = conn;
@@ -242,7 +201,7 @@ int odbcshell_odbc_disconnect(ODBCShell * cnf, const char * name)
 
    conn = cnf->conns[conn_index];
    odbcshell_odbc_conn_rm(cnf, name);
-   odbcshell_odbc_conn_free(cnf, &conn);
+   odbcshell_odbc_free(cnf, &conn);
 
    if ((!(cnf->current)) && (cnf->conns_count))
       cnf->current = cnf->conns[0];
@@ -305,6 +264,47 @@ void odbcshell_odbc_errors(const char * s, ODBCShell * cnf,
       if (!(strcmp((char *)sqlstate, "IM003")))
          return;
    };
+
+   return;
+}
+
+
+/// frees resources from an iODBC connection
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  connp    pointer to pointer to connection struct
+void odbcshell_odbc_free(ODBCShell * cnf, ODBCShellConn  ** connp)
+{
+   if (!(connp))
+      return;
+
+   if (cnf)
+      if (cnf->current == (*connp))
+         cnf->current = NULL;
+
+   if ((*connp)->hstmt)
+   {
+      SQLCloseCursor((*connp)->hstmt);
+      SQLFreeHandle(SQL_HANDLE_STMT, (*connp)->hstmt);
+   };
+   (*connp)->hstmt = NULL;
+
+   if ((*connp)->hdbc)
+   {
+      SQLDisconnect((*connp)->hdbc);
+      SQLFreeHandle(SQL_HANDLE_DBC, (*connp)->hdbc);
+   };
+   (*connp)->hdbc = NULL;
+
+   if ((*connp)->name)
+      free((*connp)->name);
+   (*connp)->name = NULL;
+
+   if ((*connp)->dsn)
+      free((*connp)->dsn);
+   (*connp)->dsn = NULL;
+
+   free(*connp);
+   (*connp) = NULL;
 
    return;
 }
