@@ -71,6 +71,9 @@ int odbcshell_odbc_conn_rm(ODBCShell * cnf, const char * name);
 int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
    const char * name);
 
+// disconnects a session
+int odbcshell_odbc_disconnect(ODBCShell * cnf, const char * name);
+
 // displays iODBC errors
 void odbcshell_odbc_errors(const char * s, ODBCShell * cnf,
    ODBCShellConn  * conn);

@@ -225,6 +225,30 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
 }
 
 
+/// disconnects a session
+int odbcshell_odbc_disconnect(ODBCShell * cnf, const char * name)
+{
+   int             conn_index;
+   ODBCShellConn * conn;
+
+   if (cnf->current)
+      if (!(strcasecmp(name, cnf->current->name)))
+         cnf->current = NULL;
+
+   if (((conn_index = odbcshell_odbc_conn_findindex(cnf, name))) == -1)
+      return(0);
+
+   conn = cnf->conns[conn_index];
+   odbcshell_odbc_conn_rm(cnf, name);
+   odbcshell_odbc_conn_free(cnf, &conn);
+
+   if ((!(cnf->current)) && (cnf->conns_count))
+      cnf->current = cnf->conns[0];
+
+   return(0);
+}
+
+
 /// displays iODBC errors
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  conn     pointer to connection struct
