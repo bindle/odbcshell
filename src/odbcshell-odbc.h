@@ -55,6 +55,9 @@
 #pragma mark -
 #pragma mark Prototypes
 
+// adds ODBC connection to list
+int odbcshell_odbc_conn_add(ODBCShell * cnf, ODBCShellConn * conn);
+
 // frees resources from an iODBC connection
 void odbcshell_odbc_conn_free(ODBCShell * cnf, ODBCShellConn  ** connp);
 

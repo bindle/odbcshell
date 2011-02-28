@@ -56,6 +56,32 @@
 #pragma mark -
 #pragma mark Functions
 
+/// adds ODBC connection to list
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  connp    pointer to pointer to connection struct
+int odbcshell_odbc_conn_add(ODBCShell * cnf, ODBCShellConn * conn)
+{
+   void      * ptr;
+   size_t      conns_size;
+
+   conns_size  = sizeof(ODBCShellConn *);
+   conns_size *= (cnf->conns_count + 1);
+
+   if (!(ptr = realloc(cnf->conns, conns_size)))
+   {
+      fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
+      return(1);
+   };
+   cnf->conns = ptr;
+
+   cnf->conns[cnf->conns_count] = conn;
+
+   cnf->conns_count++;
+
+   return(0);
+}
+
+
 // frees resources from an iODBC connection
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  connp    pointer to pointer to connection struct
