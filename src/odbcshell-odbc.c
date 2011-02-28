@@ -158,6 +158,64 @@ int odbcshell_odbc_conn_rm(ODBCShell * cnf, const char * name)
 }
 
 
+/// displays iODBC errors
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  conn     pointer to connection struct
+void odbcshell_odbc_errors(const char * s, ODBCShell * cnf,
+   ODBCShellConn  * conn)
+{
+   int        i;
+   HENV       henv;
+   HDBC       hdbc;
+   HSTMT      hstmt;
+   SQLTCHAR   buff[512];
+   SQLTCHAR   sqlstate[15];
+   SQLINTEGER native_error;
+   SQLRETURN  sts;
+
+   henv         = cnf->henv;
+   hdbc         = conn ? conn->hdbc  : cnf->hdbc;
+   hstmt        = conn ? conn->hstmt : NULL;
+   native_error = 0;
+
+   // display statement errors
+   for(i = 1; ((hstmt) && (i < 6)); i++)
+   {
+      sts = SQLGetDiagRec (SQL_HANDLE_STMT, hstmt, i, sqlstate, &native_error, buff, sizeof(buff), NULL);
+      if (!(SQL_SUCCEEDED(sts)))
+         break;
+      fprintf (stderr, "%s: %s\n",  s, buff);
+      if (!(strcmp((char *)sqlstate, "IM003")))
+         return;
+   };
+
+   // display connection errors
+   for(i = 1; ((hdbc) && (i < 6)); i++)
+   {
+      sts = SQLGetDiagRec (SQL_HANDLE_DBC, hdbc, i, sqlstate,
+                           &native_error, buff, sizeof(buff), NULL);
+      if (!(SQL_SUCCEEDED(sts)))
+         break;
+      fprintf (stderr, "%s: %s\n",  s, buff);
+      if (!(strcmp((char *)sqlstate, "IM003")))
+         return;
+   };
+
+   // display environment errors
+   for(i = 1; ((henv) && (i < 6)); i++)
+   {
+      sts = SQLGetDiagRec (SQL_HANDLE_ENV, henv, i, sqlstate, &native_error, buff, sizeof(buff), NULL);
+      if (!(SQL_SUCCEEDED(sts)))
+         break;
+      fprintf (stderr, "%s: %s\n",  s, buff);
+      if (!(strcmp((char *)sqlstate, "IM003")))
+         return;
+   };
+
+   return;
+}
+
+
 /// initializes ODBC library
 /// @param[in]  cnf      pointer to configuration struct
 int odbcshell_odbc_initialize(ODBCShell * cnf)
