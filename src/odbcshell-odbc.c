@@ -138,6 +138,26 @@ void odbcshell_odbc_conn_free(ODBCShell * cnf, ODBCShellConn  ** connp)
 }
 
 
+/// removes an ODBC connection from the list
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  name     internal name of connection
+int odbcshell_odbc_conn_rm(ODBCShell * cnf, const char * name)
+{
+   int i;
+   int conn_index;
+
+   if (((conn_index = odbcshell_odbc_conn_findindex(cnf, name))) == -1)
+      return(0);
+
+   for(i = (conn_index+1); i < (int)cnf->conns_count; i++)
+      cnf->conns[i-1] = cnf->conns[i];
+
+   cnf->conns_count--;
+
+   return(0);
+}
+
+
 /// initializes ODBC library
 /// @param[in]  cnf      pointer to configuration struct
 int odbcshell_odbc_initialize(ODBCShell * cnf)

@@ -64,6 +64,9 @@ int odbcshell_odbc_conn_findindex(ODBCShell * cnf, const char * name);
 // frees resources from an iODBC connection
 void odbcshell_odbc_conn_free(ODBCShell * cnf, ODBCShellConn  ** connp);
 
+// removes an ODBC connection from the list
+int odbcshell_odbc_conn_rm(ODBCShell * cnf, const char * name);
+
 // initializes ODBC library
 int odbcshell_odbc_initialize(ODBCShell * cnf);
 
