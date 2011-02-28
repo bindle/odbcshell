@@ -56,13 +56,13 @@
 #pragma mark Prototypes
 
 // adds ODBC connection to list
-int odbcshell_odbc_conn_add(ODBCShell * cnf, ODBCShellConn * conn);
+int odbcshell_odbc_array_add(ODBCShell * cnf, ODBCShellConn * conn);
 
 // retrieves an ODBC connection from the list
-int odbcshell_odbc_conn_findindex(ODBCShell * cnf, const char * name);
+int odbcshell_odbc_array_findindex(ODBCShell * cnf, const char * name);
 
 // removes an ODBC connection from the list
-int odbcshell_odbc_conn_rm(ODBCShell * cnf, const char * name);
+int odbcshell_odbc_array_rm(ODBCShell * cnf, const char * name);
 
 // connects to ODBC data source
 int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,

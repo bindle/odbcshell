@@ -59,7 +59,7 @@
 /// adds ODBC connection to list
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  connp    pointer to pointer to connection struct
-int odbcshell_odbc_conn_add(ODBCShell * cnf, ODBCShellConn * conn)
+int odbcshell_odbc_array_add(ODBCShell * cnf, ODBCShellConn * conn)
 {
    void      * ptr;
    size_t      conns_size;
@@ -85,7 +85,7 @@ int odbcshell_odbc_conn_add(ODBCShell * cnf, ODBCShellConn * conn)
 /// retrieves an ODBC connection from the list
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  name     internal name of connection
-int odbcshell_odbc_conn_findindex(ODBCShell * cnf, const char * name)
+int odbcshell_odbc_array_findindex(ODBCShell * cnf, const char * name)
 {
    int i;
    if (!(cnf->conns))
@@ -100,12 +100,12 @@ int odbcshell_odbc_conn_findindex(ODBCShell * cnf, const char * name)
 /// removes an ODBC connection from the list
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  name     internal name of connection
-int odbcshell_odbc_conn_rm(ODBCShell * cnf, const char * name)
+int odbcshell_odbc_array_rm(ODBCShell * cnf, const char * name)
 {
    int i;
    int conn_index;
 
-   if (((conn_index = odbcshell_odbc_conn_findindex(cnf, name))) == -1)
+   if (((conn_index = odbcshell_odbc_array_findindex(cnf, name))) == -1)
       return(0);
 
    for(i = (conn_index+1); i < (int)cnf->conns_count; i++)
@@ -129,7 +129,7 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
    SQLRETURN        sts;
    ODBCShellConn  * conn;
 
-   if ((odbcshell_odbc_conn_findindex(cnf, dsn)) >= 0)
+   if ((odbcshell_odbc_array_findindex(cnf, dsn)) >= 0)
    {
       fprintf(stderr, "%s: connection %s already established\n", PROGRAM_NAME, name);
       return(0);
@@ -173,7 +173,7 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
       return(0);
    };
 
-   if ((odbcshell_odbc_conn_add(cnf, conn)))
+   if ((odbcshell_odbc_array_add(cnf, conn)))
    {
       odbcshell_odbc_free(cnf, &conn);
       return(1);
@@ -196,11 +196,11 @@ int odbcshell_odbc_disconnect(ODBCShell * cnf, const char * name)
       if (!(strcasecmp(name, cnf->current->name)))
          cnf->current = NULL;
 
-   if (((conn_index = odbcshell_odbc_conn_findindex(cnf, name))) == -1)
+   if (((conn_index = odbcshell_odbc_array_findindex(cnf, name))) == -1)
       return(0);
 
    conn = cnf->conns[conn_index];
-   odbcshell_odbc_conn_rm(cnf, name);
+   odbcshell_odbc_array_rm(cnf, name);
    odbcshell_odbc_free(cnf, &conn);
 
    if ((!(cnf->current)) && (cnf->conns_count))
