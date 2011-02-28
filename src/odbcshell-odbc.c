@@ -158,6 +158,73 @@ int odbcshell_odbc_conn_rm(ODBCShell * cnf, const char * name)
 }
 
 
+/// connects to ODBC data source
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  dsn      data source to connect
+/// @param[in]  name     internal name of connect
+int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
+   const char * name)
+{
+   SQLTCHAR         dsnOut[512];
+   short            buflen;
+   SQLRETURN        sts;
+   ODBCShellConn  * conn;
+
+   if ((odbcshell_odbc_conn_findindex(cnf, dsn)) >= 0)
+   {
+      fprintf(stderr, "%s: connection %s already established\n", PROGRAM_NAME, name);
+      return(0);
+   };
+
+   // allocates memory for storing internal connection information
+   if (!(conn = malloc(sizeof(ODBCShellConn))))
+   {
+      fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
+      return(1);
+   };
+   memset(conn, 0, sizeof(ODBCShellConn));
+   name = name ? name : "";
+   if (!(conn->name = strdup(name)))
+   {
+      fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
+      return(1);
+   };
+   if (!(conn->dsn = (char *)strdup(dsn)))
+   {
+      fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
+      return(1);
+   };
+
+   // allocates iODBC handle for connection
+   if (SQLAllocHandle(SQL_HANDLE_DBC, cnf->henv, &conn->hdbc) != SQL_SUCCESS)
+   {
+      odbcshell_odbc_errors("SQLAllocHandle", cnf, conn);
+      odbcshell_odbc_conn_free(cnf, &conn);
+      return(0);
+   };
+   SQLSetConnectOption(conn->hdbc, SQL_APPLICATION_NAME, (SQLULEN)PROGRAM_NAME);
+
+   // connects to data source
+   sts = SQLDriverConnect(conn->hdbc, 0, (SQLTCHAR *)conn->dsn, SQL_NTS, dsnOut,
+                          strlen(conn->dsn), &buflen, SQL_DRIVER_COMPLETE);
+   if ((sts != SQL_SUCCESS) && (sts != SQL_SUCCESS_WITH_INFO))
+   {
+      odbcshell_odbc_errors("SQLDriverConnect", cnf, conn);
+      odbcshell_odbc_conn_free(cnf, &conn);
+      return(0);
+   };
+
+   if ((odbcshell_odbc_conn_add(cnf, conn)))
+   {
+      odbcshell_odbc_conn_free(cnf, &conn);
+      return(1);
+   };
+   cnf->current = conn;
+
+   return(0);
+}
+
+
 /// displays iODBC errors
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  conn     pointer to connection struct
