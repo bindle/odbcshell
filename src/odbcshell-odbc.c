@@ -632,6 +632,7 @@ int odbcshell_odbc_use(ODBCShell * cnf, const char * name)
 /// @param[in]  cnf      pointer to configuration struct
 int odbcshell_odbc_version(ODBCShell * cnf)
 {
+   int         i;
    SQLTCHAR    info[255];
    SQLSMALLINT len;
    SQLRETURN   sts;
@@ -640,17 +641,16 @@ int odbcshell_odbc_version(ODBCShell * cnf)
    if (sts == SQL_SUCCESS)
       printf("iODBC Driver Manager %s\n", info);
 
-   if (cnf->current)
+   for(i = 0; i < (int)cnf->conns_count; i++)
    {
-      if (cnf->current->name)
-         printf("Connection: %s\n", cnf->current->name);
-      sts = SQLGetInfo(cnf->current->hdbc, SQL_DRIVER_VER, info, sizeof(info), &len);
+      printf("connection: %s", cnf->conns[i]->name);
+      sts = SQLGetInfo(cnf->conns[i]->hdbc, SQL_DRIVER_NAME, info, sizeof(info), &len);
       if (sts == SQL_SUCCESS)
       {
-         printf ("Driver: %s", info);
-         sts = SQLGetInfo (cnf->current->hdbc, SQL_DRIVER_NAME, info, sizeof(info), &len);
+         printf (" (%s)", info);
+         sts = SQLGetInfo (cnf->conns[i]->hdbc, SQL_DRIVER_VER, info, sizeof(info), &len);
          if (sts == SQL_SUCCESS)
-            printf(" (%s)", info);
+            printf(" %s", info);
          printf("\n");
       };
    };
