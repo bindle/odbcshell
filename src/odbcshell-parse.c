@@ -106,7 +106,7 @@ int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,
 
       *offsetp += offset;
 
-      switch((code = odbcshell_interpret_line(cnf, argc, argv)))
+      switch((code = odbcshell_interpret_line(cnf, &buff[pos], argc, argv)))
       {
          case 1:
             return(code);
@@ -126,7 +126,8 @@ int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[out] argcp
 /// @param[out] argvp
-int odbcshell_interpret_line(ODBCShell * cnf, int argc, char ** argv)
+int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
+   char ** argv)
 {
    int               code;
    ODBCShellOption * cmd;
@@ -135,10 +136,7 @@ int odbcshell_interpret_line(ODBCShell * cnf, int argc, char ** argv)
       return(0);
 
    if (!(cmd = odbcshell_lookup_opt_by_name(odbcshell_cmd_strings, argv[0])))
-   {
-      printf("%s: %s: unknown command\n", PROGRAM_NAME, argv[0]);
-      return(0);
-   };
+      return(odbcshell_cmd_exec(cnf, str));
 
    if (cmd->min_arg > argc)
    {

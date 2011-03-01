@@ -62,7 +62,8 @@ int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,
    size_t * offset);
 
 // interprets the arguments from a command line
-int odbcshell_interpret_line(ODBCShell * cnf, int argc, char ** argv);
+int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
+   char ** argv);
 
 // splits a line into multiple arguments
 int odbcshell_parse_line(char * line, int * argcp, char *** argvp,

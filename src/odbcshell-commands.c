@@ -122,6 +122,15 @@ int odbcshell_cmd_echo(ODBCShell * cnf, int argc, char ** argv)
 }
 
 
+/// executes SQL statement
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  cnf      pointer to configuration struct
+int odbcshell_cmd_exec(ODBCShell * cnf, char * sql)
+{
+   return(odbcshell_odbc_exec(cnf, sql));
+}
+
+
 /// displays usage information
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  argc     number of arguments passed to command
