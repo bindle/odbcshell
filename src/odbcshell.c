@@ -200,6 +200,10 @@ int main(int argc, char * argv[])
    if ((odbcshell_odbc_initialize(cnf)))
       return(1);
 
+
+   c = 1;
+   odbcshell_set_option(cnf, ODBCSHELL_OPT_CONTINUE, &c);
+
    if (odbcshell_cli_loop(cnf))
    {
       odbcshell_odbc_close(cnf);
