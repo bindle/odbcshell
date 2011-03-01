@@ -440,6 +440,57 @@ int odbcshell_odbc_list_dsn(ODBCShell * cnf)
 }
 
 
+/// reconnects a session
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  name     internal name of connect
+int odbcshell_odbc_reconnect(ODBCShell * cnf, const char * name)
+{
+   SQLTCHAR        dsnOut[512];
+   short           buflen;
+   SQLRETURN       sts;
+   int             conn_index;
+   ODBCShellConn * conn;
+
+   if (!(name))
+   {
+      if (!(cnf->current))
+         return(0);
+      if (!(cnf->current->name))
+         return(0);
+      name = cnf->current->name;
+   };
+
+   if (((conn_index = odbcshell_odbc_array_findindex(cnf, name))) == -1)
+      return(0);
+
+   conn = cnf->conns[conn_index];
+
+   SQLCloseCursor(conn->hstmt);
+   SQLFreeHandle(SQL_HANDLE_STMT, conn->hstmt);
+   conn->hstmt = NULL;
+   SQLDisconnect(conn->hdbc);
+
+   sts = SQLDriverConnect(conn->hdbc, 0, (SQLTCHAR *)conn->dsn, SQL_NTS, dsnOut,
+      sizeof(dsnOut), &buflen, SQL_DRIVER_NOPROMPT);
+   if ((sts != SQL_SUCCESS) && (sts != SQL_SUCCESS_WITH_INFO))
+   {
+      odbcshell_odbc_errors("SQLDriverConnect", cnf, conn);
+      odbcshell_odbc_free(cnf, &conn);
+      return(-1);
+   }; 
+
+   sts = SQLAllocHandle(SQL_HANDLE_STMT, conn->hdbc, &conn->hstmt);
+   if (sts != SQL_SUCCESS)
+   {
+      odbcshell_odbc_errors("SQLAllocHandle", cnf, conn);
+      odbcshell_odbc_free(cnf, &conn);
+      return(-1);
+   };
+
+   return(0);
+}
+
+
 /// displays result from ODBC operation
 /// @param[in]  cnf      pointer to configuration struct
 int odbcshell_odbc_result(ODBCShell * cnf)

@@ -211,6 +211,18 @@ int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv)
 }
 
 
+/// reconnects to a database
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  argc     number of arguments passed to command
+/// @param[in]  argv     array of arguments passed to command
+int odbcshell_cmd_reconnect(ODBCShell * cnf, int argc, char ** argv)
+{
+   if (argc == 2)
+      return(odbcshell_odbc_reconnect(cnf, argv[1]));
+   return(odbcshell_odbc_reconnect(cnf, NULL));
+}
+
+
 /// resets internal configuration
 /// @param[in]  cnf      pointer to configuration struct
 int odbcshell_cmd_resetconf(ODBCShell * cnf)

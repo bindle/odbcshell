@@ -82,6 +82,9 @@ int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv);
 // exits from shell
 int odbcshell_cmd_quit(ODBCShell * cnf);
 
+// reconnects to a database
+int odbcshell_cmd_reconnect(ODBCShell * cnf, int argc, char ** argv);
+
 // resets internal configuration
 int odbcshell_cmd_resetconf(ODBCShell * cnf);
 

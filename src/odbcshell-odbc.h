@@ -90,6 +90,9 @@ int odbcshell_odbc_initialize(ODBCShell * cnf);
 // displays list of ODBC data sources
 int odbcshell_odbc_list_dsn(ODBCShell * cnf);
 
+// reconnects a session
+int odbcshell_odbc_reconnect(ODBCShell * cnf, const char * name);
+
 // displays result from ODBC operation
 int odbcshell_odbc_result(ODBCShell * cnf);
 
