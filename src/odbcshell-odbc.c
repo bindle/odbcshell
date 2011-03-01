@@ -209,6 +209,7 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
       return(-1);
    };
 
+   // adds connection to array
    if ((odbcshell_odbc_array_add(cnf, conn)))
    {
       odbcshell_odbc_free(cnf, &conn);
@@ -279,7 +280,7 @@ void odbcshell_odbc_errors(const char * s, ODBCShell * cnf,
    // display statement errors
    for(i = 1; ((hstmt) && (i < 6)); i++)
    {
-      sts = SQLGetDiagRec (SQL_HANDLE_STMT, hstmt, i, sqlstate, &native_error, buff, sizeof(buff), NULL);
+      sts = SQLGetDiagRec(SQL_HANDLE_STMT, hstmt, i, sqlstate, &native_error, buff, sizeof(buff), NULL);
       if (!(SQL_SUCCEEDED(sts)))
          break;
       fprintf (stderr, "%s: %s\n",  s, buff);
@@ -290,11 +291,11 @@ void odbcshell_odbc_errors(const char * s, ODBCShell * cnf,
    // display connection errors
    for(i = 1; ((hdbc) && (i < 6)); i++)
    {
-      sts = SQLGetDiagRec (SQL_HANDLE_DBC, hdbc, i, sqlstate,
+      sts = SQLGetDiagRec(SQL_HANDLE_DBC, hdbc, i, sqlstate,
                            &native_error, buff, sizeof(buff), NULL);
       if (!(SQL_SUCCEEDED(sts)))
          break;
-      fprintf (stderr, "%s: %s\n",  s, buff);
+      fprintf(stderr, "%s: %s\n",  s, buff);
       if (!(strcmp((char *)sqlstate, "IM003")))
          return;
    };
@@ -302,10 +303,10 @@ void odbcshell_odbc_errors(const char * s, ODBCShell * cnf,
    // display environment errors
    for(i = 1; ((henv) && (i < 6)); i++)
    {
-      sts = SQLGetDiagRec (SQL_HANDLE_ENV, henv, i, sqlstate, &native_error, buff, sizeof(buff), NULL);
+      sts = SQLGetDiagRec(SQL_HANDLE_ENV, henv, i, sqlstate, &native_error, buff, sizeof(buff), NULL);
       if (!(SQL_SUCCEEDED(sts)))
          break;
-      fprintf (stderr, "%s: %s\n",  s, buff);
+      fprintf(stderr, "%s: %s\n",  s, buff);
       if (!(strcmp((char *)sqlstate, "IM003")))
          return;
    };
@@ -397,7 +398,7 @@ int odbcshell_odbc_initialize(ODBCShell * cnf)
    if (SQLAllocHandle((SQLSMALLINT)SQL_HANDLE_ENV, NULL, &cnf->henv) != SQL_SUCCESS)
       return(-1);
 
-   SQLSetEnvAttr (cnf->henv, SQL_ATTR_ODBC_VERSION, (SQLPOINTER) SQL_OV_ODBC3,
+   SQLSetEnvAttr(cnf->henv, SQL_ATTR_ODBC_VERSION, (SQLPOINTER) SQL_OV_ODBC3,
                   SQL_IS_UINTEGER);
 
    if (SQLAllocHandle(SQL_HANDLE_DBC, cnf->henv, &cnf->hdbc) != SQL_SUCCESS)
@@ -683,8 +684,8 @@ int odbcshell_odbc_version(ODBCShell * cnf)
       sts = SQLGetInfo(cnf->conns[i]->hdbc, SQL_DRIVER_NAME, info, sizeof(info), &len);
       if (sts == SQL_SUCCESS)
       {
-         printf (" (%s)", info);
-         sts = SQLGetInfo (cnf->conns[i]->hdbc, SQL_DRIVER_VER, info, sizeof(info), &len);
+         printf(" (%s)", info);
+         sts = SQLGetInfo(cnf->conns[i]->hdbc, SQL_DRIVER_VER, info, sizeof(info), &len);
          if (sts == SQL_SUCCESS)
             printf(" %s", info);
          printf("\n");
