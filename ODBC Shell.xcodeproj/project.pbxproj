@@ -7,7 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A0287F46131C79B900A06C03 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = A0287F45131C79B900A06C03 /* main.c */; };
+		A0287F4B131C7A0C00A06C03 /* odbcshell.c in Sources */ = {isa = PBXBuildFile; fileRef = A06CE3E712E7BBD500AD1C66 /* odbcshell.c */; };
+		A0287F4D131C7A0C00A06C03 /* odbcshell-cli.c in Sources */ = {isa = PBXBuildFile; fileRef = A06CE44312E7D6F500AD1C66 /* odbcshell-cli.c */; };
+		A0287F4F131C7A0C00A06C03 /* odbcshell-commands.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B80F2312EA46D8005A119F /* odbcshell-commands.c */; };
+		A0287F51131C7A0C00A06C03 /* odbcshell-odbc.c in Sources */ = {isa = PBXBuildFile; fileRef = A061EE4612F108E900277649 /* odbcshell-odbc.c */; };
+		A0287F53131C7A0C00A06C03 /* odbcshell-odbcw.c in Sources */ = {isa = PBXBuildFile; fileRef = A0A091ED12F2058A00D47AED /* odbcshell-odbcw.c */; };
+		A0287F55131C7A0C00A06C03 /* odbcshell-options.c in Sources */ = {isa = PBXBuildFile; fileRef = A06CE4C312E8C8A800AD1C66 /* odbcshell-options.c */; };
+		A0287F57131C7A0C00A06C03 /* odbcshell-parse.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B80EE212EA0C7D005A119F /* odbcshell-parse.c */; };
+		A0287F59131C7A0C00A06C03 /* odbcshell-variables.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B80EE912EA0D56005A119F /* odbcshell-variables.c */; };
+		A0287F5C131C7A2100A06C03 /* libiodbc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0287F5B131C7A2100A06C03 /* libiodbc.dylib */; };
+		A0287F5E131C7AAE00A06C03 /* libreadline.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0287F5D131C7AAE00A06C03 /* libreadline.dylib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,8 +33,8 @@
 
 /* Begin PBXFileReference section */
 		A0287F41131C79B900A06C03 /* odbcshell */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = odbcshell; sourceTree = BUILT_PRODUCTS_DIR; };
-		A0287F45131C79B900A06C03 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		A0287F47131C79B900A06C03 /* odbcshell.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = odbcshell.1; sourceTree = "<group>"; };
+		A0287F5B131C7A2100A06C03 /* libiodbc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiodbc.dylib; path = usr/lib/libiodbc.dylib; sourceTree = SDKROOT; };
+		A0287F5D131C7AAE00A06C03 /* libreadline.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libreadline.dylib; path = usr/lib/libreadline.dylib; sourceTree = SDKROOT; };
 		A02A73F61318CE89007AB2B0 /* odbc-example.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "odbc-example.c"; sourceTree = "<group>"; };
 		A061EE4512F108E900277649 /* odbcshell-odbc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "odbcshell-odbc.h"; sourceTree = "<group>"; };
 		A061EE4612F108E900277649 /* odbcshell-odbc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "odbcshell-odbc.c"; sourceTree = "<group>"; };
@@ -59,6 +68,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0287F5E131C7AAE00A06C03 /* libreadline.dylib in Frameworks */,
+				A0287F5C131C7A2100A06C03 /* libiodbc.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,13 +84,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		A0287F44131C79B900A06C03 /* odbcshell */ = {
+		A046A8B5131CCFFC0059E5AA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				A0287F45131C79B900A06C03 /* main.c */,
-				A0287F47131C79B900A06C03 /* odbcshell.1 */,
+				A0287F5D131C7AAE00A06C03 /* libreadline.dylib */,
+				A0287F5B131C7A2100A06C03 /* libiodbc.dylib */,
 			);
-			path = odbcshell;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		A06CE3CA12E7BBAB00AD1C66 = {
@@ -95,7 +106,7 @@
 				A06CE3E312E7BBD500AD1C66 /* NEWS */,
 				A06CE3E412E7BBD500AD1C66 /* README */,
 				A06CE3E512E7BBD500AD1C66 /* src */,
-				A0287F44131C79B900A06C03 /* odbcshell */,
+				A046A8B5131CCFFC0059E5AA /* Frameworks */,
 				A0287F42131C79B900A06C03 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -182,7 +193,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0287F46131C79B900A06C03 /* main.c in Sources */,
+				A0287F4B131C7A0C00A06C03 /* odbcshell.c in Sources */,
+				A0287F4D131C7A0C00A06C03 /* odbcshell-cli.c in Sources */,
+				A0287F4F131C7A0C00A06C03 /* odbcshell-commands.c in Sources */,
+				A0287F51131C7A0C00A06C03 /* odbcshell-odbc.c in Sources */,
+				A0287F53131C7A0C00A06C03 /* odbcshell-odbcw.c in Sources */,
+				A0287F55131C7A0C00A06C03 /* odbcshell-options.c in Sources */,
+				A0287F57131C7A0C00A06C03 /* odbcshell-parse.c in Sources */,
+				A0287F59131C7A0C00A06C03 /* odbcshell-variables.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -204,7 +222,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH_ACTUAL)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
@@ -225,7 +243,7 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
 			};
@@ -255,6 +273,7 @@
 				A0287F49131C79B900A06C03 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A06CE3CF12E7BBAB00AD1C66 /* Build configuration list for PBXProject "ODBC Shell" */ = {
 			isa = XCConfigurationList;
