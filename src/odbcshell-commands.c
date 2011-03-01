@@ -276,6 +276,20 @@ int odbcshell_cmd_unset(ODBCShell * cnf, char ** argv)
 }
 
 
+/// switches active database connection
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  argc     number of arguments passed to command
+/// @param[in]  argv     array of arguments passed to command
+int odbcshell_cmd_use(ODBCShell * cnf, int argc, char ** argv)
+{
+   if (argc == 2)
+      odbcshell_odbc_use(cnf, argv[1]);
+   else
+      odbcshell_odbc_use(cnf, NULL);
+   return(0);
+}
+
+
 /// exits from shell
 /// @param[in]  cnf      pointer to configuration struct
 int odbcshell_cmd_quit(ODBCShell * cnf)

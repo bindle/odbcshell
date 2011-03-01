@@ -171,6 +171,7 @@ int odbcshell_interpret_line(ODBCShell * cnf, int argc, char ** argv)
       case ODBCSHELL_CMD_SILENT:     code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
       case ODBCSHELL_CMD_UNALIAS:    code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
       case ODBCSHELL_CMD_UNSET:      code = odbcshell_cmd_unset(cnf, argv); break;
+      case ODBCSHELL_CMD_USE:        code = odbcshell_cmd_use(cnf, argc, argv); break;
       case ODBCSHELL_CMD_VERBOSE:    code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
       case ODBCSHELL_CMD_VERSION:    code = odbcshell_cmd_version(cnf); break;
       default:                       code = odbcshell_cmd_incomplete(cnf, argc, argv); break;

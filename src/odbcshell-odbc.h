@@ -84,6 +84,9 @@ int odbcshell_odbc_initialize(ODBCShell * cnf);
 // displays list of ODBC data sources
 int odbcshell_odbc_list_dsn(ODBCShell * cnf);
 
+// switches active connection
+int odbcshell_odbc_use(ODBCShell * cnf, const char * name);
+
 // displays ODBC version
 int odbcshell_odbc_version(ODBCShell * cnf);
 

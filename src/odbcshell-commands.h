@@ -88,6 +88,9 @@ int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv);
 // unsets internal value of configuration parameter
 int odbcshell_cmd_unset(ODBCShell * cnf, char ** argv);
 
+// switches active database connection
+int odbcshell_cmd_use(ODBCShell * cnf, int argc, char ** argv);
+
 // displays version information
 int odbcshell_cmd_version(ODBCShell * cnf);
 

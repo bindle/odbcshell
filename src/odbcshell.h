@@ -115,6 +115,7 @@
 #define ODBCSHELL_CMD_CLEAR       0x10
 #define ODBCSHELL_CMD_ECHO        0x11
 #define ODBCSHELL_CMD_DSN         0x12
+#define ODBCSHELL_CMD_USE         0x13
 #define ODBCSHELL_CMD_SQL         -1
 
 

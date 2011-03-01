@@ -368,6 +368,41 @@ int odbcshell_odbc_list_dsn(ODBCShell * cnf)
 }
 
 
+/// switches active connection
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  name     internal name of connect
+int odbcshell_odbc_use(ODBCShell * cnf, const char * name)
+{
+   int i;
+
+   if (!(name))
+   {
+      printf("  Name:      DSN:\n");
+      for(i = 0; i < (int)cnf->conns_count; i++)
+      {
+         if (!(strcasecmp(cnf->current->name, cnf->conns[i]->name)))
+            printf("* %-10s %s\n", cnf->conns[i]->name, cnf->conns[i]->dsn);
+         else
+            printf("  %-10s %s\n", cnf->conns[i]->name, cnf->conns[i]->dsn);
+      };
+      return(0);
+   };
+
+   for(i = 0; i < (int)cnf->conns_count; i++)
+   {
+      if (!(strcasecmp(name, cnf->conns[i]->name)))
+      {
+         cnf->current = cnf->conns[i];
+         return(0);
+      };
+   };
+
+   fprintf(stderr, "%s: unknown connection handle\n", PROGRAM_NAME);
+
+   return(1);
+}
+
+
 /// displays ODBC version
 /// @param[in]  cnf      pointer to configuration struct
 int odbcshell_odbc_version(ODBCShell * cnf)
