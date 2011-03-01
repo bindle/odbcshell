@@ -58,6 +58,9 @@
 // clears the screen
 int odbcshell_cmd_clear(void);
 
+// prints strings to screen
+int odbcshell_cmd_connect(ODBCShell * cnf, int argc, char ** argv);
+
 // displays ODBC data sources
 int odbcshell_cmd_dsn(ODBCShell * cnf);
 
