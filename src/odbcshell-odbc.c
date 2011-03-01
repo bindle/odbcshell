@@ -159,26 +159,26 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
    if ((odbcshell_odbc_array_findindex(cnf, name)) >= 0)
    {
       fprintf(stderr, "%s: connection with name \"%s\" already exists\n", PROGRAM_NAME, name);
-      return(0);
+      return(-1);
    };
 
    // allocates memory for storing internal connection information
    if (!(conn = malloc(sizeof(ODBCShellConn))))
    {
       fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-      return(1);
+      return(-1);
    };
    memset(conn, 0, sizeof(ODBCShellConn));
    name = name ? name : "";
    if (!(conn->name = strdup(name)))
    {
       fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-      return(1);
+      return(-1);
    };
    if (!(conn->dsn = (char *)strdup(dsn)))
    {
       fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-      return(1);
+      return(-1);
    };
 
    // allocates iODBC handle for connection
@@ -186,7 +186,7 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
    {
       odbcshell_odbc_errors("SQLAllocHandle", cnf, conn);
       odbcshell_odbc_free(cnf, &conn);
-      return(0);
+      return(-1);
    };
    SQLSetConnectOption(conn->hdbc, SQL_APPLICATION_NAME, (SQLULEN)PROGRAM_NAME);
 
@@ -197,7 +197,7 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
    {
       odbcshell_odbc_errors("SQLDriverConnect", cnf, conn);
       odbcshell_odbc_free(cnf, &conn);
-      return(0);
+      return(-1);
    };
 
    // allocates statement handle
@@ -212,7 +212,7 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
    if ((odbcshell_odbc_array_add(cnf, conn)))
    {
       odbcshell_odbc_free(cnf, &conn);
-      return(1);
+      return(-1);
    };
    cnf->current = conn;
 
@@ -324,7 +324,7 @@ int odbcshell_odbc_exec(ODBCShell * cnf, char * sql)
    if (!(cnf->current))
    {
       fprintf(stderr, "%s: not connected to a database\n", PROGRAM_NAME);
-      return(1);
+      return(-1);
    };
 
    // prepare SQL statement
@@ -332,7 +332,7 @@ int odbcshell_odbc_exec(ODBCShell * cnf, char * sql)
    if (err != SQL_SUCCESS)
    {
       odbcshell_odbc_errors("SQLPrepare", cnf, cnf->current);
-      return(1);
+      return(-1);
    };
 
    // execute SQL statement
@@ -340,9 +340,9 @@ int odbcshell_odbc_exec(ODBCShell * cnf, char * sql)
    if (err != SQL_SUCCESS)
    {
       odbcshell_odbc_errors("SQLExecute", cnf, cnf->current);
-      return(1);
       if (err == SQL_SUCCESS_WITH_INFO)
          return(0);
+      return(-1);
    };
 
    return(odbcshell_odbc_result(cnf));
