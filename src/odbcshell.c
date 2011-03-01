@@ -202,8 +202,11 @@ int main(int argc, char * argv[])
 
    if (odbcshell_cli_loop(cnf))
    {
+      odbcshell_odbc_close(cnf);
       return(1);
    };
+
+   odbcshell_odbc_close(cnf);
 
    return(0);
 }

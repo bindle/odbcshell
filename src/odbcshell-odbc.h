@@ -64,6 +64,9 @@ int odbcshell_odbc_array_findindex(ODBCShell * cnf, const char * name);
 // removes an ODBC connection from the list
 int odbcshell_odbc_array_rm(ODBCShell * cnf, const char * name);
 
+// closes all ODBC connections
+int odbcshell_odbc_close(ODBCShell * cnf);
+
 // connects to ODBC data source
 int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
    const char * name);

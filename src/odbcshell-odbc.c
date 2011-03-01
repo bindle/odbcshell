@@ -117,6 +117,33 @@ int odbcshell_odbc_array_rm(ODBCShell * cnf, const char * name)
 }
 
 
+/// closes all ODBC connections
+/// @param[in]  cnf      pointer to configuration struct
+int odbcshell_odbc_close(ODBCShell * cnf)
+{
+   int i;
+
+   for(i = 0;i < (int)cnf->conns_count; i++)
+   {
+      printf("closing connection \"%s\"\n", cnf->conns[i]->name);
+      odbcshell_odbc_free(cnf, &cnf->conns[i]);
+   };
+
+   cnf->conns_count = 0;
+
+   if (cnf->hdbc)
+   {
+      SQLDisconnect(cnf->hdbc);
+      SQLFreeHandle(SQL_HANDLE_DBC, cnf->hdbc);
+   };
+
+   if (cnf->henv)
+      SQLFreeHandle(SQL_HANDLE_ENV, cnf->henv);
+
+   return(0);
+}
+
+
 /// connects to ODBC data source
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  dsn      data source to connect
