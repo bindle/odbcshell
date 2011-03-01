@@ -200,6 +200,15 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
       return(0);
    };
 
+   // allocates statement handle
+   sts = SQLAllocHandle(SQL_HANDLE_STMT, conn->hdbc, &conn->hstmt);
+   if (sts != SQL_SUCCESS)
+   {
+      odbcshell_odbc_errors("SQLAllocHandle", cnf, conn);
+      odbcshell_odbc_free(cnf, &conn);
+      return(-1);
+   };
+
    if ((odbcshell_odbc_array_add(cnf, conn)))
    {
       odbcshell_odbc_free(cnf, &conn);
