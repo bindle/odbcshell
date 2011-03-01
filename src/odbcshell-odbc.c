@@ -70,7 +70,7 @@ int odbcshell_odbc_array_add(ODBCShell * cnf, ODBCShellConn * conn)
    if (!(ptr = realloc(cnf->conns, conns_size)))
    {
       fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-      return(1);
+      return(-1);
    };
    cnf->conns = ptr;
 
@@ -523,7 +523,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
       {
          odbcshell_odbc_errors("SQLNumResultCols", cnf, cnf->current);
          SQLCloseCursor(cnf->current->hstmt);
-         return(1);
+         return(-1);
       };
       if (numCols == 0)
       {
@@ -531,7 +531,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
          SQLRowCount(cnf->current->hstmt, &nrows);
          printf("Statement executed. %ld rows affected.\n", (long)nrows);
          SQLCloseCursor(cnf->current->hstmt);
-         return(1);
+         return(-1);
       };
       if (numCols > 256)
       {
@@ -549,7 +549,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
          {
             odbcshell_odbc_errors("SQLDescribeCol", cnf, cnf->current);
             SQLCloseCursor(cnf->current->hstmt);
-            return(1);
+            return(-1);
          };
          switch(colType)
          {
@@ -650,7 +650,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             {
                odbcshell_odbc_errors("SQLGetData", cnf, cnf->current);
                SQLCloseCursor(cnf->current->hstmt);
-               return(1);
+               return(-1);
             };
             if (colIndicator == SQL_NULL_DATA)
                fetchBuffer[0] = '\0';
@@ -672,7 +672,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    {
       odbcshell_odbc_errors("SQLMoreResults", cnf, cnf->current);
       SQLCloseCursor(cnf->current->hstmt);
-      return(1);
+      return(-1);
    };
 
    SQLCloseCursor(cnf->current->hstmt);
@@ -712,7 +712,7 @@ int odbcshell_odbc_use(ODBCShell * cnf, const char * name)
 
    fprintf(stderr, "%s: unknown connection handle\n", PROGRAM_NAME);
 
-   return(1);
+   return(-1);
 }
 
 
