@@ -229,7 +229,7 @@ int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv)
          return(odbcshell_set_option(cnf, (int)opt->val, argv[2]));
 
       case ODBSHELL_OTYPE_INT:
-         ival = strtol(argv[2], NULL, 0);
+         ival = (int)strtol(argv[2], NULL, 0);
          return(odbcshell_set_option(cnf, (int)opt->val, &ival));
 
       default:

@@ -6,7 +6,26 @@
 	objectVersion = 42;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		A0287F46131C79B900A06C03 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = A0287F45131C79B900A06C03 /* main.c */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A0287F3F131C79B900A06C03 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		A0287F41131C79B900A06C03 /* odbcshell */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = odbcshell; sourceTree = BUILT_PRODUCTS_DIR; };
+		A0287F45131C79B900A06C03 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		A0287F47131C79B900A06C03 /* odbcshell.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = odbcshell.1; sourceTree = "<group>"; };
 		A02A73F61318CE89007AB2B0 /* odbc-example.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "odbc-example.c"; sourceTree = "<group>"; };
 		A061EE4512F108E900277649 /* odbcshell-odbc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "odbcshell-odbc.h"; sourceTree = "<group>"; };
 		A061EE4612F108E900277649 /* odbcshell-odbc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "odbcshell-odbc.c"; sourceTree = "<group>"; };
@@ -35,7 +54,34 @@
 		A0D7191F12F0D2C0004AFD89 /* git-package-version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "git-package-version.sh"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFrameworksBuildPhase section */
+		A0287F3E131C79B900A06C03 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
 /* Begin PBXGroup section */
+		A0287F42131C79B900A06C03 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A0287F41131C79B900A06C03 /* odbcshell */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A0287F44131C79B900A06C03 /* odbcshell */ = {
+			isa = PBXGroup;
+			children = (
+				A0287F45131C79B900A06C03 /* main.c */,
+				A0287F47131C79B900A06C03 /* odbcshell.1 */,
+			);
+			path = odbcshell;
+			sourceTree = "<group>";
+		};
 		A06CE3CA12E7BBAB00AD1C66 = {
 			isa = PBXGroup;
 			children = (
@@ -49,6 +95,8 @@
 				A06CE3E312E7BBD500AD1C66 /* NEWS */,
 				A06CE3E412E7BBD500AD1C66 /* README */,
 				A06CE3E512E7BBD500AD1C66 /* src */,
+				A0287F44131C79B900A06C03 /* odbcshell */,
+				A0287F42131C79B900A06C03 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -86,6 +134,26 @@
 		};
 /* End PBXGroup section */
 
+/* Begin PBXNativeTarget section */
+		A0287F40131C79B900A06C03 /* odbcshell */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A0287F4A131C79B900A06C03 /* Build configuration list for PBXNativeTarget "odbcshell" */;
+			buildPhases = (
+				A0287F3D131C79B900A06C03 /* Sources */,
+				A0287F3E131C79B900A06C03 /* Frameworks */,
+				A0287F3F131C79B900A06C03 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = odbcshell;
+			productName = odbcshell;
+			productReference = A0287F41131C79B900A06C03 /* odbcshell */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
 /* Begin PBXProject section */
 		A06CE3CC12E7BBAB00AD1C66 /* Project object */ = {
 			isa = PBXProject;
@@ -100,14 +168,69 @@
 				German,
 			);
 			mainGroup = A06CE3CA12E7BBAB00AD1C66;
+			productRefGroup = A0287F42131C79B900A06C03 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
+				A0287F40131C79B900A06C03 /* odbcshell */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXSourcesBuildPhase section */
+		A0287F3D131C79B900A06C03 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0287F46131C79B900A06C03 /* main.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
 /* Begin XCBuildConfiguration section */
+		A0287F48131C79B900A06C03 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ONLY_ACTIVE_ARCH_PRE_XCODE_3_1)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH_ACTUAL)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		A0287F49131C79B900A06C03 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
+				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.6;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
 		A06CE3CD12E7BBAB00AD1C66 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -125,6 +248,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A0287F4A131C79B900A06C03 /* Build configuration list for PBXNativeTarget "odbcshell" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0287F48131C79B900A06C03 /* Debug */,
+				A0287F49131C79B900A06C03 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		A06CE3CF12E7BBAB00AD1C66 /* Build configuration list for PBXProject "ODBC Shell" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

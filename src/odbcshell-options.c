@@ -110,10 +110,10 @@ int odbcshell_get_option(ODBCShell * cnf, int opt, void * ptr)
          *((char **)ptr) = cnf->prompt;
          break;
       case ODBCSHELL_OPT_SILENT:
-         *((int *)ptr) = cnf->silent;
+         *((int *)ptr) = (int)cnf->silent;
          break;
       case ODBCSHELL_OPT_VERBOSE:
-         *((int *)ptr) = cnf->verbose;
+         *((int *)ptr) = (int)cnf->verbose;
          break;
       default:
          fprintf(stderr, "%s: unknown option\n", PROGRAM_NAME);
