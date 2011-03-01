@@ -368,6 +368,196 @@ int odbcshell_odbc_list_dsn(ODBCShell * cnf)
 }
 
 
+/// displays result from ODBC operation
+/// @param[in]  cnf      pointer to configuration struct
+int odbcshell_odbc_result(ODBCShell * cnf)
+{
+   int             err;
+   SQLRETURN       sts;
+   SQLTCHAR        fetchBuffer[1024];
+   size_t          displayWidths[256];
+   size_t          displayWidth;
+   short           numCols;
+   short           colNum;
+   SQLTCHAR        colName[50];
+   SQLSMALLINT     colType;
+   SQLULEN         colPrecision;
+   SQLLEN          colIndicator;
+   SQLSMALLINT     colScale;
+   SQLSMALLINT     colNullable;
+   unsigned long   totalRows;
+   unsigned long   totalSets;
+   SQLLEN          nrows;
+
+   totalSets = 1;
+
+   sts = SQL_SUCCESS;
+    while (sts == SQL_SUCCESS)
+   {
+      // retrieve number of columns
+      err = SQLNumResultCols(cnf->current->hstmt, &numCols);
+      if (err != SQL_SUCCESS)
+      {
+         odbcshell_odbc_errors("SQLNumResultCols", cnf, cnf->current);
+         SQLCloseCursor(cnf->current->hstmt);
+         return(1);
+      };
+      if (numCols == 0)
+      {
+         nrows = 0;
+         SQLRowCount(cnf->current->hstmt, &nrows);
+         printf("Statement executed. %ld rows affected.\n", (long)nrows);
+         SQLCloseCursor(cnf->current->hstmt);
+         return(1);
+      };
+      if (numCols > 256)
+      {
+         numCols = 256;
+         fprintf(stderr, "NOTE: Resultset truncated to %d columns.\n", 256);
+      };
+
+      // retrieve name of column
+      for(colNum = 1; colNum <= numCols; colNum++)
+      {
+         err = SQLDescribeCol(cnf->current->hstmt, colNum, (SQLTCHAR *)colName,
+                              sizeof(colName), NULL, &colType, &colPrecision,
+                              &colScale, &colNullable);
+         if (err != SQL_SUCCESS)
+         {
+            odbcshell_odbc_errors("SQLDescribeCol", cnf, cnf->current);
+            SQLCloseCursor(cnf->current->hstmt);
+            return(1);
+         };
+         switch(colType)
+         {
+            case SQL_VARCHAR:
+            case SQL_CHAR:
+            case SQL_WVARCHAR:
+            case SQL_WCHAR:
+            case SQL_GUID:
+               displayWidth = colPrecision;
+               break;
+
+            case SQL_BINARY:
+               displayWidth = colPrecision * 2;
+               break;
+
+            case SQL_LONGVARCHAR:
+            case SQL_WLONGVARCHAR:
+            case SQL_LONGVARBINARY:
+               displayWidth = 30;	/* show only first 30 */
+               break;
+
+            case SQL_BIT:
+               displayWidth = 1;
+               break;
+
+            case SQL_TINYINT:
+            case SQL_SMALLINT:
+            case SQL_INTEGER:
+            case SQL_BIGINT:
+               displayWidth = colPrecision + 1;	/* sign */
+               break;
+
+            case SQL_DOUBLE:
+            case SQL_DECIMAL:
+            case SQL_NUMERIC:
+            case SQL_FLOAT:
+            case SQL_REAL:
+               displayWidth = colPrecision + 2;	/* sign, comma */
+            break;
+
+#ifdef SQL_TYPE_DATE
+            case SQL_TYPE_DATE:
+#endif
+            case SQL_DATE:
+               displayWidth = 10;
+               break;
+
+#ifdef SQL_TYPE_TIME
+            case SQL_TYPE_TIME:
+#endif
+            case SQL_TIME:
+               displayWidth = 8;
+               break;
+
+#ifdef SQL_TYPE_TIMESTAMP
+            case SQL_TYPE_TIMESTAMP:
+#endif
+            case SQL_TIMESTAMP:
+               displayWidth = 19;
+               if (colScale > 0)
+                  displayWidth = displayWidth + colScale + 1;
+               break;
+
+            default:
+               displayWidths[colNum - 1] = 0;	/* skip other data types */
+               continue;
+         };
+
+         if (displayWidth < strlen((char *)colName))
+            displayWidth = strlen((char *)colName);
+         if (displayWidth > sizeof(fetchBuffer) - 1)
+            displayWidth = sizeof(fetchBuffer) - 1;
+         displayWidths[colNum - 1] = displayWidth;
+
+         printf("\"%s\"", colName);
+         if (colNum < numCols)
+            printf(",");
+      };
+      printf("\n");
+
+      totalRows = 0;
+      while(1)
+      {
+         sts = SQLFetchScroll(cnf->current->hstmt, SQL_FETCH_NEXT, 1);
+         if (sts == SQL_NO_DATA_FOUND)
+            break;
+         if (sts != SQL_SUCCESS)
+         {
+            odbcshell_odbc_errors("SQLFetchScroll", cnf, cnf->current);
+            break;
+         };
+
+         for(colNum = 1; colNum <= numCols; colNum++)
+         {
+            sts = SQLGetData(cnf->current->hstmt, colNum, SQL_C_CHAR,
+                             fetchBuffer, sizeof(fetchBuffer), &colIndicator);
+            if ((sts != SQL_SUCCESS_WITH_INFO) && (sts != SQL_SUCCESS))
+            {
+               odbcshell_odbc_errors("SQLGetData", cnf, cnf->current);
+               SQLCloseCursor(cnf->current->hstmt);
+               return(1);
+            };
+            if (colIndicator == SQL_NULL_DATA)
+               fetchBuffer[0] = '\0';
+            printf("\"%s\"", fetchBuffer);
+            if (colNum < numCols)
+               printf(",");
+         };
+         printf("\n");
+         totalRows++;
+      };
+
+      printf("\nresult set %lu returned %lu rows.\n\n", totalSets, totalRows);
+      totalSets++;
+
+      sts = SQLMoreResults(cnf->current->hstmt);
+   };
+
+   if (sts == SQL_ERROR)
+   {
+      odbcshell_odbc_errors("SQLMoreResults", cnf, cnf->current);
+      SQLCloseCursor(cnf->current->hstmt);
+      return(1);
+   };
+
+   SQLCloseCursor(cnf->current->hstmt);
+
+   return(0);
+}
+
+
 /// switches active connection
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  name     internal name of connect
