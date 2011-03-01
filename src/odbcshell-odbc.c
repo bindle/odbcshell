@@ -278,6 +278,41 @@ void odbcshell_odbc_errors(const char * s, ODBCShell * cnf,
 }
 
 
+/// execute SQL statement
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  sql      SQL string to execute
+int odbcshell_odbc_exec(ODBCShell * cnf, char * sql)
+{
+   int err;
+
+   if (!(cnf->current))
+   {
+      fprintf(stderr, "%s: not connected to a database\n", PROGRAM_NAME);
+      return(1);
+   };
+
+   // prepare SQL statement
+   err = SQLPrepare(cnf->current->hstmt, (SQLTCHAR *)sql, SQL_NTS);
+   if (err != SQL_SUCCESS)
+   {
+      odbcshell_odbc_errors("SQLPrepare", cnf, cnf->current);
+      return(1);
+   };
+
+   // execute SQL statement
+   err = SQLExecute(cnf->current->hstmt);
+   if (err != SQL_SUCCESS)
+   {
+      odbcshell_odbc_errors("SQLExecute", cnf, cnf->current);
+      return(1);
+      if (err == SQL_SUCCESS_WITH_INFO)
+         return(0);
+   };
+
+   return(odbcshell_odbc_result(cnf));
+}
+
+
 /// frees resources from an iODBC connection
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  connp    pointer to pointer to connection struct

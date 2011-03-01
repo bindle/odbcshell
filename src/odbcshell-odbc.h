@@ -75,6 +75,9 @@ int odbcshell_odbc_disconnect(ODBCShell * cnf, const char * name);
 void odbcshell_odbc_errors(const char * s, ODBCShell * cnf,
    ODBCShellConn  * conn);
 
+// execute SQL statement
+int odbcshell_odbc_exec(ODBCShell * cnf, char * sql);
+
 // frees resources from an iODBC connection
 void odbcshell_odbc_free(ODBCShell * cnf, ODBCShellConn  ** connp);
 
