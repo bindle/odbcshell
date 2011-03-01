@@ -129,9 +129,9 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
    SQLRETURN        sts;
    ODBCShellConn  * conn;
 
-   if ((odbcshell_odbc_array_findindex(cnf, dsn)) >= 0)
+   if ((odbcshell_odbc_array_findindex(cnf, name)) >= 0)
    {
-      fprintf(stderr, "%s: connection %s already established\n", PROGRAM_NAME, name);
+      fprintf(stderr, "%s: connection with name \"%s\" already exists\n", PROGRAM_NAME, name);
       return(0);
    };
 
