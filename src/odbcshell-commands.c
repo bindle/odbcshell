@@ -82,6 +82,18 @@ int odbcshell_cmd_connect(ODBCShell * cnf, int argc, char ** argv)
 }
 
 
+/// disconnects from database
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  argc     number of arguments passed to command
+/// @param[in]  argv     array of arguments passed to command
+int odbcshell_cmd_disconnect(ODBCShell * cnf, int argc, char ** argv)
+{
+   if (argc == 2)
+      return(odbcshell_odbc_disconnect(cnf, argv[1]));
+   return(odbcshell_odbc_disconnect(cnf, NULL));
+}
+
+
 /// displays ODBC data sources
 /// @param[in]  cnf      pointer to configuration struct
 int odbcshell_cmd_dsn(ODBCShell * cnf)

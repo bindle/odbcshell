@@ -192,6 +192,15 @@ int odbcshell_odbc_disconnect(ODBCShell * cnf, const char * name)
    int             conn_index;
    ODBCShellConn * conn;
 
+   if (!(name))
+   {
+      if (!(cnf->current))
+         return(0);
+      if (!(cnf->current->name))
+         return(0);
+      name = cnf->current->name;
+   };
+
    if (cnf->current)
       if (!(strcasecmp(name, cnf->current->name)))
          cnf->current = NULL;

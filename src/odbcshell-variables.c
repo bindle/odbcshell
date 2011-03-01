@@ -62,7 +62,7 @@ ODBCShellOption odbcshell_cmd_strings[] =
 {
    { ODBCSHELL_CMD_CLEAR,       1,  1, "CLEAR",      "clears screen",        (const char *[2]){";", NULL} },
    { ODBCSHELL_CMD_CONNECT,     2,  3, "CONNECT",    "connects to a database",        (const char *[3]){" \"DSN=My Database;UID=John Doe;PWD=password\";", " name \"DSN=My Database;UID=John Doe;PWD=password\";", NULL} },
-   //{ ODBCSHELL_CMD_DISCONNECT,  1,  1, "DISCONNECT", "disconnects from a database",   (const char *[2]){";", NULL} },
+   { ODBCSHELL_CMD_DISCONNECT,  1,  2, "DISCONNECT", "disconnects from a database",   (const char *[3]){";", " name;", NULL} },
    { ODBCSHELL_CMD_DSN,         1,  1, "DSN",        "displays list of ODBC data sources",    (const char *[2]){";", NULL} },
    { ODBCSHELL_CMD_ECHO,        1, -1, "ECHO",       "prints arguments to screen",    (const char *[2]){" \"string1\" \"string2\" ... \"stringN\";", NULL} },
    { ODBCSHELL_CMD_QUIT,        1,  1, "EXIT",       "exits ODBC Shell",              (const char *[2]){";", NULL} },
