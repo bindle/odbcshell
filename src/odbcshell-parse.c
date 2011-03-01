@@ -153,24 +153,18 @@ int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
 
    switch(cmd->val)
    {
-      case ODBCSHELL_CMD_ALIAS:      code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
       case ODBCSHELL_CMD_CLEAR:      code = odbcshell_cmd_clear(); break;
       case ODBCSHELL_CMD_CONNECT:    code = odbcshell_cmd_connect(cnf, argc, argv); break;
       case ODBCSHELL_CMD_DISCONNECT: code = odbcshell_cmd_disconnect(cnf, argc, argv); break;
       case ODBCSHELL_CMD_DSN:        code = odbcshell_cmd_dsn(cnf); break;
       case ODBCSHELL_CMD_ECHO:       code = odbcshell_cmd_echo(cnf, argc, argv); break;
-      case ODBCSHELL_CMD_LOADCONF:   code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
       case ODBCSHELL_CMD_HELP:       code = odbcshell_cmd_help(cnf, argc, argv); break;
       case ODBCSHELL_CMD_QUIT:       code = odbcshell_cmd_quit(cnf); break;
       case ODBCSHELL_CMD_RECONNECT:  code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
       case ODBCSHELL_CMD_RESETCONF:  code = odbcshell_cmd_resetconf(cnf); break;
-      case ODBCSHELL_CMD_SAVECONF:   code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
       case ODBCSHELL_CMD_SET:        code = odbcshell_cmd_set(cnf, argc, argv); break;
-      case ODBCSHELL_CMD_SILENT:     code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
-      case ODBCSHELL_CMD_UNALIAS:    code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
       case ODBCSHELL_CMD_UNSET:      code = odbcshell_cmd_unset(cnf, argv); break;
       case ODBCSHELL_CMD_USE:        code = odbcshell_cmd_use(cnf, argc, argv); break;
-      case ODBCSHELL_CMD_VERBOSE:    code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
       case ODBCSHELL_CMD_VERSION:    code = odbcshell_cmd_version(cnf); break;
       default:                       code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
    };
