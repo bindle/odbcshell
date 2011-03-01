@@ -141,7 +141,7 @@ int main(int argc, char * argv[])
       my_errors("SQLAllocHandle", henv, hdbc, hstmt);
       return(1);
    };
-   SQLSetEnvAttr (henv, SQL_ATTR_ODBC_VERSION, (SQLPOINTER) SQL_OV_ODBC3, SQL_IS_UINTEGER);
+   SQLSetEnvAttr(henv, SQL_ATTR_ODBC_VERSION, (SQLPOINTER) SQL_OV_ODBC3, SQL_IS_UINTEGER);
 
    // allocate connection handle
    if (SQLAllocHandle(SQL_HANDLE_DBC, henv, &hdbc) != SQL_SUCCESS)
@@ -155,7 +155,7 @@ int main(int argc, char * argv[])
    // displays driver manager version
    err = SQLGetInfo(hdbc, SQL_DM_VER, driverInfo, sizeof(driverInfo), &len1);
    if (err == SQL_SUCCESS)
-      printf ("Driver Manager: %s\n", driverInfo);
+      printf("Driver Manager: %s\n", driverInfo);
 
    // displays list of ODBC data sources
    if (argc == 1)
@@ -168,10 +168,10 @@ int main(int argc, char * argv[])
          fprintf(stderr, "%s: unable to list ODBC sources.\n", argv[0]);
          return(0);
       };
-      fprintf (stderr, "%-32s   %-40s\n", "DSN:", "Driver:");
-      while (err == SQL_SUCCESS)
+      fprintf(stderr, "%-32s   %-40s\n", "DSN:", "Driver:");
+      while(err == SQL_SUCCESS)
       {
-         fprintf (stderr, "%-32s   %-40s\n", dsn, desc);
+         fprintf(stderr, "%-32s   %-40s\n", dsn, desc);
          err = SQLDataSources(henv, SQL_FETCH_NEXT, dsn,  sizeof(dsn), &len1,
                                                     desc, sizeof(desc), &len2);
       };
@@ -194,10 +194,10 @@ int main(int argc, char * argv[])
    err = SQLGetInfo(hdbc, SQL_DRIVER_VER, driverInfo, sizeof(driverInfo), &len1);
    if (err == SQL_SUCCESS)
    {
-      printf ("Driver: %s", driverInfo);
-      err = SQLGetInfo (hdbc, SQL_DRIVER_NAME, driverInfo, sizeof(driverInfo), &len1);
+      printf("Driver: %s", driverInfo);
+      err = SQLGetInfo(hdbc, SQL_DRIVER_NAME, driverInfo, sizeof(driverInfo), &len1);
       if (err == SQL_SUCCESS)
-         printf (" (%s)", driverInfo);
+         printf(" (%s)", driverInfo);
       printf("\n\n");
    };
 
@@ -341,7 +341,7 @@ int main(int argc, char * argv[])
    };
 
    // execute SQL statement
-   err = SQLExecute (hstmt);
+   err = SQLExecute(hstmt);
    if (err != SQL_SUCCESS)
    {
       my_errors("SQLExecute", henv, hdbc, hstmt);
@@ -382,10 +382,10 @@ void my_errors(const char * s, HENV henv, HDBC hdbc, HSTMT hstmt)
    // display statement errors
    for(i = 1; ((hstmt) && (i < 6)); i++)
    {
-      sts = SQLGetDiagRec (SQL_HANDLE_STMT, hstmt, i, sqlstate, &native_error, buff, sizeof(buff), NULL);
+      sts = SQLGetDiagRec(SQL_HANDLE_STMT, hstmt, i, sqlstate, &native_error, buff, sizeof(buff), NULL);
       if (!(SQL_SUCCEEDED(sts)))
          break;
-      fprintf (stderr, "%s: %s\n",  s, buff);
+      fprintf(stderr, "%s: %s\n",  s, buff);
       if (!(strcmp((char *)sqlstate, "IM003")))
          return;
    };
@@ -393,11 +393,11 @@ void my_errors(const char * s, HENV henv, HDBC hdbc, HSTMT hstmt)
    // display connection errors
    for(i = 1; ((hdbc) && (i < 6)); i++)
    {
-      sts = SQLGetDiagRec (SQL_HANDLE_DBC, hdbc, i, sqlstate,
+      sts = SQLGetDiagRec(SQL_HANDLE_DBC, hdbc, i, sqlstate,
                            &native_error, buff, sizeof(buff), NULL);
       if (!(SQL_SUCCEEDED(sts)))
          break;
-      fprintf (stderr, "%s: %s\n",  s, buff);
+      fprintf(stderr, "%s: %s\n",  s, buff);
       if (!(strcmp((char *)sqlstate, "IM003")))
          return;
    };
@@ -405,10 +405,10 @@ void my_errors(const char * s, HENV henv, HDBC hdbc, HSTMT hstmt)
    // display environment errors
    for(i = 1; ((henv) && (i < 6)); i++)
    {
-      sts = SQLGetDiagRec (SQL_HANDLE_ENV, henv, i, sqlstate, &native_error, buff, sizeof(buff), NULL);
+      sts = SQLGetDiagRec(SQL_HANDLE_ENV, henv, i, sqlstate, &native_error, buff, sizeof(buff), NULL);
       if (!(SQL_SUCCEEDED(sts)))
          break;
-      fprintf (stderr, "%s: %s\n",  s, buff);
+      fprintf(stderr, "%s: %s\n",  s, buff);
       if (!(strcmp((char *)sqlstate, "IM003")))
          return;
    };
@@ -444,7 +444,7 @@ int my_result(HENV henv, HDBC hdbc, HSTMT hstmt)
 {
    int             err;
    SQLRETURN       sts;
-  SQLTCHAR         fetchBuffer[1024];
+   SQLTCHAR        fetchBuffer[1024];
    size_t          displayWidths[32];
    size_t          displayWidth;
    short           numCols;
@@ -462,28 +462,28 @@ int my_result(HENV henv, HDBC hdbc, HSTMT hstmt)
    totalSets = 1;
 
    sts = SQL_SUCCESS;
-    while (sts == SQL_SUCCESS)
+    while(sts == SQL_SUCCESS)
    {
       // retrieve number of columns
       err = SQLNumResultCols(hstmt, &numCols);
       if (err != SQL_SUCCESS)
       {
          my_errors("SQLExecute", henv, hdbc, hstmt);
-         SQLCloseCursor (hstmt);
+         SQLCloseCursor(hstmt);
          return(1);
       };
       if (numCols == 0)
       {
          nrows = 0;
-         SQLRowCount (hstmt, &nrows);
-         printf ("Statement executed. %ld rows affected.\n", (long)nrows);
-         SQLCloseCursor (hstmt);
+         SQLRowCount(hstmt, &nrows);
+         printf("Statement executed. %ld rows affected.\n", (long)nrows);
+         SQLCloseCursor(hstmt);
          return(1);
       };
       if (numCols > 32)
       {
          numCols = 32;
-         fprintf (stderr, "NOTE: Resultset truncated to %d columns.\n", 32);
+         fprintf(stderr, "NOTE: Resultset truncated to %d columns.\n", 32);
       };
 
       // retrieve name of column
@@ -497,7 +497,7 @@ int my_result(HENV henv, HDBC hdbc, HSTMT hstmt)
             SQLCloseCursor(hstmt);
             return(1);
          };
-         switch (colType)
+         switch(colType)
          {
             case SQL_VARCHAR:
             case SQL_CHAR:
@@ -588,7 +588,7 @@ int my_result(HENV henv, HDBC hdbc, HSTMT hstmt)
             break;
          };
 
-         for (colNum = 1; colNum <= numCols; colNum++)
+         for(colNum = 1; colNum <= numCols; colNum++)
          {
             sts = SQLGetData(hstmt, colNum, SQL_C_CHAR, fetchBuffer,
                              sizeof(fetchBuffer), &colIndicator);
@@ -600,7 +600,7 @@ int my_result(HENV henv, HDBC hdbc, HSTMT hstmt)
             };
             if (colIndicator == SQL_NULL_DATA)
                fetchBuffer[0] = '\0';
-            printf ("\"%s\"", fetchBuffer);
+            printf("\"%s\"", fetchBuffer);
             if (colNum < numCols)
                printf(",");
          };
@@ -608,7 +608,7 @@ int my_result(HENV henv, HDBC hdbc, HSTMT hstmt)
          totalRows++;
       };
 
-      printf ("\nresult set %lu returned %lu rows.\n\n", totalSets, totalRows);
+      printf("\nresult set %lu returned %lu rows.\n\n", totalSets, totalRows);
       totalSets++;
 
       sts = SQLMoreResults(hstmt);
@@ -617,11 +617,11 @@ int my_result(HENV henv, HDBC hdbc, HSTMT hstmt)
    if (sts == SQL_ERROR)
    {
       my_errors("SQLMoreResults", henv, hdbc, hstmt);
-      SQLCloseCursor (hstmt);
+      SQLCloseCursor(hstmt);
       return(1);
    };
 
-   SQLCloseCursor (hstmt);
+   SQLCloseCursor(hstmt);
 
    return(0);
 }
