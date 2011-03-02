@@ -80,6 +80,12 @@
 #define PACKAGE_VERSION ""
 #endif
 
+// runtime modes
+#define ODBCSHELL_MODE_SHELL    0x01
+#define ODBCSHELL_MODE_SCRIPT   0x02
+#define ODBCSHELL_MODE_EXEC     0x03
+#define ODBCSHELL_MODE_LISTDSN  0x04
+
 // option types
 #define ODBSHELL_OTYPE_MASK       0x0F
 #define ODBSHELL_OTYPE_INT        0x01
@@ -155,6 +161,7 @@ struct odbcshell_connection
 typedef struct odbcshell_config_data ODBCShell;
 struct odbcshell_config_data
 {
+   long long          mode;        ///< run mode for ODBC Shell
    long long          continues;   ///< toggle for continue one error mode
    long long          history;     ///< disables storing history
    long long          noshell;     ///< disables ability to call shell commands

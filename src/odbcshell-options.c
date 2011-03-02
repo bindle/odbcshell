@@ -144,6 +144,8 @@ int odbcshell_initialize(ODBCShell ** cnfp)
    };
    memset(cnf, 0, sizeof(ODBCShell));
 
+   cnf->mode = ODBCSHELL_MODE_SHELL;
+
    odbcshell_signal_init();
 
    if (odbcshell_set_defaults(cnf))

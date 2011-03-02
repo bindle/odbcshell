@@ -136,6 +136,7 @@ int main(int argc, char * argv[])
 {
    int           c;
    int           ival;
+   int           sts;
    int           opt_index;
    ODBCShell   * cnf;
 
@@ -194,18 +195,29 @@ int main(int argc, char * argv[])
    if ((odbcshell_odbc_initialize(cnf)))
       return(1);
 
-   c = 1;
-   odbcshell_set_option(cnf, ODBCSHELL_OPT_CONTINUE, &c);
-
-   if (odbcshell_cli_loop(cnf))
+   sts = 0;
+   switch(cnf->mode)
    {
-      odbcshell_free(cnf);
-      return(1);
+      case ODBCSHELL_MODE_SCRIPT:
+         break;
+
+      case ODBCSHELL_MODE_EXEC:
+         break;
+
+      case ODBCSHELL_MODE_LISTDSN:
+         break;
+
+      case ODBCSHELL_MODE_SHELL:
+      default:
+         c = 1;
+         odbcshell_set_option(cnf, ODBCSHELL_OPT_CONTINUE, &c);
+         sts = odbcshell_cli_loop(cnf);
+         break;
    };
 
    odbcshell_free(cnf);
 
-   return(0);
+   return(sts);
 }
 
 /* end of source */
