@@ -127,6 +127,19 @@
 #pragma mark -
 #pragma mark Datatypes
 
+/// internal map for switching between an directive's ASCII and numeric values
+typedef struct odbcshell_option_data ODBCShellOption;
+struct odbcshell_option_data
+{
+   long long     val;        ///< option ID
+   long long     min_arg;    ///< minimum arguments allowed
+   long long     max_arg;    ///< maximum arguments allowed
+   const char  * name;       ///< option description
+   const char  * desc;       ///< option description
+   const char ** usage;      ///< option usage
+};
+
+
 /// ODBC connection information
 typedef struct odbcshell_connection ODBCShellConn;
 struct odbcshell_connection
@@ -156,19 +169,6 @@ struct odbcshell_config_data
    HDBC               hdbc;        ///< iODBC connection state
    ODBCShellConn    * current;     ///< current connection to use for SQL
    ODBCShellConn   ** conns;       ///< list of active connections
-};
-
-
-/// internal map for switching between an directive's ASCII and numeric values
-typedef struct odbcshell_option_data ODBCShellOption;
-struct odbcshell_option_data
-{
-   long long     val;        ///< option ID
-   long long     min_arg;    ///< minimum arguments allowed
-   long long     max_arg;    ///< maximum arguments allowed
-   const char  * name;       ///< option description
-   const char  * desc;       ///< option description
-   const char ** usage;      ///< option usage
 };
 
 
