@@ -131,7 +131,8 @@ int odbcshell_odbc_close(ODBCShell * cnf)
       printf("closing connection \"%s\"\n", cnf->conns[i]->name);
       odbcshell_odbc_free(cnf, &cnf->conns[i]);
    };
-
+   free(cnf->conns);
+   cnf->conns = NULL;
    cnf->conns_count = 0;
 
    if (cnf->hdbc)
@@ -139,9 +140,11 @@ int odbcshell_odbc_close(ODBCShell * cnf)
       SQLDisconnect(cnf->hdbc);
       SQLFreeHandle(SQL_HANDLE_DBC, cnf->hdbc);
    };
+   cnf->hdbc = NULL;
 
    if (cnf->henv)
       SQLFreeHandle(SQL_HANDLE_ENV, cnf->henv);
+   cnf->henv = NULL;
 
    return(0);
 }
