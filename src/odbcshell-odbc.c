@@ -480,7 +480,6 @@ int odbcshell_odbc_reconnect(ODBCShell * cnf, const char * name)
    if ((sts != SQL_SUCCESS) && (sts != SQL_SUCCESS_WITH_INFO))
    {
       odbcshell_odbc_errors("SQLDriverConnect", cnf, conn);
-      odbcshell_odbc_free(cnf, &conn);
       return(-1);
    }; 
 
@@ -488,7 +487,6 @@ int odbcshell_odbc_reconnect(ODBCShell * cnf, const char * name)
    if (sts != SQL_SUCCESS)
    {
       odbcshell_odbc_errors("SQLAllocHandle", cnf, conn);
-      odbcshell_odbc_free(cnf, &conn);
       return(-1);
    };
 
