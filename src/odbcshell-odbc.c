@@ -162,6 +162,11 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
    SQLRETURN        sts;
    ODBCShellConn  * conn;
 
+   if (!(name))
+      name = "default";
+   if (!(strlen(name)))
+      name = "default";
+
    if ((odbcshell_odbc_array_findindex(cnf, name)) >= 0)
    {
       odbcshell_error(cnf, "connection with name \"%s\" already exists\n", name);

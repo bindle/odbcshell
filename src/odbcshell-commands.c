@@ -80,7 +80,7 @@ int odbcshell_cmd_connect(ODBCShell * cnf, int argc, char ** argv)
 {
    if (argc == 3)
       return(odbcshell_odbc_connect(cnf, argv[2], argv[1]));
-   return(odbcshell_odbc_connect(cnf, argv[1], "default"));
+   return(odbcshell_odbc_connect(cnf, argv[1], NULL));
 }
 
 
