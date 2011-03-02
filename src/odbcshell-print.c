@@ -78,6 +78,25 @@ void odbcshell_error(ODBCShell * cnf, const char * format, ...)
 }
 
 
+/// prints message to stdout
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  format   format string for message
+/// @param[in]  ...
+void odbcshell_printf(ODBCShell * cnf, const char * format, ...)
+{
+   va_list ap;
+
+   if ((cnf->silent))
+      return;
+
+   va_start(ap, format);
+      vprintf(format, ap);
+   va_end(ap);
+
+   return;
+}
+
+
 /// displays verbose messages
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  format   format string for message

@@ -55,8 +55,11 @@
 #pragma mark -
 #pragma mark Prototypes
 
-/// displays error messages
+// displays error messages
 void odbcshell_error(ODBCShell * cnf, const char * format, ...) __attribute__ ((format (printf, 2, 3)));
+
+// prints message to stdout
+void odbcshell_printf(ODBCShell * cnf, const char * format, ...) __attribute__ ((format (printf, 2, 3)));
 
 // displays verbose messages
 void odbcshell_verbose(ODBCShell * cnf, const char * str, ...) __attribute__ ((format (printf, 2, 3)));
