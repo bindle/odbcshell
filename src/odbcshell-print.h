@@ -58,6 +58,9 @@
 // displays error messages
 void odbcshell_error(ODBCShell * cnf, const char * format, ...) __attribute__ ((format (printf, 2, 3)));
 
+// displays fatal error messages
+void odbcshell_fatal(ODBCShell * cnf, const char * format, ...) __attribute__ ((format (printf, 2, 3)));
+
 // prints message to stdout
 void odbcshell_printf(ODBCShell * cnf, const char * format, ...) __attribute__ ((format (printf, 2, 3)));
 

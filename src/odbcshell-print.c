@@ -70,6 +70,27 @@ void odbcshell_error(ODBCShell * cnf, const char * format, ...)
       return;
 
    fprintf(stderr, "%s: ", PROGRAM_NAME);
+   if (cnf->active_cmd)
+      fprintf(stderr, "%s: ", cnf->active_cmd);
+   va_start(ap, format);
+      vfprintf(stderr, format, ap);
+   va_end(ap);
+
+   return;
+}
+
+
+/// displays fatal error messages
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  format   format string for message
+/// @param[in]  ...  
+void odbcshell_fatal(ODBCShell * cnf, const char * format, ...)
+{
+   va_list ap;
+
+   fprintf(stderr, "%s: ", PROGRAM_NAME);
+   if (cnf->active_cmd)
+      fprintf(stderr, "%s: ", cnf->active_cmd);
    va_start(ap, format);
       vfprintf(stderr, format, ap);
    va_end(ap);
