@@ -164,7 +164,7 @@ struct odbcshell_config_data
    char             * conffile;    ///< odbcshell configuration file
    char             * histfile;    ///< GNU readline history file
    char             * prompt;      ///< shell prompt
-   char             * active_cmd;  ///< command being actively executed
+   ODBCShellOption  * active_cmd;  ///< command being actively executed
    HENV               henv;        ///< iODBC environment state
    HDBC               hdbc;        ///< iODBC connection state
    ODBCShellConn    * current;     ///< current connection to use for SQL

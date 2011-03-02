@@ -71,7 +71,7 @@ void odbcshell_error(ODBCShell * cnf, const char * format, ...)
 
    fprintf(stderr, "%s: ", PROGRAM_NAME);
    if (cnf->active_cmd)
-      fprintf(stderr, "%s: ", cnf->active_cmd);
+      fprintf(stderr, "%s: ", cnf->active_cmd->name);
    va_start(ap, format);
       vfprintf(stderr, format, ap);
    va_end(ap);
@@ -90,7 +90,7 @@ void odbcshell_fatal(ODBCShell * cnf, const char * format, ...)
 
    fprintf(stderr, "%s: ", PROGRAM_NAME);
    if (cnf->active_cmd)
-      fprintf(stderr, "%s: ", cnf->active_cmd);
+      fprintf(stderr, "%s: ", cnf->active_cmd->name);
    va_start(ap, format);
       vfprintf(stderr, format, ap);
    va_end(ap);

@@ -151,6 +151,7 @@ int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
       return(0);
    };
 
+   cnf->active_cmd = cmd;
    switch(cmd->val)
    {
       case ODBCSHELL_CMD_CLEAR:      code = odbcshell_cmd_clear(); break;
@@ -168,6 +169,7 @@ int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
       case ODBCSHELL_CMD_VERSION:    code = odbcshell_cmd_version(cnf); break;
       default:                       code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
    };
+   cnf->active_cmd = NULL;
 
    return(code);
 }
