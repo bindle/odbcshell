@@ -218,7 +218,8 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
       odbcshell_odbc_free(cnf, &conn);
       return(-1);
    };
-   cnf->current = conn;
+
+   odbcshell_odbc_update_current(cnf, conn);
 
    return(0);
 }
@@ -235,7 +236,10 @@ int odbcshell_odbc_disconnect(ODBCShell * cnf, const char * name)
    if (!(name))
    {
       if (!(cnf->current))
-         return(0);
+      {
+         odbcshell_error(cnf, "disconnect: not connected to a database\n");
+         return(-1);
+      };
       if (!(cnf->current->name))
          return(0);
       name = cnf->current->name;
@@ -246,14 +250,15 @@ int odbcshell_odbc_disconnect(ODBCShell * cnf, const char * name)
          cnf->current = NULL;
 
    if (((conn_index = odbcshell_odbc_array_findindex(cnf, name))) == -1)
-      return(0);
-
+   {
+      odbcshell_error(cnf, "disconnect: unknown connection \"%s\"\n", name);
+      return(-1);
+   };
    conn = cnf->conns[conn_index];
    odbcshell_odbc_array_rm(cnf, name);
    odbcshell_odbc_free(cnf, &conn);
 
-   if ((!(cnf->current)) && (cnf->conns_count))
-      cnf->current = cnf->conns[0];
+   odbcshell_odbc_update_current(cnf, NULL);
 
    return(0);
 }
@@ -686,6 +691,27 @@ int odbcshell_odbc_result(ODBCShell * cnf)
 }
 
 
+/// updates current connection
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  conn     pointer to connection struct
+int odbcshell_odbc_update_current(ODBCShell * cnf, ODBCShellConn  * conn)
+{
+   if ( (!(conn)) && ((cnf->current)) )
+      return(0);
+
+   if ( (!(conn)) && (!(cnf->conns_count)) )
+      return(0);
+
+   if (!(conn))
+      conn = cnf->conns[cnf->conns_count-1];
+
+   cnf->current = conn;
+   odbcshell_printf(cnf, "using connection \"%s\"\n", cnf->current->name);
+
+   return(0);
+}
+
+
 /// switches active connection
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  name     internal name of connect
@@ -710,7 +736,7 @@ int odbcshell_odbc_use(ODBCShell * cnf, const char * name)
    {
       if (!(strcasecmp(name, cnf->conns[i]->name)))
       {
-         cnf->current = cnf->conns[i];
+         odbcshell_odbc_update_current(cnf, cnf->conns[i]);
          return(0);
       };
    };

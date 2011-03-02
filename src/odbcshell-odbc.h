@@ -96,6 +96,9 @@ int odbcshell_odbc_reconnect(ODBCShell * cnf, const char * name);
 // displays result from ODBC operation
 int odbcshell_odbc_result(ODBCShell * cnf);
 
+// updates current connection
+int odbcshell_odbc_update_current(ODBCShell * cnf, ODBCShellConn  * conn);
+
 // switches active connection
 int odbcshell_odbc_use(ODBCShell * cnf, const char * name);
 
