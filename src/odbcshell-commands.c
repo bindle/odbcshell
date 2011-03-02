@@ -51,6 +51,7 @@
 
 #include "odbcshell-commands.h"
 #include "odbcshell-options.h"
+#include "odbcshell-print.h"
 #include "odbcshell-variables.h"
 #include "odbcshell-odbc.h"
 
@@ -345,8 +346,9 @@ int odbcshell_cmd_quit(ODBCShell * cnf)
    if (!(cnf))
       return(-1);
 
-   if (!(cnf->silent))
-      printf("bye.\n");
+   odbcshell_odbc_close(cnf);
+
+   odbcshell_printf(cnf, "bye.\n");
 
    return(1);
 }
