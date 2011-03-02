@@ -161,7 +161,7 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
 
    if ((odbcshell_odbc_array_findindex(cnf, name)) >= 0)
    {
-      fprintf(stderr, "%s: connection with name \"%s\" already exists\n", PROGRAM_NAME, name);
+      odbcshell_error(cnf, "connection with name \"%s\" already exists\n", name);
       return(-1);
    };
 
@@ -237,7 +237,7 @@ int odbcshell_odbc_disconnect(ODBCShell * cnf, const char * name)
    {
       if (!(cnf->current))
       {
-         odbcshell_error(cnf, "disconnect: not connected to a database\n");
+         odbcshell_error(cnf, "not connected to a database\n");
          return(-1);
       };
       if (!(cnf->current->name))
@@ -251,7 +251,7 @@ int odbcshell_odbc_disconnect(ODBCShell * cnf, const char * name)
 
    if (((conn_index = odbcshell_odbc_array_findindex(cnf, name))) == -1)
    {
-      odbcshell_error(cnf, "disconnect: unknown connection \"%s\"\n", name);
+      odbcshell_error(cnf, "unknown connection \"%s\"\n", name);
       return(-1);
    };
    conn = cnf->conns[conn_index];
@@ -291,7 +291,7 @@ void odbcshell_odbc_errors(const char * s, ODBCShell * cnf,
       sts = SQLGetDiagRec(SQL_HANDLE_STMT, hstmt, i, sqlstate, &native_error, buff, sizeof(buff), NULL);
       if (!(SQL_SUCCEEDED(sts)))
          break;
-      fprintf (stderr, "%s: %s\n",  s, buff);
+      odbcshell_error(cnf, "%s: %s\n",  s, buff);
       if (!(strcmp((char *)sqlstate, "IM003")))
          return;
    };
@@ -303,7 +303,7 @@ void odbcshell_odbc_errors(const char * s, ODBCShell * cnf,
                            &native_error, buff, sizeof(buff), NULL);
       if (!(SQL_SUCCEEDED(sts)))
          break;
-      fprintf(stderr, "%s: %s\n",  s, buff);
+      odbcshell_error(cnf, "%s: %s\n",  s, buff);
       if (!(strcmp((char *)sqlstate, "IM003")))
          return;
    };
@@ -314,7 +314,7 @@ void odbcshell_odbc_errors(const char * s, ODBCShell * cnf,
       sts = SQLGetDiagRec(SQL_HANDLE_ENV, henv, i, sqlstate, &native_error, buff, sizeof(buff), NULL);
       if (!(SQL_SUCCEEDED(sts)))
          break;
-      fprintf(stderr, "%s: %s\n",  s, buff);
+      odbcshell_error(cnf, "%s: %s\n",  s, buff);
       if (!(strcmp((char *)sqlstate, "IM003")))
          return;
    };
@@ -332,7 +332,7 @@ int odbcshell_odbc_exec(ODBCShell * cnf, char * sql)
 
    if (!(cnf->current))
    {
-      fprintf(stderr, "%s: not connected to a database\n", PROGRAM_NAME);
+      odbcshell_error(cnf, "not connected to a database\n");
       return(-1);
    };
 
@@ -434,8 +434,8 @@ int odbcshell_odbc_list_dsn(ODBCShell * cnf)
                                                     desc, sizeof(desc), &len2);
    if (err != SQL_SUCCESS)
    {
-      fprintf(stderr, "%s: unable to list ODBC sources.\n", PROGRAM_NAME);
-      return(0);
+      odbcshell_error(cnf, "unable to list ODBC sources.\n");
+      return(-1);
    };
 
    printf("%-32s   %-40s\n", "DSN:", "Driver:");
@@ -546,7 +546,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
       if (numCols > 256)
       {
          numCols = 256;
-         fprintf(stderr, "NOTE: Resultset truncated to %d columns.\n", 256);
+         odbcshell_error(cnf, "NOTE: Resultset truncated to %d columns.\n", 256);
       };
 
       // retrieve name of column
@@ -741,7 +741,7 @@ int odbcshell_odbc_use(ODBCShell * cnf, const char * name)
       };
    };
 
-   fprintf(stderr, "%s: unknown connection handle\n", PROGRAM_NAME);
+   odbcshell_error(cnf, "use: unknown connection handle\n");
 
    return(-1);
 }
