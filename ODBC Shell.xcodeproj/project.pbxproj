@@ -66,6 +66,7 @@
 		A0BFC5F6131DBF1B006FBFDE /* odbcshell-print.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "odbcshell-print.c"; sourceTree = "<group>"; };
 		A0BFC637131DC6A5006FBFDE /* odbcshell-signal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "odbcshell-signal.h"; sourceTree = "<group>"; };
 		A0BFC638131DC6A5006FBFDE /* odbcshell-signal.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "odbcshell-signal.c"; sourceTree = "<group>"; };
+		A0BFC656131DCA8A006FBFDE /* TODO */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TODO; sourceTree = "<group>"; };
 		A0D7191F12F0D2C0004AFD89 /* git-package-version.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = "git-package-version.sh"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -112,6 +113,7 @@
 				A06CE3E312E7BBD500AD1C66 /* NEWS */,
 				A06CE3E412E7BBD500AD1C66 /* README */,
 				A06CE3E512E7BBD500AD1C66 /* src */,
+				A0BFC656131DCA8A006FBFDE /* TODO */,
 				A046A8B5131CCFFC0059E5AA /* Frameworks */,
 				A0287F42131C79B900A06C03 /* Products */,
 			);
