@@ -47,6 +47,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "odbcshell-commands.h"
 #include "odbcshell-options.h"
@@ -235,11 +236,13 @@ int odbcshell_cmd_resetconf(ODBCShell * cnf)
 /// @param[in]  argv     array of arguments passed to command
 int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv)
 {
+   int               i;
    int               ival;
    ODBCShellOption * opt;
 
    if (argc < 2)
    {
+      printf("ODBC Shell Parameters:\n");
       odbcshell_show_option(cnf, ODBCSHELL_OPT_CONTINUE);
       odbcshell_show_option(cnf, ODBCSHELL_OPT_HISTFILE);
       odbcshell_show_option(cnf, ODBCSHELL_OPT_HISTORY);
@@ -247,6 +250,32 @@ int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv)
       odbcshell_show_option(cnf, ODBCSHELL_OPT_PROMPT);
       odbcshell_show_option(cnf, ODBCSHELL_OPT_SILENT);
       odbcshell_show_option(cnf, ODBCSHELL_OPT_VERBOSE);
+      return(0);
+   };
+
+   if (!(strcasecmp(argv[1], "help")))
+   {
+      if (argc >= 3)
+      {
+         if (!(opt = odbcshell_lookup_opt_by_name(odbcshell_opt_strings, argv[2])))
+         {
+            printf("%s: set %s: unknown option\n", PROGRAM_NAME, argv[2]);
+            return(-1);
+         };
+         printf("%-15s", opt->name);
+         if (opt->desc)
+            printf(" %s", opt->desc);
+         printf("\n");
+         return(0);
+      };
+      printf("ODBC Shell Parameter Descriptions:\n");
+      for(i = 0; odbcshell_opt_strings[i].name; i++)
+      {
+         printf("%-15s", odbcshell_opt_strings[i].name);
+         if (odbcshell_opt_strings[i].desc)
+            printf(" %s", odbcshell_opt_strings[i].desc);
+         printf("\n");
+      };
       return(0);
    };
 
