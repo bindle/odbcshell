@@ -153,7 +153,7 @@ int odbcshell_cmd_help(ODBCShell * cnf, int argc, char ** argv)
       for(u = 0; odbcshell_cmd_strings[u].name; u++)
       {
          if ((u%5) == 0)
-            printf("       ");
+            printf("   ");
          printf("%-12s", odbcshell_cmd_strings[u].name);
          if ((u%5) == 4)
             printf("\n");
@@ -161,8 +161,7 @@ int odbcshell_cmd_help(ODBCShell * cnf, int argc, char ** argv)
       if ((u%5) != 0)
          printf("\n");
 
-      printf("For more info use \"HELP <topic>;\".\n");
-      printf("End of HELP info.\n");
+      printf("For more info use \"HELP <topic>\".\n");
       return(0);
    };
 
@@ -177,21 +176,20 @@ int odbcshell_cmd_help(ODBCShell * cnf, int argc, char ** argv)
       return(0);
    };
 
-   printf("%s Command:\n", cmd->name);
+   printf("Command:\n   %s\n", cmd->name);
    if (cmd->desc)
    {
       printf("Description:\n");
-      printf("       %s\n", cmd->desc);
+      printf("   %s\n", cmd->desc);
    };
    if (cmd->usage)
    {
       printf("Usage:\n");
       for(u = 0; cmd->usage[u]; u++)
-         printf("       %s%s\n", cmd->name, cmd->usage[u]);
+         printf("   %s%s\n", cmd->name, cmd->usage[u]);
    };
    if ( (!(cmd->usage)) && (!(cmd->desc)) )
-      printf("       Help information for this topic is unavailable.\n");
-   printf("End of HELP info.\n");
+      printf("   Help information for this topic is unavailable.\n");
 
    return(0);
 }

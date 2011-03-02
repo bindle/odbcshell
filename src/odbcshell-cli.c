@@ -98,8 +98,8 @@ int odbcshell_cli_loop(ODBCShell * cnf)
 
    if (!(cnf->silent))
    {
-      printf("Welcome to ODBC Shell v%s. Commands end with ';'.\n\n", PACKAGE_VERSION);
-      printf("Type \"help;\" for usage information.\n\n");
+      printf("Welcome to ODBC Shell v%s.\n\n", PACKAGE_VERSION);
+      printf("Type \"help\" for usage information.\n\n");
    };
 
    argv   = NULL;
