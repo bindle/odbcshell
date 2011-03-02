@@ -104,6 +104,7 @@ void odbcshell_usage(void)
    printf(("Usage: %s [OPTIONS]\n"
          "  -D dsn                    connect to DSN\n"
          "  -h, --help                print this help and exit\n"
+         "  -l                        print list of available DSN\n"
          "  -q, --quiet, --silent     do not print messages\n"
          "  -V, --version             print version number and exit\n"
          "  -v, --verbose             print verbose messages\n"
@@ -142,7 +143,7 @@ int main(int argc, char * argv[])
    char        * opt_dsn;
    ODBCShell   * cnf;
 
-   static char   short_opt[] = "D:hqVv";
+   static char   short_opt[] = "D:hlqVv";
    static struct option long_opt[] =
    {
       {"help",          no_argument, 0, 'h'},
@@ -177,6 +178,9 @@ int main(int argc, char * argv[])
          case 'h':
             odbcshell_usage();
             return(0);
+         case 'l':
+            cnf->mode = ODBCSHELL_MODE_LISTDSN;
+            break;
          case 'q':
             ival = 1;
             odbcshell_set_option(cnf, ODBCSHELL_OPT_SILENT, &ival);
@@ -220,6 +224,7 @@ int main(int argc, char * argv[])
          break;
 
       case ODBCSHELL_MODE_LISTDSN:
+         sts = odbcshell_odbc_list_dsn(cnf);
          break;
 
       case ODBCSHELL_MODE_SHELL:
