@@ -102,6 +102,7 @@ int main(int argc, char * argv[]);
 void odbcshell_usage(void)
 {
    printf(("Usage: %s [OPTIONS]\n"
+         "  -c                        continue if error is encoutered\n"
          "  -D dsn                    connect to DSN\n"
          "  -h, --help                print this help and exit\n"
          "  -l                        print list of available DSN\n"
@@ -142,7 +143,7 @@ int main(int argc, char * argv[])
    int           opt_index;
    ODBCShell   * cnf;
 
-   static char   short_opt[] = "D:hlqVv";
+   static char   short_opt[] = "cD:hlqVv";
    static struct option long_opt[] =
    {
       {"help",          no_argument, 0, 'h'},
@@ -168,6 +169,10 @@ int main(int argc, char * argv[])
       {
          case -1:	/* no more arguments */
          case 0:	/* long options toggles */
+            break;
+         case 'c':
+            ival = 1;
+            odbcshell_set_option(cnf, ODBCSHELL_OPT_CONTINUE, &ival);
             break;
          case 'D':
             cnf->dflt_dsn = optarg;
@@ -217,8 +222,8 @@ int main(int argc, char * argv[])
 
       case ODBCSHELL_MODE_SHELL:
       default:
-         c = 1;
-         odbcshell_set_option(cnf, ODBCSHELL_OPT_CONTINUE, &c);
+         //c = 1;
+         //odbcshell_set_option(cnf, ODBCSHELL_OPT_CONTINUE, &c);
          sts = odbcshell_cli_loop(cnf);
          break;
    };
