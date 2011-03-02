@@ -102,6 +102,7 @@ int main(int argc, char * argv[]);
 void odbcshell_usage(void)
 {
    printf(("Usage: %s [OPTIONS]\n"
+         "  -D dsn                    connect to DSN\n"
          "  -h, --help                print this help and exit\n"
          "  -q, --quiet, --silent     do not print messages\n"
          "  -V, --version             print version number and exit\n"
@@ -138,9 +139,10 @@ int main(int argc, char * argv[])
    int           ival;
    int           sts;
    int           opt_index;
+   char        * opt_dsn;
    ODBCShell   * cnf;
 
-   static char   short_opt[] = "hqVv";
+   static char   short_opt[] = "D:hqVv";
    static struct option long_opt[] =
    {
       {"help",          no_argument, 0, 'h'},
@@ -157,6 +159,8 @@ int main(int argc, char * argv[])
       return(1);
    };
 
+   opt_dsn = NULL;
+
    if ((odbcshell_initialize(&cnf)))
       return(1);
 
@@ -166,6 +170,9 @@ int main(int argc, char * argv[])
       {
          case -1:	/* no more arguments */
          case 0:	/* long options toggles */
+            break;
+         case 'D':
+            opt_dsn = optarg;
             break;
          case 'h':
             odbcshell_usage();
@@ -181,7 +188,6 @@ int main(int argc, char * argv[])
             ival = 1;
             odbcshell_set_option(cnf, ODBCSHELL_OPT_VERBOSE, &ival);
             break;
-            break;
          case '?':
             fprintf(stderr, "Try `%s --help' for more information.\n", PROGRAM_NAME);
             return(1);
@@ -194,6 +200,15 @@ int main(int argc, char * argv[])
 
    if ((odbcshell_odbc_initialize(cnf)))
       return(1);
+
+   if (opt_dsn)
+   {
+      if (odbcshell_odbc_connect(cnf, opt_dsn, NULL))
+      {
+         odbcshell_free(cnf);
+         return(1);
+      };
+   };
 
    sts = 0;
    switch(cnf->mode)
