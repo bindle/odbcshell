@@ -47,6 +47,9 @@
 
 #include <string.h>
 
+#include "odbcshell-print.h"
+
+
 
 /////////////////
 //             //
@@ -329,6 +332,7 @@ int odbcshell_odbc_exec(ODBCShell * cnf, char * sql)
    };
 
    // prepare SQL statement
+   odbcshell_verbose(cnf, "preparing SQL statement...\n");
    err = SQLPrepare(cnf->current->hstmt, (SQLTCHAR *)sql, SQL_NTS);
    if (err != SQL_SUCCESS)
    {
@@ -337,6 +341,7 @@ int odbcshell_odbc_exec(ODBCShell * cnf, char * sql)
    };
 
    // execute SQL statement
+   odbcshell_verbose(cnf, "executing SQL statement...\n");
    err = SQLExecute(cnf->current->hstmt);
    if (err != SQL_SUCCESS)
    {
@@ -514,8 +519,10 @@ int odbcshell_odbc_result(ODBCShell * cnf)
 
    totalSets = 1;
 
+   odbcshell_verbose(cnf, "preparing SQL results...\n");
+
    sts = SQL_SUCCESS;
-    while (sts == SQL_SUCCESS)
+   while (sts == SQL_SUCCESS)
    {
       // retrieve number of columns
       err = SQLNumResultCols(cnf->current->hstmt, &numCols);

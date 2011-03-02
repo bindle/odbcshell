@@ -86,6 +86,8 @@ src_odbcshell_SOURCES			= $(noinst_HEADERS) \
 					  src/odbcshell-options.h \
 					  src/odbcshell-parse.c \
 					  src/odbcshell-parse.h \
+					  src/odbcshell-print.c \
+					  src/odbcshell-print.h \
 					  src/odbcshell-variables.c \
 					  src/odbcshell-variables.h
 
