@@ -72,6 +72,7 @@
 #include "odbcshell-cli.h"
 #include "odbcshell-options.h"
 #include "odbcshell-odbc.h"
+#include "odbcshell-signal.h"
 
 
 //////////////////
@@ -196,6 +197,8 @@ int main(int argc, char * argv[])
             return(1);
       };
    };
+
+   odbcshell_signal_init();
 
    if ((odbcshell_odbc_initialize(cnf)))
       return(1);
