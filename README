@@ -37,9 +37,13 @@ Disclaimer
 Software Requirements
 =====================
 
+   GNU GCC 4.2.1
+   GNU Libtool 2.4
+   GNU Autoconf 2.68
+   GNU Automake 1.11.1
+   GNU Readline 6.1
    Git 1.7.2.3
    iODBC 2.52.6
-   GNU Readline 6.1
 
 
 Maintainers
@@ -53,9 +57,18 @@ Maintainers
 Community
 =========
 
+   Web Page:
+      http://www.bindlebinaries.com/products/nix/odbcshell/
+
    Mailing List:
       odbc-shell@lists.bindlebinaries.com
       https://lists.bindlebinaries.com/mailman/listinfo/odbc-shell
+
+   Bug Reports:
+      https://support.bindlebinaries.com/projects/odbcshell
+
+   Downloads:
+      http://scm.bindlebinaries.com/pub/software/odbcshell/
 
 
 Source Code
