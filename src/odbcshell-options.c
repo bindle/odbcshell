@@ -49,6 +49,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "odbcshell-odbc.h"
+#include "odbcshell-signal.h"
+
 
 /////////////////
 //             //
@@ -64,6 +67,8 @@ void odbcshell_free(ODBCShell * cnf)
 {
    if (!(cnf))
       return;
+
+   odbcshell_odbc_close(cnf);
 
    if (cnf->conffile)
       free(cnf->conffile);
@@ -127,9 +132,6 @@ int odbcshell_get_option(ODBCShell * cnf, int opt, void * ptr)
 /// @param[in]  cnfp     pointer to configuration struct
 int odbcshell_initialize(ODBCShell ** cnfp)
 {
-   //int               ival;
-   char              ibuff[2048];
-   //size_t            len;
    ODBCShell       * cnf;
 
    if (!(cnfp))
@@ -142,11 +144,12 @@ int odbcshell_initialize(ODBCShell ** cnfp)
    };
    memset(cnf, 0, sizeof(ODBCShell));
 
-   if (getenv("HOME"))
+   odbcshell_signal_init();
+
+   if (odbcshell_set_defaults(cnf))
    {
-      snprintf(ibuff, 2048L, "%s/.odbcshell_history", getenv("HOME"));
-      if (odbcshell_set_option(cnf, ODBCSHELL_OPT_HISTFILE, ibuff))
-         return(-1);
+      odbcshell_free(cnf);
+      return(1);
    };
 
    *cnfp = cnf;
@@ -158,6 +161,7 @@ int odbcshell_initialize(ODBCShell ** cnfp)
 // sets default values for configuration options
 int odbcshell_set_defaults(ODBCShell * cnf)
 {
+   odbcshell_odbc_close(cnf);
    if (odbcshell_set_option(cnf, ODBCSHELL_OPT_CONFFILE, NULL)) return(-1);
    if (odbcshell_set_option(cnf, ODBCSHELL_OPT_CONTINUE, NULL)) return(-1);
    if (odbcshell_set_option(cnf, ODBCSHELL_OPT_HISTFILE, NULL)) return(-1);
@@ -166,8 +170,6 @@ int odbcshell_set_defaults(ODBCShell * cnf)
    if (odbcshell_set_option(cnf, ODBCSHELL_OPT_PROMPT,   NULL)) return(-1);
    if (odbcshell_set_option(cnf, ODBCSHELL_OPT_SILENT,   NULL)) return(-1);
    if (odbcshell_set_option(cnf, ODBCSHELL_OPT_VERBOSE,  NULL)) return(-1);
-   cnf->henv = SQL_NULL_HANDLE;
-   cnf->hdbc = SQL_NULL_HANDLE;
    return(0);
 }
 

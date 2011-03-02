@@ -72,7 +72,6 @@
 #include "odbcshell-cli.h"
 #include "odbcshell-options.h"
 #include "odbcshell-odbc.h"
-#include "odbcshell-signal.h"
 
 
 //////////////////
@@ -157,13 +156,7 @@ int main(int argc, char * argv[])
       return(1);
    };
 
-   if (!(cnf = malloc(sizeof(ODBCShell))))
-   {
-      fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-      return(1);
-   };
-   memset(cnf, 0, sizeof(ODBCShell));
-   if (odbcshell_set_defaults(cnf))
+   if ((odbcshell_initialize(&cnf)))
       return(1);
 
    while((c = getopt_long(argc, argv, short_opt, long_opt, &opt_index)) != -1)
@@ -198,22 +191,19 @@ int main(int argc, char * argv[])
       };
    };
 
-   odbcshell_signal_init();
-
    if ((odbcshell_odbc_initialize(cnf)))
       return(1);
-
 
    c = 1;
    odbcshell_set_option(cnf, ODBCSHELL_OPT_CONTINUE, &c);
 
    if (odbcshell_cli_loop(cnf))
    {
-      odbcshell_odbc_close(cnf);
+      odbcshell_free(cnf);
       return(1);
    };
 
-   odbcshell_odbc_close(cnf);
+   odbcshell_free(cnf);
 
    return(0);
 }
