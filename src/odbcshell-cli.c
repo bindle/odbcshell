@@ -52,6 +52,7 @@
 #include <readline/history.h>
 
 #include "odbcshell-commands.h"
+#include "odbcshell-odbc.h"
 #include "odbcshell-parse.h"
 #include "odbcshell-variables.h"
 
@@ -101,6 +102,10 @@ int odbcshell_cli_loop(ODBCShell * cnf)
       printf("Welcome to ODBC Shell v%s.\n\n", PACKAGE_VERSION);
       printf("Type \"help\" for usage information.\n\n");
    };
+
+   if (cnf->dflt_dsn)
+      if (odbcshell_odbc_connect(cnf, cnf->dflt_dsn, NULL))
+         return(-1);
 
    argv   = NULL;
    argc   = 0;

@@ -140,7 +140,6 @@ int main(int argc, char * argv[])
    int           ival;
    int           sts;
    int           opt_index;
-   char        * opt_dsn;
    ODBCShell   * cnf;
 
    static char   short_opt[] = "D:hlqVv";
@@ -160,8 +159,6 @@ int main(int argc, char * argv[])
       return(1);
    };
 
-   opt_dsn = NULL;
-
    if ((odbcshell_initialize(&cnf)))
       return(1);
 
@@ -173,7 +170,7 @@ int main(int argc, char * argv[])
          case 0:	/* long options toggles */
             break;
          case 'D':
-            opt_dsn = optarg;
+            cnf->dflt_dsn = optarg;
             break;
          case 'h':
             odbcshell_usage();
@@ -204,15 +201,6 @@ int main(int argc, char * argv[])
 
    if ((odbcshell_odbc_initialize(cnf)))
       return(1);
-
-   if (opt_dsn)
-   {
-      if (odbcshell_odbc_connect(cnf, opt_dsn, NULL))
-      {
-         odbcshell_free(cnf);
-         return(1);
-      };
-   };
 
    sts = 0;
    switch(cnf->mode)

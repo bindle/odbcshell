@@ -171,6 +171,7 @@ struct odbcshell_config_data
    char             * conffile;    ///< odbcshell configuration file
    char             * histfile;    ///< GNU readline history file
    char             * prompt;      ///< shell prompt
+   const char       * dflt_dsn;    ///< default DSN to use for "autoconnect"
    ODBCShellOption  * active_cmd;  ///< command being actively executed
    HENV               henv;        ///< iODBC environment state
    HDBC               hdbc;        ///< iODBC connection state
