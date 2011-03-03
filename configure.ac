@@ -148,6 +148,7 @@ fi
 
 # check for GNU readline
 have_readline=yes
+AC_CHECK_LIB([curses], [tgetnum])
 AC_CHECK_HEADERS([readline/readline.h]      ,,[have_readline=no])
 AC_CHECK_HEADERS([readline/history.h]       ,,[have_readline=no])
 AC_SEARCH_LIBS([add_history],     [readline],,[have_readline=no], [-lcurses])
