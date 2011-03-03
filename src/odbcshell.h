@@ -81,10 +81,10 @@
 #endif
 
 // runtime modes
-#define ODBCSHELL_MODE_SHELL    0x01
-#define ODBCSHELL_MODE_SCRIPT   0x02
-#define ODBCSHELL_MODE_EXEC     0x03
-#define ODBCSHELL_MODE_LISTDSN  0x04
+#define ODBCSHELL_MODE_SHELL    0x00
+#define ODBCSHELL_MODE_SCRIPT   0x01
+#define ODBCSHELL_MODE_EXEC     0x02
+#define ODBCSHELL_MODE_LISTDSN  0x03
 
 // option types
 #define ODBSHELL_OTYPE_MASK       0x0F
@@ -168,10 +168,12 @@ struct odbcshell_config_data
    long long          silent;      ///< toggle for silent mode
    long long          verbose;     ///< toggle for verbose mode
    long long          conns_count; ///< toggle for verbose mode
+   long long          exec_count;  ///< toggle for verbose mode
    char             * conffile;    ///< odbcshell configuration file
    char             * histfile;    ///< GNU readline history file
    char             * prompt;      ///< shell prompt
    const char       * dflt_dsn;    ///< default DSN to use for "autoconnect"
+   char            ** exec_strs;   ///< list of strings to execute
    ODBCShellOption  * active_cmd;  ///< command being actively executed
    HENV               henv;        ///< iODBC environment state
    HDBC               hdbc;        ///< iODBC connection state

@@ -17,6 +17,7 @@
 		A0287F59131C7A0C00A06C03 /* odbcshell-variables.c in Sources */ = {isa = PBXBuildFile; fileRef = A0B80EE912EA0D56005A119F /* odbcshell-variables.c */; };
 		A0287F5C131C7A2100A06C03 /* libiodbc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0287F5B131C7A2100A06C03 /* libiodbc.dylib */; };
 		A0287F5E131C7AAE00A06C03 /* libreadline.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0287F5D131C7AAE00A06C03 /* libreadline.dylib */; };
+		A0497E02131F0BB700ADC9BB /* odbcshell-exec.c in Sources */ = {isa = PBXBuildFile; fileRef = A0497E01131F0BB700ADC9BB /* odbcshell-exec.c */; };
 		A0BFC5F7131DBF1B006FBFDE /* odbcshell-print.c in Sources */ = {isa = PBXBuildFile; fileRef = A0BFC5F6131DBF1B006FBFDE /* odbcshell-print.c */; };
 		A0BFC639131DC6A5006FBFDE /* odbcshell-signal.c in Sources */ = {isa = PBXBuildFile; fileRef = A0BFC638131DC6A5006FBFDE /* odbcshell-signal.c */; };
 /* End PBXBuildFile section */
@@ -38,6 +39,8 @@
 		A0287F5B131C7A2100A06C03 /* libiodbc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiodbc.dylib; path = usr/lib/libiodbc.dylib; sourceTree = SDKROOT; };
 		A0287F5D131C7AAE00A06C03 /* libreadline.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libreadline.dylib; path = usr/lib/libreadline.dylib; sourceTree = SDKROOT; };
 		A02A73F61318CE89007AB2B0 /* odbc-example.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "odbc-example.c"; sourceTree = "<group>"; };
+		A0497E00131F0BB700ADC9BB /* odbcshell-exec.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "odbcshell-exec.h"; sourceTree = "<group>"; };
+		A0497E01131F0BB700ADC9BB /* odbcshell-exec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "odbcshell-exec.c"; sourceTree = "<group>"; };
 		A061EE4512F108E900277649 /* odbcshell-odbc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "odbcshell-odbc.h"; sourceTree = "<group>"; };
 		A061EE4612F108E900277649 /* odbcshell-odbc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "odbcshell-odbc.c"; sourceTree = "<group>"; };
 		A06CE3DD12E7BBD500AD1C66 /* acinclude.m4 */ = {isa = PBXFileReference; explicitFileType = text.script; fileEncoding = 4; path = acinclude.m4; sourceTree = "<group>"; };
@@ -129,6 +132,8 @@
 				A06CE44212E7D6F500AD1C66 /* odbcshell-cli.h */,
 				A0B80F2312EA46D8005A119F /* odbcshell-commands.c */,
 				A0B80F2212EA46D8005A119F /* odbcshell-commands.h */,
+				A0497E01131F0BB700ADC9BB /* odbcshell-exec.c */,
+				A0497E00131F0BB700ADC9BB /* odbcshell-exec.h */,
 				A061EE4612F108E900277649 /* odbcshell-odbc.c */,
 				A061EE4512F108E900277649 /* odbcshell-odbc.h */,
 				A0A091ED12F2058A00D47AED /* odbcshell-odbcw.c */,
@@ -215,6 +220,7 @@
 				A0287F59131C7A0C00A06C03 /* odbcshell-variables.c in Sources */,
 				A0BFC5F7131DBF1B006FBFDE /* odbcshell-print.c in Sources */,
 				A0BFC639131DC6A5006FBFDE /* odbcshell-signal.c in Sources */,
+				A0497E02131F0BB700ADC9BB /* odbcshell-exec.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

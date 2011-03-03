@@ -70,6 +70,7 @@
 #include <iodbcext.h>
 
 #include "odbcshell-cli.h"
+#include "odbcshell-exec.h"
 #include "odbcshell-options.h"
 #include "odbcshell-odbc.h"
 
@@ -104,6 +105,7 @@ void odbcshell_usage(void)
    printf(("Usage: %s [OPTIONS]\n"
          "  -c                        continue if error is encoutered\n"
          "  -D dsn                    connect to DSN\n"
+         "  -e sql                    execute SQL statement\n"
          "  -h, --help                print this help and exit\n"
          "  -l                        print list of available DSN\n"
          "  -q, --quiet, --silent     do not print messages\n"
@@ -143,7 +145,7 @@ int main(int argc, char * argv[])
    int           opt_index;
    ODBCShell   * cnf;
 
-   static char   short_opt[] = "cD:hlqVv";
+   static char   short_opt[] = "cD:e:hlqVv";
    static struct option long_opt[] =
    {
       {"help",          no_argument, 0, 'h'},
@@ -177,10 +179,27 @@ int main(int argc, char * argv[])
          case 'D':
             cnf->dflt_dsn = optarg;
             break;
+         case 'e':
+            if (((cnf->mode)) && (cnf->mode != ODBCSHELL_MODE_EXEC))
+            {
+               fprintf(stderr, "%s: incompatible options `-e' and `-l'\n", PROGRAM_NAME);
+               fprintf(stderr, "Try `%s --help' for more information.\n", PROGRAM_NAME);
+               return(1);
+            };
+            cnf->mode = ODBCSHELL_MODE_EXEC;
+            if (odbcshell_exec_append_str(cnf, optarg))
+               return(1);
+            break;
          case 'h':
             odbcshell_usage();
             return(0);
          case 'l':
+            if (((cnf->mode)) && (cnf->mode != ODBCSHELL_MODE_LISTDSN))
+            {
+               fprintf(stderr, "%s: incompatible options `-e' and `-l'\n", PROGRAM_NAME);
+               fprintf(stderr, "Try `%s --help' for more information.\n", PROGRAM_NAME);
+               return(1);
+            };
             cnf->mode = ODBCSHELL_MODE_LISTDSN;
             break;
          case 'q':
@@ -204,6 +223,9 @@ int main(int argc, char * argv[])
       };
    };
 
+   if (!(cnf->mode))
+      cnf->mode = ODBCSHELL_MODE_SHELL;
+
    if ((odbcshell_odbc_initialize(cnf)))
       return(1);
 
@@ -214,6 +236,7 @@ int main(int argc, char * argv[])
          break;
 
       case ODBCSHELL_MODE_EXEC:
+         sts = odbcshell_exec_loop(cnf);
          break;
 
       case ODBCSHELL_MODE_LISTDSN:
@@ -222,8 +245,8 @@ int main(int argc, char * argv[])
 
       case ODBCSHELL_MODE_SHELL:
       default:
-         //c = 1;
-         //odbcshell_set_option(cnf, ODBCSHELL_OPT_CONTINUE, &c);
+         c = 1;
+         odbcshell_set_option(cnf, ODBCSHELL_OPT_CONTINUE, &c);
          sts = odbcshell_cli_loop(cnf);
          break;
    };

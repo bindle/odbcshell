@@ -82,6 +82,10 @@ void odbcshell_free(ODBCShell * cnf)
       free(cnf->prompt);
    cnf->prompt = NULL;
 
+   if (cnf->exec_strs)
+      free(cnf->exec_strs);
+   cnf->exec_strs = NULL;
+
    free(cnf);
 
    return;
@@ -143,8 +147,6 @@ int odbcshell_initialize(ODBCShell ** cnfp)
       return(-1);
    };
    memset(cnf, 0, sizeof(ODBCShell));
-
-   cnf->mode = ODBCSHELL_MODE_SHELL;
 
    odbcshell_signal_init();
 
