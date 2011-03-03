@@ -51,6 +51,7 @@
 
 #include "odbcshell-odbc.h"
 #include "odbcshell-signal.h"
+#include "odbcshell-print.h"
 
 
 /////////////////
@@ -85,6 +86,8 @@ void odbcshell_free(ODBCShell * cnf)
    if (cnf->exec_strs)
       free(cnf->exec_strs);
    cnf->exec_strs = NULL;
+
+   odbcshell_fclose(cnf);
 
    free(cnf);
 

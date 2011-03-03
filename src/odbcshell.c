@@ -73,6 +73,7 @@
 #include "odbcshell-exec.h"
 #include "odbcshell-options.h"
 #include "odbcshell-odbc.h"
+#include "odbcshell-print.h"
 
 
 //////////////////
@@ -108,6 +109,7 @@ void odbcshell_usage(void)
          "  -e sql                    execute SQL statement\n"
          "  -h, --help                print this help and exit\n"
          "  -l                        print list of available DSN\n"
+         "  -o file                   file to write output\n"
          "  -q, --quiet, --silent     do not print messages\n"
          "  -V, --version             print version number and exit\n"
          "  -v, --verbose             print verbose messages\n"
@@ -145,7 +147,7 @@ int main(int argc, char * argv[])
    int           opt_index;
    ODBCShell   * cnf;
 
-   static char   short_opt[] = "cD:e:hlqVv";
+   static char   short_opt[] = "cD:e:hlo:qVv";
    static struct option long_opt[] =
    {
       {"help",          no_argument, 0, 'h'},
@@ -202,6 +204,9 @@ int main(int argc, char * argv[])
             };
             cnf->mode = ODBCSHELL_MODE_LISTDSN;
             break;
+         case 'o':
+            cnf->dflt_output = optarg;
+            break;
          case 'q':
             ival = 1;
             odbcshell_set_option(cnf, ODBCSHELL_OPT_SILENT, &ival);
@@ -226,8 +231,20 @@ int main(int argc, char * argv[])
    if (!(cnf->mode))
       cnf->mode = ODBCSHELL_MODE_SHELL;
 
+   if ((cnf->dflt_output))
+   {
+      if ((odbcshell_fopen(cnf, cnf->dflt_output)))
+      {
+         odbcshell_free(cnf);
+         return(1);
+      };
+   };
+
    if ((odbcshell_odbc_initialize(cnf)))
+   {
+      odbcshell_free(cnf);
       return(1);
+   };
 
    sts = 0;
    switch(cnf->mode)

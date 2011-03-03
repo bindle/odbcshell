@@ -49,6 +49,8 @@
 #include <stdio.h>
 #include <string.h>
 
+extern const int errno;
+
 
 /////////////////
 //             //
@@ -93,6 +95,52 @@ void odbcshell_fatal(ODBCShell * cnf, const char * format, ...)
       fprintf(stderr, "%s: ", cnf->active_cmd->name);
    va_start(ap, format);
       vfprintf(stderr, format, ap);
+   va_end(ap);
+
+   return;
+}
+
+
+/// close file
+/// @param[in]  cnf      pointer to configuration struct
+int odbcshell_fclose(ODBCShell * cnf)
+{
+   if (!(cnf->output))
+      return(0);
+   fclose(cnf->output);
+   cnf->output = NULL;
+   return(0);
+}
+
+
+/// open file for writing
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  path     file to open for writing
+int odbcshell_fopen(ODBCShell * cnf, const char * path)
+{
+   odbcshell_fclose(cnf);
+   if (!(cnf->output = fopen(path, "w")))
+   {
+      odbcshell_error(cnf, "%s", strerror(errno));
+      return(-1);
+   };
+   return(0);
+}
+
+
+/// prints message to file
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  format   format string for message
+/// @param[in]  ...
+void odbcshell_fprintf(ODBCShell * cnf, const char * format, ...)
+{
+   FILE    * fs;
+   va_list   ap;
+
+   fs = cnf->output ? cnf->output : stdout;
+
+   va_start(ap, format);
+      vfprintf(fs, format, ap);
    va_end(ap);
 
    return;

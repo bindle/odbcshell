@@ -642,11 +642,11 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             displayWidth = sizeof(fetchBuffer) - 1;
          displayWidths[colNum - 1] = displayWidth;
 
-         printf("\"%s\"", colName);
+         odbcshell_fprintf(cnf, "\"%s\"", colName);
          if (colNum < numCols)
-            printf(",");
+            odbcshell_fprintf(cnf, ",");
       };
-      printf("\n");
+      odbcshell_fprintf(cnf, "\n");
 
       totalRows = 0;
       while(1)
@@ -672,11 +672,11 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             };
             if (colIndicator == SQL_NULL_DATA)
                fetchBuffer[0] = '\0';
-            printf("\"%s\"", fetchBuffer);
+            odbcshell_fprintf(cnf, "\"%s\"", fetchBuffer);
             if (colNum < numCols)
-               printf(",");
+               odbcshell_fprintf(cnf, ",");
          };
-         printf("\n");
+         odbcshell_fprintf(cnf, "\n");
          totalRows++;
       };
 

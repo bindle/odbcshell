@@ -169,10 +169,12 @@ struct odbcshell_config_data
    long long          verbose;     ///< toggle for verbose mode
    long long          conns_count; ///< toggle for verbose mode
    long long          exec_count;  ///< toggle for verbose mode
+   FILE             * output;      ///< file to save results
    char             * conffile;    ///< odbcshell configuration file
    char             * histfile;    ///< GNU readline history file
    char             * prompt;      ///< shell prompt
    const char       * dflt_dsn;    ///< default DSN to use for "autoconnect"
+   const char       * dflt_output; ///< default DSN to use for "autoconnect"
    char            ** exec_strs;   ///< list of strings to execute
    ODBCShellOption  * active_cmd;  ///< command being actively executed
    HENV               henv;        ///< iODBC environment state
