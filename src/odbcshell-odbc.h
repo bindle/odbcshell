@@ -102,6 +102,9 @@ int odbcshell_odbc_show_dsn(ODBCShell * cnf);
 // displays list of ODBC owners
 int odbcshell_odbc_show_owners(ODBCShell * cnf);
 
+// displays list of ODBC tables
+int odbcshell_odbc_show_tables(ODBCShell * cnf);
+
 // displays list of ODBC qualifiers
 int odbcshell_odbc_show_qualifiers(ODBCShell * cnf);
 

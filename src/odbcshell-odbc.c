@@ -748,6 +748,29 @@ int odbcshell_odbc_show_owners(ODBCShell * cnf)
 }
 
 
+/// displays list of ODBC tables
+/// @param[in]  cnf      pointer to configuration struct
+int odbcshell_odbc_show_tables(ODBCShell * cnf)
+{
+   SQLRETURN       sts;
+
+   if (!(cnf->current))
+   {
+      odbcshell_error(cnf, "not connected to a database\n");
+      return(-1);
+   };
+
+   sts = SQLTables(cnf->current->hstmt, NULL, 0, NULL, 0, NULL, 0, NULL, 0);
+   if (sts != SQL_SUCCESS)
+   {
+      odbcshell_odbc_errors("SQLMoreResults", cnf, cnf->current);
+      return(-1);
+   };
+
+   return(odbcshell_odbc_result(cnf));
+}
+
+
 /// displays list of ODBC qualifiers
 /// @param[in]  cnf      pointer to configuration struct
 int odbcshell_odbc_show_qualifiers(ODBCShell * cnf)
