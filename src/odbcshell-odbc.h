@@ -99,6 +99,9 @@ int odbcshell_odbc_show_datatypes(ODBCShell * cnf);
 // displays list of ODBC data sources
 int odbcshell_odbc_show_dsn(ODBCShell * cnf);
 
+// displays list of ODBC owners
+int odbcshell_odbc_show_owners(ODBCShell * cnf);
+
 // updates current connection
 int odbcshell_odbc_update_current(ODBCShell * cnf, ODBCShellConn  * conn);
 
