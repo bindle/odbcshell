@@ -55,7 +55,9 @@
 //  Headers  //
 //           //
 ///////////////
+#ifdef PMARK
 #pragma mark Headers
+#endif
 
 #include "odbcshell.h"
 
@@ -82,8 +84,10 @@
 //  Prototypes  //
 //              //
 //////////////////
+#ifdef PMARK
 #pragma mark -
 #pragma mark Prototypes
+#endif
 
 // displays usage
 void odbcshell_usage(void);
@@ -97,8 +101,10 @@ int main(int argc, char * argv[]);
 //  Functions  //
 //             //
 /////////////////
+#ifdef PMARK
 #pragma mark -
 #pragma mark Functions
+#endif
 
 
 /// displays usage

@@ -55,7 +55,9 @@
 //  Headers  //
 //           //
 ///////////////
+#ifdef PMARK
 #pragma mark Headers
+#endif
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -68,22 +70,15 @@
 #include <iodbcext.h>
 
 
-///////////////////
-//               //
-//  Definitions  //
-//               //
-///////////////////
-#pragma mark -
-#pragma mark Definitions & Macros
-
-
 //////////////////
 //              //
 //  Prototypes  //
 //              //
 //////////////////
+#ifdef PMARK
 #pragma mark -
 #pragma mark Prototypes
+#endif
 
 // main statement
 int main(int argc, char * argv[]);
@@ -103,8 +98,10 @@ int my_result(HENV henv, HDBC hdbc, HSTMT hstmt);
 //  Functions  //
 //             //
 /////////////////
+#ifdef PMARK
 #pragma mark -
 #pragma mark Functions
+#endif
 
 /// main statement
 /// @param[in]  argc  number of arguments passed to program

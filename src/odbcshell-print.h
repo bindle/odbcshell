@@ -42,7 +42,9 @@
 //  Headers  //
 //           //
 ///////////////
+#ifdef PMARK
 #pragma mark Headers
+#endif
 
 #include "odbcshell.h"
 
@@ -52,8 +54,10 @@
 //  Prototypes  //
 //              //
 //////////////////
+#ifdef PMARK
 #pragma mark -
 #pragma mark Prototypes
+#endif
 
 // displays error messages
 void odbcshell_error(ODBCShell * cnf, const char * format, ...) __attribute__ ((format (printf, 2, 3)));

@@ -41,7 +41,9 @@
 //  Headers  //
 //           //
 ///////////////
+#ifdef PMARK
 #pragma mark Headers
+#endif
 
 #include "odbcshell.h"
 
@@ -53,31 +55,15 @@
 #include "odbcshell-variables.h"
 
 
-//////////////////
-//              //
-//  Prototypes  //
-//              //
-//////////////////
-#pragma mark -
-#pragma mark Prototypes
-
-
-/////////////////
-//             //
-//  Variables  //
-//             //
-/////////////////
-#pragma mark -
-#pragma mark Variables
-
-
 /////////////////
 //             //
 //  Functions  //
 //             //
 /////////////////
+#ifdef PMARK
 #pragma mark -
 #pragma mark Functions
+#endif
 
 /// interprets the string buffer
 int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,

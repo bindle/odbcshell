@@ -41,7 +41,9 @@
 //  Headers  //
 //           //
 ///////////////
+#ifdef PMARK
 #pragma mark Headers
+#endif
 
 #include "odbcshell.h"
 
@@ -54,8 +56,9 @@
 //  Variables  //
 //             //
 /////////////////
-#pragma mark -
+#ifdef PMARK
 #pragma mark Variables
+#endif
 
 /// numeric values for command names
 ODBCShellOption odbcshell_cmd_strings[] =
@@ -101,8 +104,10 @@ ODBCShellOption odbcshell_opt_strings[] =
 //  Functions  //
 //             //
 /////////////////
+#ifdef PMARK
 #pragma mark -
 #pragma mark Functions
+#endif
 
 /// looks up option by name
 /// @param[in]  opts   array of optins to search

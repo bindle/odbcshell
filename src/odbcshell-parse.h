@@ -42,7 +42,9 @@
 //  Headers  //
 //           //
 ///////////////
+#ifdef PMARK
 #pragma mark Headers
+#endif
 
 #include "odbcshell.h"
 
@@ -54,8 +56,10 @@
 //  Prototypes  //
 //              //
 //////////////////
+#ifdef PMARK
 #pragma mark -
 #pragma mark Prototypes
+#endif
 
 // interprets the arguments from a command line
 int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,

@@ -41,7 +41,9 @@
 //  Headers  //
 //           //
 ///////////////
+#ifdef PMARK
 #pragma mark Headers
+#endif
 
 #include "odbcshell.h"
 
@@ -61,8 +63,10 @@
 //  Functions  //
 //             //
 /////////////////
+#ifdef PMARK
 #pragma mark -
 #pragma mark Functions
+#endif
 
 /// clears the screen
 int odbcshell_cmd_clear(void)

@@ -42,7 +42,9 @@
 //  Headers  //
 //           //
 ///////////////
+#ifdef PMARK
 #pragma mark Headers
+#endif
 
 #ifdef HAVE_CONFIG_H
 #include <config.h>
@@ -61,8 +63,10 @@
 //  Definitions  //
 //               //
 ///////////////////
+#ifdef PMARK
 #pragma mark -
 #pragma mark Definitions & Macros
+#endif
 
 #ifndef PROGRAM_NAME
 #define PROGRAM_NAME "odbcshell"
@@ -133,8 +137,10 @@
 //  Datatypes  //
 //             //
 /////////////////
+#ifdef PMARK
 #pragma mark -
 #pragma mark Datatypes
+#endif
 
 /// internal map for switching between an directive's ASCII and numeric values
 typedef struct odbcshell_option_data ODBCShellOption;
@@ -194,8 +200,10 @@ struct odbcshell_config_data
 //  Prototypes  //
 //              //
 //////////////////
+#ifdef PMARK
 #pragma mark -
 #pragma mark Prototypes
+#endif
 
 // displays version information
 void odbcshell_version(void);

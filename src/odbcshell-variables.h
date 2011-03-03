@@ -42,7 +42,9 @@
 //  Headers  //
 //           //
 ///////////////
+#ifdef PMARK
 #pragma mark Headers
+#endif
 
 #include "odbcshell.h"
 
@@ -52,8 +54,10 @@
 //  Prototypes  //
 //              //
 //////////////////
+#ifdef PMARK
 #pragma mark -
 #pragma mark Prototypes
+#endif
 
 extern ODBCShellOption odbcshell_cmd_strings[];
 extern ODBCShellOption odbcshell_opt_strings[];
