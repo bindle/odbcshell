@@ -342,6 +342,8 @@ int odbcshell_cmd_show(ODBCShell * cnf, const char * data)
       return(odbcshell_odbc_show_dsn(cnf));
    else if (!(strcasecmp(data, "owners")))
       return(odbcshell_odbc_show_owners(cnf));
+   else if (!(strcasecmp(data, "qualifiers")))
+      return(odbcshell_odbc_show_qualifiers(cnf));
    else
    {
       odbcshell_error(cnf, "invalid database data request\n");
