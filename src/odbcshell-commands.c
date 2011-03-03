@@ -251,7 +251,7 @@ int odbcshell_cmd_reconnect(ODBCShell * cnf, int argc, char ** argv)
 
 /// resets internal configuration
 /// @param[in]  cnf      pointer to configuration struct
-int odbcshell_cmd_resetconf(ODBCShell * cnf)
+int odbcshell_cmd_reset(ODBCShell * cnf)
 {
    return(odbcshell_set_defaults(cnf));
 }

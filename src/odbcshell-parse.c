@@ -164,7 +164,7 @@ int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
       case ODBCSHELL_CMD_OPEN:       code = odbcshell_cmd_open(cnf, argc, argv); break;
       case ODBCSHELL_CMD_QUIT:       code = odbcshell_cmd_quit(cnf); break;
       case ODBCSHELL_CMD_RECONNECT:  code = odbcshell_cmd_reconnect(cnf, argc, argv); break;
-      case ODBCSHELL_CMD_RESETCONF:  code = odbcshell_cmd_resetconf(cnf); break;
+      case ODBCSHELL_CMD_RESET:      code = odbcshell_cmd_reset(cnf); break;
       case ODBCSHELL_CMD_SET:        code = odbcshell_cmd_set(cnf, argc, argv); break;
       case ODBCSHELL_CMD_UNSET:      code = odbcshell_cmd_unset(cnf, argv); break;
       case ODBCSHELL_CMD_USE:        code = odbcshell_cmd_use(cnf, argc, argv); break;

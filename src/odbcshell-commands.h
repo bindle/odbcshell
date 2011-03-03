@@ -92,7 +92,7 @@ int odbcshell_cmd_quit(ODBCShell * cnf);
 int odbcshell_cmd_reconnect(ODBCShell * cnf, int argc, char ** argv);
 
 // resets internal configuration
-int odbcshell_cmd_resetconf(ODBCShell * cnf);
+int odbcshell_cmd_reset(ODBCShell * cnf);
 
 // sets internal value of configuration parameter
 int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv);
