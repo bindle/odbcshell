@@ -61,12 +61,14 @@
 ODBCShellOption odbcshell_cmd_strings[] =
 {
    { ODBCSHELL_CMD_CLEAR,       1,  1, "CLEAR",      "clears screen",        (const char *[2]){";", NULL} },
+   { ODBCSHELL_CMD_CLOSE,       1,  1, "CLOSE",      "closes output file",            (const char *[2]){";", NULL} },
    { ODBCSHELL_CMD_CONNECT,     2,  3, "CONNECT",    "connects to a database",        (const char *[3]){" \"DSN=My Database;UID=John Doe;PWD=password\"", " name \"DSN=My Database;UID=John Doe;PWD=password\"", NULL} },
    { ODBCSHELL_CMD_DISCONNECT,  1,  2, "DISCONNECT", "disconnects from a database",   (const char *[3]){"", " name", NULL} },
    { ODBCSHELL_CMD_DSN,         1,  1, "DSN",        "displays list of ODBC data sources",    (const char *[2]){"", NULL} },
    { ODBCSHELL_CMD_ECHO,        1, -1, "ECHO",       "prints arguments to screen",    (const char *[2]){" \"string1\" \"string2\" ... \"stringN\"", NULL} },
    { ODBCSHELL_CMD_QUIT,        1,  1, "EXIT",       "exits ODBC Shell",              (const char *[2]){"", NULL} },
    { ODBCSHELL_CMD_HELP,        1,  2, "HELP",       "displays help information",     (const char *[4]){"", " topic", " topic subtopic", NULL} },
+   { ODBCSHELL_CMD_OPEN,        1,  2, "OPEN",       "opens file to write results",   (const char *[3]){"", " filename;", NULL} },
    { ODBCSHELL_CMD_QUIT,        1,  1, "LOGOUT",     "exits ODBC Shell",              (const char *[2]){"", NULL} },
    { ODBCSHELL_CMD_QUIT,        1,  1, "QUIT",       "exits ODBC Shell",              (const char *[2]){"", NULL} },
    { ODBCSHELL_CMD_RECONNECT,   1,  2, "RECONNECT",  "reconnects to a database",      (const char *[3]){"", " name;", NULL} },

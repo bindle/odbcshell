@@ -122,6 +122,8 @@
 #define ODBCSHELL_CMD_ECHO        0x11
 #define ODBCSHELL_CMD_DSN         0x12
 #define ODBCSHELL_CMD_USE         0x13
+#define ODBCSHELL_CMD_OPEN        0x14
+#define ODBCSHELL_CMD_CLOSE       0x15
 #define ODBCSHELL_CMD_SQL         -1
 
 
@@ -170,6 +172,7 @@ struct odbcshell_config_data
    long long          conns_count; ///< toggle for verbose mode
    long long          exec_count;  ///< toggle for verbose mode
    FILE             * output;      ///< file to save results
+   char             * outputfile;  ///< name of file to save results
    char             * conffile;    ///< odbcshell configuration file
    char             * histfile;    ///< GNU readline history file
    char             * prompt;      ///< shell prompt

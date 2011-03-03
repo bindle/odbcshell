@@ -105,6 +105,9 @@ void odbcshell_fatal(ODBCShell * cnf, const char * format, ...)
 /// @param[in]  cnf      pointer to configuration struct
 int odbcshell_fclose(ODBCShell * cnf)
 {
+   if (cnf->outputfile)
+      free(cnf->outputfile);
+   cnf->outputfile = NULL;
    if (!(cnf->output))
       return(0);
    fclose(cnf->output);
@@ -119,6 +122,11 @@ int odbcshell_fclose(ODBCShell * cnf)
 int odbcshell_fopen(ODBCShell * cnf, const char * path)
 {
    odbcshell_fclose(cnf);
+   if (!(cnf->outputfile = strdup(path)))
+   {
+      odbcshell_fatal(cnf, "out of virtual memory\n");
+      return(-1);
+   };
    if (!(cnf->output = fopen(path, "w")))
    {
       odbcshell_error(cnf, "%s", strerror(errno));

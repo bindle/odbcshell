@@ -58,6 +58,9 @@
 // clears the screen
 int odbcshell_cmd_clear(void);
 
+// closes output file
+int odbcshell_cmd_close(ODBCShell * cnf);
+
 // prints strings to screen
 int odbcshell_cmd_connect(ODBCShell * cnf, int argc, char ** argv);
 
@@ -78,6 +81,9 @@ int odbcshell_cmd_help(ODBCShell * cnf, int argc, char ** argv);
 
 // displays information stating the function is incomplete
 int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv);
+
+// opens file for writing results
+int odbcshell_cmd_open(ODBCShell * cnf, int argc, char ** argv);
 
 // exits from shell
 int odbcshell_cmd_quit(ODBCShell * cnf);

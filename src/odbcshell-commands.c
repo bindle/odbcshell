@@ -72,6 +72,14 @@ int odbcshell_cmd_clear(void)
 }
 
 
+/// closes output file
+/// @param[in]  cnf      pointer to configuration struct
+int odbcshell_cmd_close(ODBCShell * cnf)
+{
+   return(odbcshell_fclose(cnf));
+}
+
+
 /// connects to database
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  argc     number of arguments passed to command
@@ -208,6 +216,24 @@ int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv)
    if ( (!(argc)) || (!(cnf)) || (!(argv)) )
       return(0);
    return(0);
+}
+
+
+/// opens file for writing results
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  argc     number of arguments passed to command
+/// @param[in]  argv     array of arguments passed to comman
+int odbcshell_cmd_open(ODBCShell * cnf, int argc, char ** argv)
+{
+   if (argc < 2)
+   {
+      if ((cnf->outputfile))
+         printf("writing output to \"%s\"\n", cnf->outputfile);
+      else
+         printf("not writing output to a file\n");
+      return(0);
+   };
+   return(odbcshell_fopen(cnf, argv[1]));
 }
 
 
