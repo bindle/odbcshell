@@ -150,10 +150,10 @@ fi
 have_readline=yes
 AC_CHECK_HEADERS([readline/readline.h]      ,,[have_readline=no])
 AC_CHECK_HEADERS([readline/history.h]       ,,[have_readline=no])
-AC_SEARCH_LIBS([add_history],     [readline],,[have_readline=no])
-AC_SEARCH_LIBS([read_history],    [readline],,[have_readline=no])
-AC_SEARCH_LIBS([write_history],   [readline],,[have_readline=no])
-AC_SEARCH_LIBS([readline],        [readline],,[have_readline=no])
+AC_SEARCH_LIBS([add_history],     [readline],,[have_readline=no], [-lcurses])
+AC_SEARCH_LIBS([read_history],    [readline],,[have_readline=no], [-lcurses])
+AC_SEARCH_LIBS([write_history],   [readline],,[have_readline=no], [-lcurses])
+AC_SEARCH_LIBS([readline],        [readline],,[have_readline=no], [-lcurses])
 if test "x${have_readline}" == "xno";then
    AC_MSG_ERROR([ODBC Shell requires GNU Readline library.])
 fi
