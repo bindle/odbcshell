@@ -85,6 +85,7 @@
 #define ODBCSHELL_MODE_SCRIPT   0x01
 #define ODBCSHELL_MODE_EXEC     0x02
 #define ODBCSHELL_MODE_LISTDSN  0x03
+#define ODBCSHELL_MODE_SHOW     0x04
 
 // option types
 #define ODBSHELL_OTYPE_MASK       0x0F

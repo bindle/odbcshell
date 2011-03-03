@@ -109,9 +109,10 @@ void odbcshell_usage(void)
          "  -D dsn                    connect to DSN\n"
          "  -e sql                    execute SQL statement\n"
          "  -h, --help                print this help and exit\n"
-         "  -l data                   print database information\n"
+         "  -l                        print list of DSN\n"
          "  -o file                   file to write output\n"
          "  -q, --quiet, --silent     do not print messages\n"
+         "  -s data                   print database information\n"
          "  -V, --version             print version number and exit\n"
          "  -v, --verbose             print verbose messages\n"
          "\n"
@@ -148,7 +149,7 @@ int main(int argc, char * argv[])
    int           opt_index;
    ODBCShell   * cnf;
 
-   static char   short_opt[] = "cD:e:hl:o:qVv";
+   static char   short_opt[] = "cD:e:hlo:qs:Vv";
    static struct option long_opt[] =
    {
       {"help",          no_argument, 0, 'h'},
@@ -185,7 +186,7 @@ int main(int argc, char * argv[])
          case 'e':
             if (((cnf->mode)) && (cnf->mode != ODBCSHELL_MODE_EXEC))
             {
-               fprintf(stderr, "%s: incompatible options `-e' and `-l'\n", PROGRAM_NAME);
+               fprintf(stderr, "%s: incompatible options `-e', `-l' and `-s'\n", PROGRAM_NAME);
                fprintf(stderr, "Try `%s --help' for more information.\n", PROGRAM_NAME);
                return(1);
             };
@@ -199,12 +200,11 @@ int main(int argc, char * argv[])
          case 'l':
             if (((cnf->mode)) && (cnf->mode != ODBCSHELL_MODE_LISTDSN))
             {
-               fprintf(stderr, "%s: incompatible options `-e' and `-l'\n", PROGRAM_NAME);
+               fprintf(stderr, "%s: incompatible options `-e', `-l' and `-s'\n", PROGRAM_NAME);
                fprintf(stderr, "Try `%s --help' for more information.\n", PROGRAM_NAME);
                return(1);
             };
             cnf->mode = ODBCSHELL_MODE_LISTDSN;
-            cnf->dflt_show = optarg;
             break;
          case 'o':
             cnf->dflt_output = optarg;
@@ -212,6 +212,16 @@ int main(int argc, char * argv[])
          case 'q':
             ival = 1;
             odbcshell_set_option(cnf, ODBCSHELL_OPT_SILENT, &ival);
+            break;
+         case 's':
+            if (((cnf->mode)) && (cnf->mode != ODBCSHELL_MODE_SHOW))
+            {
+               fprintf(stderr, "%s: incompatible options `-e', `-l' and `-s'\n", PROGRAM_NAME);
+               fprintf(stderr, "Try `%s --help' for more information.\n", PROGRAM_NAME);
+               return(1);
+            };
+            cnf->mode = ODBCSHELL_MODE_SHOW;
+            cnf->dflt_show = optarg;
             break;
          case 'V':
             odbcshell_version();
@@ -259,6 +269,13 @@ int main(int argc, char * argv[])
          break;
 
       case ODBCSHELL_MODE_LISTDSN:
+         sts = odbcshell_odbc_show_dsn(cnf);
+         break;
+
+      case ODBCSHELL_MODE_SHOW:
+         if (cnf->dflt_dsn)
+            if (odbcshell_odbc_connect(cnf, cnf->dflt_dsn, NULL))
+               return(1);
          sts = odbcshell_cmd_show(cnf, cnf->dflt_show);
          break;
 
