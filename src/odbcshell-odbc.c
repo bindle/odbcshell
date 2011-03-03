@@ -428,36 +428,6 @@ int odbcshell_odbc_initialize(ODBCShell * cnf)
 }
 
 
-/// displays list of ODBC data sources
-/// @param[in]  cnf      pointer to configuration struct
-int odbcshell_odbc_list_dsn(ODBCShell * cnf)
-{
-   int err;
-   SQLTCHAR    dsn[33];
-   SQLTCHAR    desc[255];
-   SQLSMALLINT len1;
-   SQLSMALLINT len2;
-
-   err = SQLDataSources(cnf->henv, SQL_FETCH_FIRST, dsn,  sizeof(dsn), &len1,
-                                                    desc, sizeof(desc), &len2);
-   if (err != SQL_SUCCESS)
-   {
-      odbcshell_error(cnf, "unable to list ODBC sources.\n");
-      return(-1);
-   };
-
-   printf("%-32s   %-40s\n", "DSN:", "Driver:");
-   while (err == SQL_SUCCESS)
-   {
-      printf("%-32s   %-40s\n", dsn, desc);
-      err = SQLDataSources(cnf->henv, SQL_FETCH_NEXT, dsn,  sizeof(dsn), &len1,
-                                                      desc, sizeof(desc), &len2);
-   };
-
-   return(0);
-}
-
-
 /// reconnects a session
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  name     internal name of connect
@@ -694,6 +664,36 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    };
 
    SQLCloseCursor(cnf->current->hstmt);
+
+   return(0);
+}
+
+
+/// displays list of ODBC data sources
+/// @param[in]  cnf      pointer to configuration struct
+int odbcshell_odbc_show_dsn(ODBCShell * cnf)
+{
+   int err;
+   SQLTCHAR    dsn[33];
+   SQLTCHAR    desc[255];
+   SQLSMALLINT len1;
+   SQLSMALLINT len2;
+
+   err = SQLDataSources(cnf->henv, SQL_FETCH_FIRST, dsn,  sizeof(dsn), &len1,
+                                                    desc, sizeof(desc), &len2);
+   if (err != SQL_SUCCESS)
+   {
+      odbcshell_error(cnf, "unable to list ODBC sources.\n");
+      return(-1);
+   };
+
+   printf("%-32s   %-40s\n", "DSN:", "Driver:");
+   while (err == SQL_SUCCESS)
+   {
+      printf("%-32s   %-40s\n", dsn, desc);
+      err = SQLDataSources(cnf->henv, SQL_FETCH_NEXT, dsn,  sizeof(dsn), &len1,
+                                                      desc, sizeof(desc), &len2);
+   };
 
    return(0);
 }

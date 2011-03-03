@@ -120,10 +120,10 @@
 #define ODBCSHELL_CMD_VERSION     0x0F
 #define ODBCSHELL_CMD_CLEAR       0x10
 #define ODBCSHELL_CMD_ECHO        0x11
-#define ODBCSHELL_CMD_DSN         0x12
 #define ODBCSHELL_CMD_USE         0x13
 #define ODBCSHELL_CMD_OPEN        0x14
 #define ODBCSHELL_CMD_CLOSE       0x15
+#define ODBCSHELL_CMD_SHOW        0x16
 #define ODBCSHELL_CMD_SQL         -1
 
 
@@ -178,6 +178,7 @@ struct odbcshell_config_data
    char             * prompt;      ///< shell prompt
    const char       * dflt_dsn;    ///< default DSN to use for "autoconnect"
    const char       * dflt_output; ///< default DSN to use for "autoconnect"
+   const char       * dflt_show;   ///< default DSN to use for show data
    char            ** exec_strs;   ///< list of strings to execute
    ODBCShellOption  * active_cmd;  ///< command being actively executed
    HENV               henv;        ///< iODBC environment state

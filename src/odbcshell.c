@@ -70,6 +70,7 @@
 #include <iodbcext.h>
 
 #include "odbcshell-cli.h"
+#include "odbcshell-commands.h"
 #include "odbcshell-exec.h"
 #include "odbcshell-options.h"
 #include "odbcshell-odbc.h"
@@ -108,7 +109,7 @@ void odbcshell_usage(void)
          "  -D dsn                    connect to DSN\n"
          "  -e sql                    execute SQL statement\n"
          "  -h, --help                print this help and exit\n"
-         "  -l                        print list of available DSN\n"
+         "  -l data                   print database information\n"
          "  -o file                   file to write output\n"
          "  -q, --quiet, --silent     do not print messages\n"
          "  -V, --version             print version number and exit\n"
@@ -147,7 +148,7 @@ int main(int argc, char * argv[])
    int           opt_index;
    ODBCShell   * cnf;
 
-   static char   short_opt[] = "cD:e:hlo:qVv";
+   static char   short_opt[] = "cD:e:hl:o:qVv";
    static struct option long_opt[] =
    {
       {"help",          no_argument, 0, 'h'},
@@ -203,6 +204,7 @@ int main(int argc, char * argv[])
                return(1);
             };
             cnf->mode = ODBCSHELL_MODE_LISTDSN;
+            cnf->dflt_show = optarg;
             break;
          case 'o':
             cnf->dflt_output = optarg;
@@ -257,7 +259,7 @@ int main(int argc, char * argv[])
          break;
 
       case ODBCSHELL_MODE_LISTDSN:
-         sts = odbcshell_odbc_list_dsn(cnf);
+         sts = odbcshell_cmd_show(cnf, cnf->dflt_show);
          break;
 
       case ODBCSHELL_MODE_SHELL:

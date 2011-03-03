@@ -67,9 +67,6 @@ int odbcshell_cmd_connect(ODBCShell * cnf, int argc, char ** argv);
 // disconnects from database
 int odbcshell_cmd_disconnect(ODBCShell * cnf, int argc, char ** argv);
 
-// displays ODBC data sources
-int odbcshell_cmd_dsn(ODBCShell * cnf);
-
 // prints strings to screen
 int odbcshell_cmd_echo(ODBCShell * cnf, int argc, char ** argv);
 
@@ -96,6 +93,9 @@ int odbcshell_cmd_reset(ODBCShell * cnf);
 
 // sets internal value of configuration parameter
 int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv);
+
+// shows database information
+int odbcshell_cmd_show(ODBCShell * cnf, const char * data);
 
 // unsets internal value of configuration parameter
 int odbcshell_cmd_unset(ODBCShell * cnf, char ** argv);

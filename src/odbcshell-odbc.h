@@ -87,14 +87,14 @@ void odbcshell_odbc_free(ODBCShell * cnf, ODBCShellConn  ** connp);
 // initializes ODBC library
 int odbcshell_odbc_initialize(ODBCShell * cnf);
 
-// displays list of ODBC data sources
-int odbcshell_odbc_list_dsn(ODBCShell * cnf);
-
 // reconnects a session
 int odbcshell_odbc_reconnect(ODBCShell * cnf, const char * name);
 
 // displays result from ODBC operation
 int odbcshell_odbc_result(ODBCShell * cnf);
+
+// displays list of ODBC data sources
+int odbcshell_odbc_show_dsn(ODBCShell * cnf);
 
 // updates current connection
 int odbcshell_odbc_update_current(ODBCShell * cnf, ODBCShellConn  * conn);

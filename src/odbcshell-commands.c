@@ -104,14 +104,6 @@ int odbcshell_cmd_disconnect(ODBCShell * cnf, int argc, char ** argv)
 }
 
 
-/// displays ODBC data sources
-/// @param[in]  cnf      pointer to configuration struct
-int odbcshell_cmd_dsn(ODBCShell * cnf)
-{
-   return(odbcshell_odbc_list_dsn(cnf));
-}
-
-
 /// prints strings to screen
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  argc     number of arguments passed to command
@@ -335,6 +327,24 @@ int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv)
          return(0);
    };
 
+   return(0);
+}
+
+
+/// shows database information
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  data     data to retrieve
+int odbcshell_cmd_show(ODBCShell * cnf, const char * data)
+{
+   if (!(strcasecmp(data, "dsn")))
+   {
+      return(odbcshell_odbc_show_dsn(cnf));
+   }
+   else
+   {
+      odbcshell_error(cnf, "invalid database data request\n");
+      return(-1);
+   };
    return(0);
 }
 
