@@ -669,6 +669,29 @@ int odbcshell_odbc_result(ODBCShell * cnf)
 }
 
 
+/// displays list of ODBC datatypes
+/// @param[in]  cnf      pointer to configuration struct
+int odbcshell_odbc_show_datatypes(ODBCShell * cnf)
+{
+   SQLRETURN       sts;
+
+   if (!(cnf->current))
+   {
+      odbcshell_error(cnf, "not connected to a database\n");
+      return(-1);
+   };
+
+   sts = SQLGetTypeInfo(cnf->current->hstmt, 0);
+   if (sts != SQL_SUCCESS)
+   {
+      odbcshell_odbc_errors("SQLGetTypeInfo", cnf, cnf->current);
+      return(-1);
+   };
+
+   return(odbcshell_odbc_result(cnf));
+}
+
+
 /// displays list of ODBC data sources
 /// @param[in]  cnf      pointer to configuration struct
 int odbcshell_odbc_show_dsn(ODBCShell * cnf)

@@ -336,10 +336,10 @@ int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv)
 /// @param[in]  data     data to retrieve
 int odbcshell_cmd_show(ODBCShell * cnf, const char * data)
 {
-   if (!(strcasecmp(data, "dsn")))
-   {
+   if (!(strcasecmp(data, "datatypes")))
+      return(odbcshell_odbc_show_datatypes(cnf));
+   else if (!(strcasecmp(data, "dsn")))
       return(odbcshell_odbc_show_dsn(cnf));
-   }
    else
    {
       odbcshell_error(cnf, "invalid database data request\n");
