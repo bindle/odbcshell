@@ -134,7 +134,6 @@ AC_DEFUN([AC_ODBCSHELL_ENABLE_WARNINGS],[dnl
       ac_odbcshell_warnings_list=" ${ac_odbcshell_warnings_list} -W"
       ac_odbcshell_warnings_list=" ${ac_odbcshell_warnings_list} -Wall"
       ac_odbcshell_warnings_list=" ${ac_odbcshell_warnings_list} -Werror"
-      ac_odbcshell_warnings_list=" ${ac_odbcshell_warnings_list} -Wno-pragmas"
    fi
    if test "x${USE_STRICTWARNINGS}" == "xyes";then
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -std=gnu99"
@@ -159,7 +158,7 @@ AC_DEFUN([AC_ODBCSHELL_ENABLE_WARNINGS],[dnl
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wswitch-default"   # for some reason any call to memset() fails with this flag
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wtrigraphs"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wunused"
-      #ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wunknown-pragmas"
+      ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wunknown-pragmas"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wuninitialized"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wmultichar"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wundef"
