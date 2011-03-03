@@ -43,10 +43,10 @@ DIST_SUBDIRS				=
 # Global flags
 AM_LIBS					=
 AM_LDFLAGS				=
-AM_CFLAGS				= -O2 -W -Wall -Werror $(CFLAGS_WARNINGS)
-AM_CXXFLAGS				= -O2 -W -Wall -Werror @AM_CXXFLAGS@
-AM_OBJCFLAGS				= -O2 -W -Wall -Werror @AM_OBJCFLAGS@
-AM_CPPFLAGS				= -O2 -W -Wall -Werror -DHAVE_CONFIG_H=1 -I$(top_builddir)/include -I$(top_srcdir)/include
+AM_CFLAGS				= -O2 $(CFLAGS_WARNINGS)
+AM_CXXFLAGS				= -O2 @AM_CXXFLAGS@
+AM_OBJCFLAGS				= -O2 @AM_OBJCFLAGS@
+AM_CPPFLAGS				= -O2 -DHAVE_CONFIG_H=1 -I$(top_builddir)/include -I$(top_srcdir)/include
 ACLOCAL_AMFLAGS				= -I m4 -W all -W error
 DEFS					=
 
