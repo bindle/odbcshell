@@ -346,6 +346,8 @@ int odbcshell_cmd_show(ODBCShell * cnf, const char * data)
       return(odbcshell_odbc_show_qualifiers(cnf));
    else if (!(strcasecmp(data, "tables")))
       return(odbcshell_odbc_show_tables(cnf));
+   else if (!(strcasecmp(data, "types")))
+      return(odbcshell_odbc_show_types(cnf));
    else
    {
       odbcshell_error(cnf, "invalid database data request\n");

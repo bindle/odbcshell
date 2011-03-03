@@ -771,6 +771,32 @@ int odbcshell_odbc_show_tables(ODBCShell * cnf)
 }
 
 
+/// displays list of ODBC types
+/// @param[in]  cnf      pointer to configuration struct
+int odbcshell_odbc_show_types(ODBCShell * cnf)
+{
+   SQLRETURN       sts;
+   unsigned char   strwild[2];
+
+   strncpy((char *)strwild,  "%", 2);
+
+   if (!(cnf->current))
+   {
+      odbcshell_error(cnf, "not connected to a database\n");
+      return(-1);
+   };
+
+   sts = SQLTables(cnf->current->hstmt, NULL, 0, NULL, 0, NULL, 0, strwild, SQL_NTS);
+   if (sts != SQL_SUCCESS)
+   {
+      odbcshell_odbc_errors("SQLGetTypeInfo", cnf, cnf->current);
+      return(-1);
+   };
+
+   return(odbcshell_odbc_result(cnf));
+}
+
+
 /// displays list of ODBC qualifiers
 /// @param[in]  cnf      pointer to configuration struct
 int odbcshell_odbc_show_qualifiers(ODBCShell * cnf)
