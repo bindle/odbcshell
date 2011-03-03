@@ -49,8 +49,7 @@
 #include <stdio.h>
 #include <string.h>
 
-extern const int errno;
-
+#include <errno.h>
 
 /////////////////
 //             //
