@@ -266,14 +266,8 @@ int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv)
    if (argc < 2)
    {
       printf("ODBC Shell Parameters:\n");
-      odbcshell_show_option(cnf, ODBCSHELL_OPT_CONTINUE);
-      odbcshell_show_option(cnf, ODBCSHELL_OPT_HISTFILE);
-      odbcshell_show_option(cnf, ODBCSHELL_OPT_HISTORY);
-      odbcshell_show_option(cnf, ODBCSHELL_OPT_NOSHELL);
-      odbcshell_show_option(cnf, ODBCSHELL_OPT_ODBCPROMPT);
-      odbcshell_show_option(cnf, ODBCSHELL_OPT_PROMPT);
-      odbcshell_show_option(cnf, ODBCSHELL_OPT_SILENT);
-      odbcshell_show_option(cnf, ODBCSHELL_OPT_VERBOSE);
+      for(i = 0; odbcshell_opt_strings[i].name; i++)
+         odbcshell_show_option(cnf, odbcshell_opt_strings[i].val);
       return(0);
    };
 

@@ -335,7 +335,8 @@ int odbcshell_show_option(ODBCShell * cnf, int opt)
          break;
 
       default:
-         break;
+         odbcshell_error(cnf, "Unknown option ID \"0x%04X\"\n", opt);
+         return(-1);
    };
    return(0);
 }
