@@ -12,10 +12,11 @@ Contents
 
    1. Disclaimer
    2. Software Requirements
-   3. Maintainers
-   4. Community
-   5. Source Code
-   6. Package Maintence Notes
+   3. Tested Platforms
+   4. Maintainers
+   5. Community
+   6. Source Code
+   7. Package Maintence Notes
 
 
 Disclaimer
@@ -39,11 +40,24 @@ Software Requirements
 
    GNU GCC 4.2.1
    GNU Libtool 2.4
-   GNU Autoconf 2.68
+   GNU Autoconf 2.65
    GNU Automake 1.11.1
    GNU Readline 6.1
    Git 1.7.2.3
    iODBC 2.52.6
+
+
+Tested Platforms
+================
+
+   OS X 10.6.6
+      - FileMaker xDBC 11.3.76
+      - MyODBC 5.1.8
+      - SQLite ODBC 0.88
+
+   Slackware 13.1
+      - MyODBC 5.1.8
+      - SQLite ODBC 0.88
 
 
 Maintainers
