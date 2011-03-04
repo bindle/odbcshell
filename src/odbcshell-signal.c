@@ -64,7 +64,7 @@
 void odbcshell_signal_init(void)
 {
    //signal(SIGTERM,   SIG_IGN);
-   //signal(SIGINT,    SIG_IGN); 
+   signal(SIGINT,    SIG_IGN);
    //signal(SIGHUP,    SIG_IGN);
    signal(SIGALRM,   SIG_IGN);
    signal(SIGVTALRM, SIG_IGN);
