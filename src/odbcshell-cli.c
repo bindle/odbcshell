@@ -110,8 +110,7 @@ int odbcshell_cli_loop(ODBCShell * cnf)
    };
 
    if (cnf->dflt_dsn)
-      if (odbcshell_odbc_connect(cnf, cnf->dflt_dsn, NULL))
-         return(-1);
+      odbcshell_odbc_connect(cnf, cnf->dflt_dsn, NULL);
 
    argv   = NULL;
    argc   = 0;
