@@ -207,8 +207,14 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
    SQLSetConnectOption(conn->hdbc, SQL_APPLICATION_NAME, (SQLULEN)PROGRAM_NAME);
 
    // connects to data source
-   sts = SQLDriverConnect(conn->hdbc, 0, (SQLTCHAR *)conn->dsn, SQL_NTS, dsnOut,
-                          strlen(conn->dsn), &buflen, SQL_DRIVER_COMPLETE);
+   if (cnf->odbcprompt)
+   {
+      sts = SQLDriverConnect(conn->hdbc, 0, (SQLTCHAR *)conn->dsn, SQL_NTS,
+            dsnOut, strlen(conn->dsn), &buflen, SQL_DRIVER_COMPLETE);
+   } else {
+      sts = SQLDriverConnect(conn->hdbc, 0, (SQLTCHAR *)conn->dsn, SQL_NTS,
+            dsnOut, strlen(conn->dsn), &buflen, SQL_DRIVER_NOPROMPT);
+   };
    if ((sts != SQL_SUCCESS) && (sts != SQL_SUCCESS_WITH_INFO))
    {
       odbcshell_odbc_errors("SQLDriverConnect", cnf, conn);

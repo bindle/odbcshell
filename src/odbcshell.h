@@ -106,6 +106,7 @@
 #define ODBCSHELL_OPT_PROMPT      (0x060 | ODBSHELL_OTYPE_CHAR)
 #define ODBCSHELL_OPT_SILENT      (0x070 | ODBSHELL_OTYPE_BOOL)
 #define ODBCSHELL_OPT_VERBOSE     (0x080 | ODBSHELL_OTYPE_BOOL)
+#define ODBCSHELL_OPT_ODBCPROMPT  (0x090 | ODBSHELL_OTYPE_BOOL)
 
 // command IDs
 #define ODBCSHELL_CMD_ALIAS       0x01
@@ -176,6 +177,7 @@ struct odbcshell_config_data
    long long          noshell;     ///< disables ability to call shell commands
    long long          silent;      ///< toggle for silent mode
    long long          verbose;     ///< toggle for verbose mode
+   long long          odbcprompt;  ///< instructs ODBC to not prompt for information
    long long          conns_count; ///< toggle for verbose mode
    long long          exec_count;  ///< toggle for verbose mode
    FILE             * output;      ///< file to save results

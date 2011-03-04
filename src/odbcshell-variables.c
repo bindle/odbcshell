@@ -92,6 +92,7 @@ ODBCShellOption odbcshell_opt_strings[] =
    { ODBCSHELL_OPT_HISTFILE,  1,  1, "histfile",   "file used for saving command history", NULL },
    { ODBCSHELL_OPT_HISTORY,   1,  1, "history",    "enable history file", NULL },
    { ODBCSHELL_OPT_NOSHELL,   1,  1, "noshell",    "disable calling external programs/scripts", NULL },
+   { ODBCSHELL_OPT_ODBCPROMPT,1,  1, "odbcprompt", "allow ODBC driver to prompt for information", NULL },
    { ODBCSHELL_OPT_PROMPT,    1,  1, "prompt",     "prompt used within ODBC Shell", NULL },
    { ODBCSHELL_OPT_SILENT,    1,  1, "silent",     "do not display non-fatal messages", NULL },
    { ODBCSHELL_OPT_VERBOSE,   1,  1, "verbose",    "display verbose messages", NULL },

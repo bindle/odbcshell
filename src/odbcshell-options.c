@@ -119,6 +119,9 @@ int odbcshell_get_option(ODBCShell * cnf, int opt, void * ptr)
             return(0);
          *((char **)ptr) = cnf->histfile;
          break;
+      case ODBCSHELL_OPT_ODBCPROMPT:
+         *((int *)ptr) = (int)cnf->odbcprompt;
+         break;
       case ODBCSHELL_OPT_PROMPT:
          *((char **)ptr) = NULL;
          if (!(cnf->prompt))
@@ -178,6 +181,7 @@ int odbcshell_set_defaults(ODBCShell * cnf)
    if (odbcshell_set_option(cnf, ODBCSHELL_OPT_HISTFILE, NULL)) return(-1);
    if (odbcshell_set_option(cnf, ODBCSHELL_OPT_HISTORY,  NULL)) return(-1);
    if (odbcshell_set_option(cnf, ODBCSHELL_OPT_NOSHELL,  NULL)) return(-1);
+   if (odbcshell_set_option(cnf, ODBCSHELL_OPT_ODBCPROMPT,NULL)) return(-1);
    if (odbcshell_set_option(cnf, ODBCSHELL_OPT_PROMPT,   NULL)) return(-1);
    if (odbcshell_set_option(cnf, ODBCSHELL_OPT_SILENT,   NULL)) return(-1);
    if (odbcshell_set_option(cnf, ODBCSHELL_OPT_VERBOSE,  NULL)) return(-1);
@@ -246,6 +250,13 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
             cnf->noshell = 1;
          return(0);
 
+      case ODBCSHELL_OPT_ODBCPROMPT:
+         if (!(ptr))
+            cnf->odbcprompt = 1;
+         else
+            cnf->odbcprompt = *((const int *)ptr);
+         break;
+
       case ODBCSHELL_OPT_PROMPT:
          if (cnf->prompt)
             free(cnf->prompt);
@@ -305,6 +316,10 @@ int odbcshell_show_option(ODBCShell * cnf, int opt)
 
       case ODBCSHELL_OPT_NOSHELL:
          printf("%-15s %s\n", "noshell", cnf->noshell ? "yes" : "no");
+         break;
+
+      case ODBCSHELL_OPT_ODBCPROMPT:
+         printf("%-15s %s\n", "odbcprompt", cnf->odbcprompt ? "yes" : "no");
          break;
 
       case ODBCSHELL_OPT_PROMPT:
