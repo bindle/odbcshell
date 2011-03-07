@@ -497,7 +497,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    SQLTCHAR        fetchBuffer[1024];
    size_t          displayWidths[256];
    size_t          displayWidth;
-   short           numCols;
+   short           cols_count;
    short           col_index;
    SQLTCHAR        colName[50];
    SQLSMALLINT     colType;
@@ -517,14 +517,14 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    while (sts == SQL_SUCCESS)
    {
       // retrieve number of columns
-      err = SQLNumResultCols(cnf->current->hstmt, &numCols);
+      err = SQLNumResultCols(cnf->current->hstmt, &cols_count);
       if (err != SQL_SUCCESS)
       {
          odbcshell_odbc_errors("SQLNumResultCols", cnf, cnf->current);
          SQLCloseCursor(cnf->current->hstmt);
          return(-1);
       };
-      if (numCols == 0)
+      if (cols_count == 0)
       {
          nrows = 0;
          SQLRowCount(cnf->current->hstmt, &nrows);
@@ -532,14 +532,14 @@ int odbcshell_odbc_result(ODBCShell * cnf)
          SQLCloseCursor(cnf->current->hstmt);
          return(-1);
       };
-      if (numCols > 256)
+      if (cols_count > 256)
       {
-         numCols = 256;
+         cols_count = 256;
          odbcshell_error(cnf, "NOTE: Resultset truncated to %d columns.\n", 256);
       };
 
       // retrieve name of column
-      for(col_index = 1; col_index <= numCols; col_index++)
+      for(col_index = 1; col_index <= cols_count; col_index++)
       {
          err = SQLDescribeCol(cnf->current->hstmt, col_index, (SQLTCHAR *)colName,
                               sizeof(colName), NULL, &colType, &colPrecision,
@@ -624,7 +624,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
          displayWidths[col_index - 1] = displayWidth;
 
          odbcshell_fprintf(cnf, "\"%s\"", colName);
-         if (col_index < numCols)
+         if (col_index < cols_count)
             odbcshell_fprintf(cnf, ",");
       };
       odbcshell_fprintf(cnf, "\n");
@@ -641,7 +641,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             break;
          };
 
-         for(col_index = 1; col_index <= numCols; col_index++)
+         for(col_index = 1; col_index <= cols_count; col_index++)
          {
             sts = SQLGetData(cnf->current->hstmt, col_index, SQL_C_CHAR,
                              fetchBuffer, sizeof(fetchBuffer), &colIndicator);
@@ -654,7 +654,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             if (colIndicator == SQL_NULL_DATA)
                fetchBuffer[0] = '\0';
             odbcshell_fprintf(cnf, "\"%s\"", fetchBuffer);
-            if (col_index < numCols)
+            if (col_index < cols_count)
                odbcshell_fprintf(cnf, ",");
          };
          odbcshell_fprintf(cnf, "\n");
