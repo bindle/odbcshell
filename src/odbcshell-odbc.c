@@ -539,9 +539,9 @@ int odbcshell_odbc_result(ODBCShell * cnf)
       };
 
       // retrieve name of column
-      for(col_index = 1; col_index <= cols_count; col_index++)
+      for(col_index = 0; col_index < cols_count; col_index++)
       {
-         err = SQLDescribeCol(cnf->current->hstmt, col_index, (SQLTCHAR *)colName,
+         err = SQLDescribeCol(cnf->current->hstmt, col_index+1, (SQLTCHAR *)colName,
                               sizeof(colName), NULL, &colType, &colPrecision,
                               &colScale, &colNullable);
          if (err != SQL_SUCCESS)
@@ -613,7 +613,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
                break;
 
             default:
-               displayWidths[col_index - 1] = 0;	/* skip other data types */
+               displayWidths[col_index] = 0;	/* skip other data types */
                continue;
          };
 
@@ -621,10 +621,10 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             displayWidth = strlen((char *)colName);
          if (displayWidth > sizeof(fetchBuffer) - 1)
             displayWidth = sizeof(fetchBuffer) - 1;
-         displayWidths[col_index - 1] = displayWidth;
+         displayWidths[col_index] = displayWidth;
 
          odbcshell_fprintf(cnf, "\"%s\"", colName);
-         if (col_index < cols_count)
+         if (col_index < (cols_count-1))
             odbcshell_fprintf(cnf, ",");
       };
       odbcshell_fprintf(cnf, "\n");
@@ -641,9 +641,9 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             break;
          };
 
-         for(col_index = 1; col_index <= cols_count; col_index++)
+         for(col_index = 0; col_index < cols_count; col_index++)
          {
-            sts = SQLGetData(cnf->current->hstmt, col_index, SQL_C_CHAR,
+            sts = SQLGetData(cnf->current->hstmt, col_index+1, SQL_C_CHAR,
                              fetchBuffer, sizeof(fetchBuffer), &colIndicator);
             if ((sts != SQL_SUCCESS_WITH_INFO) && (sts != SQL_SUCCESS))
             {
@@ -654,7 +654,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             if (colIndicator == SQL_NULL_DATA)
                fetchBuffer[0] = '\0';
             odbcshell_fprintf(cnf, "\"%s\"", fetchBuffer);
-            if (col_index < cols_count)
+            if (col_index < (cols_count-1))
                odbcshell_fprintf(cnf, ",");
          };
          odbcshell_fprintf(cnf, "\n");
