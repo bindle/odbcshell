@@ -500,7 +500,6 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    short           cols_count;
    short           col_index;
    SQLULEN         colPrecision;
-   SQLLEN          colIndicator;
    unsigned long   totalRows;
    unsigned long   totalSets;
    SQLLEN          nrows;
@@ -642,14 +641,14 @@ int odbcshell_odbc_result(ODBCShell * cnf)
          for(col_index = 0; col_index < cols_count; col_index++)
          {
             sts = SQLGetData(cnf->current->hstmt, col_index+1, SQL_C_CHAR,
-                             fetchBuffer, sizeof(fetchBuffer), &colIndicator);
+                             fetchBuffer, sizeof(fetchBuffer), &col.indicator);
             if ((sts != SQL_SUCCESS_WITH_INFO) && (sts != SQL_SUCCESS))
             {
                odbcshell_odbc_errors("SQLGetData", cnf, cnf->current);
                SQLCloseCursor(cnf->current->hstmt);
                return(-1);
             };
-            if (colIndicator == SQL_NULL_DATA)
+            if (col.indicator == SQL_NULL_DATA)
                fetchBuffer[0] = '\0';
             odbcshell_fprintf(cnf, "\"%s\"", fetchBuffer);
             if (col_index < (cols_count-1))
