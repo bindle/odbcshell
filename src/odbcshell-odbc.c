@@ -621,8 +621,12 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             col->width = strlen((char *)col->name);
          if (col->width > sizeof(fetchBuffer) - 1)
             col->width = sizeof(fetchBuffer) - 1;
+      };
 
-         odbcshell_fprintf(cnf, "\"%s\"", col->name);
+      // displays name of columns
+      for(col_index = 0; col_index < cols_count; col_index++)
+      {
+         odbcshell_fprintf(cnf, "\"%s\"", cnf->cols[col_index].name);
          if (col_index < (cols_count-1))
             odbcshell_fprintf(cnf, ",");
       };
