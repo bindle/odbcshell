@@ -501,7 +501,6 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    short           col_index;
    SQLULEN         colPrecision;
    SQLLEN          colIndicator;
-   SQLSMALLINT     colScale;
    SQLSMALLINT     colNullable;
    unsigned long   totalRows;
    unsigned long   totalSets;
@@ -543,7 +542,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
          memset(&col, 0, sizeof(ODBCShellColumn));
          err = SQLDescribeCol(cnf->current->hstmt, col_index+1, col.name,
                               sizeof(col.name), NULL, &col.type, &colPrecision,
-                              &colScale, &colNullable);
+                              &col.scale, &colNullable);
          if (err != SQL_SUCCESS)
          {
             odbcshell_odbc_errors("SQLDescribeCol", cnf, cnf->current);
@@ -608,8 +607,8 @@ int odbcshell_odbc_result(ODBCShell * cnf)
 #endif
             case SQL_TIMESTAMP:
                displayWidth = 19;
-               if (colScale > 0)
-                  displayWidth = displayWidth + colScale + 1;
+               if (col.scale > 0)
+                  displayWidth = displayWidth + col.scale + 1;
                break;
 
             default:
