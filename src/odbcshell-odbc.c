@@ -499,7 +499,6 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    size_t          displayWidth;
    short           cols_count;
    short           col_index;
-   SQLSMALLINT     colType;
    SQLULEN         colPrecision;
    SQLLEN          colIndicator;
    SQLSMALLINT     colScale;
@@ -543,7 +542,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
       {
          memset(&col, 0, sizeof(ODBCShellColumn));
          err = SQLDescribeCol(cnf->current->hstmt, col_index+1, col.name,
-                              sizeof(col.name), NULL, &colType, &colPrecision,
+                              sizeof(col.name), NULL, &col.type, &colPrecision,
                               &colScale, &colNullable);
          if (err != SQL_SUCCESS)
          {
@@ -551,7 +550,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             SQLCloseCursor(cnf->current->hstmt);
             return(-1);
          };
-         switch(colType)
+         switch(col.type)
          {
             case SQL_VARCHAR:
             case SQL_CHAR:

@@ -201,6 +201,7 @@ struct odbcshell_config_data
 typedef struct odbcshell_column ODBCShellColumn;
 struct odbcshell_column
 {
+   SQLSMALLINT   type;
    SQLTCHAR      name[64];    ///< name of column
 };
 
