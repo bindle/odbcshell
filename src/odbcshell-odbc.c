@@ -496,7 +496,6 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    SQLRETURN       sts;
    SQLTCHAR        fetchBuffer[1024];
    size_t          displayWidths[256];
-   size_t          displayWidth;
    short           cols_count;
    short           col_index;
    unsigned long   totalRows;
@@ -553,28 +552,28 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             case SQL_WVARCHAR:
             case SQL_WCHAR:
             case SQL_GUID:
-               displayWidth = col.precision;
+               col.width = col.precision;
                break;
 
             case SQL_BINARY:
-               displayWidth = col.precision * 2;
+               col.width = col.precision * 2;
                break;
 
             case SQL_LONGVARCHAR:
             case SQL_WLONGVARCHAR:
             case SQL_LONGVARBINARY:
-               displayWidth = 30;	/* show only first 30 */
+               col.width = 30;	/* show only first 30 */
                break;
 
             case SQL_BIT:
-               displayWidth = 1;
+               col.width = 1;
                break;
 
             case SQL_TINYINT:
             case SQL_SMALLINT:
             case SQL_INTEGER:
             case SQL_BIGINT:
-               displayWidth = col.precision + 1;	/* sign */
+               col.width = col.precision + 1;	/* sign */
                break;
 
             case SQL_DOUBLE:
@@ -582,30 +581,30 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             case SQL_NUMERIC:
             case SQL_FLOAT:
             case SQL_REAL:
-               displayWidth = col.precision + 2;	/* sign, comma */
+               col.width = col.precision + 2;	/* sign, comma */
             break;
 
 #ifdef SQL_TYPE_DATE
             case SQL_TYPE_DATE:
 #endif
             case SQL_DATE:
-               displayWidth = 10;
+               col.width = 10;
                break;
 
 #ifdef SQL_TYPE_TIME
             case SQL_TYPE_TIME:
 #endif
             case SQL_TIME:
-               displayWidth = 8;
+               col.width = 8;
                break;
 
 #ifdef SQL_TYPE_TIMESTAMP
             case SQL_TYPE_TIMESTAMP:
 #endif
             case SQL_TIMESTAMP:
-               displayWidth = 19;
+               col.width = 19;
                if (col.scale > 0)
-                  displayWidth = displayWidth + col.scale + 1;
+                  col.width = col.width + col.scale + 1;
                break;
 
             default:
@@ -613,11 +612,11 @@ int odbcshell_odbc_result(ODBCShell * cnf)
                continue;
          };
 
-         if (displayWidth < strlen((char *)col.name))
-            displayWidth = strlen((char *)col.name);
-         if (displayWidth > sizeof(fetchBuffer) - 1)
-            displayWidth = sizeof(fetchBuffer) - 1;
-         displayWidths[col_index] = displayWidth;
+         if (col.width < strlen((char *)col.name))
+            col.width = strlen((char *)col.name);
+         if (col.width > sizeof(fetchBuffer) - 1)
+            col.width = sizeof(fetchBuffer) - 1;
+         displayWidths[col_index] = col.width;
 
          odbcshell_fprintf(cnf, "\"%s\"", col.name);
          if (col_index < (cols_count-1))
