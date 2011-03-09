@@ -530,7 +530,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
          SQLRowCount(cnf->current->hstmt, &nrows);
          printf("Statement executed. %ld rows affected.\n", (long)nrows);
          SQLCloseCursor(cnf->current->hstmt);
-         return(-1);
+         return(0);
       };
       if (cols_count > 256)
       {
