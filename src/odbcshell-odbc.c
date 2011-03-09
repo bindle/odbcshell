@@ -501,7 +501,6 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    short           col_index;
    SQLULEN         colPrecision;
    SQLLEN          colIndicator;
-   SQLSMALLINT     colNullable;
    unsigned long   totalRows;
    unsigned long   totalSets;
    SQLLEN          nrows;
@@ -542,7 +541,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
          memset(&col, 0, sizeof(ODBCShellColumn));
          err = SQLDescribeCol(cnf->current->hstmt, col_index+1, col.name,
                               sizeof(col.name), NULL, &col.type, &colPrecision,
-                              &col.scale, &colNullable);
+                              &col.scale, &col.nullable);
          if (err != SQL_SUCCESS)
          {
             odbcshell_odbc_errors("SQLDescribeCol", cnf, cnf->current);

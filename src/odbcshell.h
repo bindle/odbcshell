@@ -203,6 +203,8 @@ struct odbcshell_column
 {
    SQLSMALLINT   type;
    SQLSMALLINT   scale;
+   SQLSMALLINT   nullable;
+   SQLSMALLINT   pad;
    SQLTCHAR      name[64];    ///< name of column
 };
 
