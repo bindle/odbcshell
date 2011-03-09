@@ -167,6 +167,20 @@ struct odbcshell_connection
 };
 
 
+/// information describing a column returned with a result
+typedef struct odbcshell_column ODBCShellColumn;
+struct odbcshell_column
+{
+   SQLSMALLINT   type;
+   SQLSMALLINT   scale;
+   SQLSMALLINT   nullable;
+   SQLSMALLINT   pad;
+   SQLULEN       precision;
+   size_t        width;   ///< width of display required to print value
+   SQLTCHAR      name[64];    ///< name of column
+};
+
+
 /// contains configuration data
 typedef struct odbcshell_config_data ODBCShell;
 struct odbcshell_config_data
@@ -194,20 +208,7 @@ struct odbcshell_config_data
    HDBC               hdbc;        ///< iODBC connection state
    ODBCShellConn    * current;     ///< current connection to use for SQL
    ODBCShellConn   ** conns;       ///< list of active connections
-};
-
-
-/// information describing a column returned with a result
-typedef struct odbcshell_column ODBCShellColumn;
-struct odbcshell_column
-{
-   SQLSMALLINT   type;
-   SQLSMALLINT   scale;
-   SQLSMALLINT   nullable;
-   SQLSMALLINT   pad;
-   SQLULEN       precision;
-   size_t        width;   ///< width of display required to print value
-   SQLTCHAR      name[64];    ///< name of column
+   ODBCShellColumn  * cols;
 };
 
 
