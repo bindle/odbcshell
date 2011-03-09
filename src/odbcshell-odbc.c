@@ -502,7 +502,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    unsigned long   totalRows;
    unsigned long   totalSets;
    SQLLEN          nrows;
-   ODBCShellColumn col;
+   ODBCShellColumn * col;
 
    totalSets = 1;
 
@@ -532,49 +532,56 @@ int odbcshell_odbc_result(ODBCShell * cnf)
          cols_count = 256;
          odbcshell_error(cnf, "NOTE: Resultset truncated to %d columns.\n", 256);
       };
+      if (col)
+         free(col);
+      if (!(col = malloc(sizeof(ODBCShellColumn))))
+      {
+         odbcshell_error(cnf, "out of virtual memory\n");
+         return(-2);
+      };
 
       // retrieve name of column
       for(col_index = 0; col_index < cols_count; col_index++)
       {
-         memset(&col, 0, sizeof(ODBCShellColumn));
-         err = SQLDescribeCol(cnf->current->hstmt, col_index+1, col.name,
-                              sizeof(col.name), NULL, &col.type, &col.precision,
-                              &col.scale, &col.nullable);
+         col = &cnf->cols[col_index];
+         err = SQLDescribeCol(cnf->current->hstmt, col_index+1, col->name,
+                              sizeof(col->name), NULL, &col->type, &col->precision,
+                              &col->scale, &col->nullable);
          if (err != SQL_SUCCESS)
          {
             odbcshell_odbc_errors("SQLDescribeCol", cnf, cnf->current);
             SQLCloseCursor(cnf->current->hstmt);
             return(-1);
          };
-         switch(col.type)
+         switch(col->type)
          {
             case SQL_VARCHAR:
             case SQL_CHAR:
             case SQL_WVARCHAR:
             case SQL_WCHAR:
             case SQL_GUID:
-               col.width = col.precision;
+               col->width = col->precision;
                break;
 
             case SQL_BINARY:
-               col.width = col.precision * 2;
+               col->width = col->precision * 2;
                break;
 
             case SQL_LONGVARCHAR:
             case SQL_WLONGVARCHAR:
             case SQL_LONGVARBINARY:
-               col.width = 30;	/* show only first 30 */
+               col->width = 30;	/* show only first 30 */
                break;
 
             case SQL_BIT:
-               col.width = 1;
+               col->width = 1;
                break;
 
             case SQL_TINYINT:
             case SQL_SMALLINT:
             case SQL_INTEGER:
             case SQL_BIGINT:
-               col.width = col.precision + 1;	/* sign */
+               col->width = col->precision + 1;	/* sign */
                break;
 
             case SQL_DOUBLE:
@@ -582,30 +589,30 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             case SQL_NUMERIC:
             case SQL_FLOAT:
             case SQL_REAL:
-               col.width = col.precision + 2;	/* sign, comma */
+               col->width = col->precision + 2;	/* sign, comma */
             break;
 
 #ifdef SQL_TYPE_DATE
             case SQL_TYPE_DATE:
 #endif
             case SQL_DATE:
-               col.width = 10;
+               col->width = 10;
                break;
 
 #ifdef SQL_TYPE_TIME
             case SQL_TYPE_TIME:
 #endif
             case SQL_TIME:
-               col.width = 8;
+               col->width = 8;
                break;
 
 #ifdef SQL_TYPE_TIMESTAMP
             case SQL_TYPE_TIMESTAMP:
 #endif
             case SQL_TIMESTAMP:
-               col.width = 19;
-               if (col.scale > 0)
-                  col.width = col.width + col.scale + 1;
+               col->width = 19;
+               if (col->scale > 0)
+                  col->width = col->width + col->scale + 1;
                break;
 
             default:
@@ -613,13 +620,13 @@ int odbcshell_odbc_result(ODBCShell * cnf)
                continue;
          };
 
-         if (col.width < strlen((char *)col.name))
-            col.width = strlen((char *)col.name);
-         if (col.width > sizeof(fetchBuffer) - 1)
-            col.width = sizeof(fetchBuffer) - 1;
-         displayWidths[col_index] = col.width;
+         if (col->width < strlen((char *)col->name))
+            col->width = strlen((char *)col->name);
+         if (col->width > sizeof(fetchBuffer) - 1)
+            col->width = sizeof(fetchBuffer) - 1;
+         displayWidths[col_index] = col->width;
 
-         odbcshell_fprintf(cnf, "\"%s\"", col.name);
+         odbcshell_fprintf(cnf, "\"%s\"", col->name);
          if (col_index < (cols_count-1))
             odbcshell_fprintf(cnf, ",");
       };
