@@ -53,7 +53,6 @@
 #include "odbcshell-print.h"
 
 
-
 /////////////////
 //             //
 //  Functions  //
