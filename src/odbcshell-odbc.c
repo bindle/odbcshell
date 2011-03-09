@@ -499,7 +499,6 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    size_t          displayWidth;
    short           cols_count;
    short           col_index;
-   SQLTCHAR        colName[50];
    SQLSMALLINT     colType;
    SQLULEN         colPrecision;
    SQLLEN          colIndicator;
@@ -508,6 +507,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    unsigned long   totalRows;
    unsigned long   totalSets;
    SQLLEN          nrows;
+   ODBCShellColumn col;
 
    totalSets = 1;
 
@@ -541,8 +541,9 @@ int odbcshell_odbc_result(ODBCShell * cnf)
       // retrieve name of column
       for(col_index = 0; col_index < cols_count; col_index++)
       {
-         err = SQLDescribeCol(cnf->current->hstmt, col_index+1, (SQLTCHAR *)colName,
-                              sizeof(colName), NULL, &colType, &colPrecision,
+         memset(&col, 0, sizeof(ODBCShellColumn));
+         err = SQLDescribeCol(cnf->current->hstmt, col_index+1, col.name,
+                              sizeof(col.name), NULL, &colType, &colPrecision,
                               &colScale, &colNullable);
          if (err != SQL_SUCCESS)
          {
@@ -617,13 +618,13 @@ int odbcshell_odbc_result(ODBCShell * cnf)
                continue;
          };
 
-         if (displayWidth < strlen((char *)colName))
-            displayWidth = strlen((char *)colName);
+         if (displayWidth < strlen((char *)col.name))
+            displayWidth = strlen((char *)col.name);
          if (displayWidth > sizeof(fetchBuffer) - 1)
             displayWidth = sizeof(fetchBuffer) - 1;
          displayWidths[col_index] = displayWidth;
 
-         odbcshell_fprintf(cnf, "\"%s\"", colName);
+         odbcshell_fprintf(cnf, "\"%s\"", col.name);
          if (col_index < (cols_count-1))
             odbcshell_fprintf(cnf, ",");
       };

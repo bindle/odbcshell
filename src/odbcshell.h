@@ -197,6 +197,14 @@ struct odbcshell_config_data
 };
 
 
+/// information describing a column returned with a result
+typedef struct odbcshell_column ODBCShellColumn;
+struct odbcshell_column
+{
+   SQLTCHAR      name[64];    ///< name of column
+};
+
+
 //////////////////
 //              //
 //  Prototypes  //
