@@ -495,7 +495,6 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    int             err;
    SQLRETURN       sts;
    SQLTCHAR        fetchBuffer[1024];
-   size_t          displayWidths[256];
    SQLLEN          indicator;
    short           cols_count;
    short           col_index;
@@ -527,18 +526,16 @@ int odbcshell_odbc_result(ODBCShell * cnf)
          SQLCloseCursor(cnf->current->hstmt);
          return(0);
       };
-      if (cols_count > 256)
-      {
-         cols_count = 256;
-         odbcshell_error(cnf, "NOTE: Resultset truncated to %d columns.\n", 256);
-      };
-      if (col)
-         free(col);
-      if (!(col = malloc(sizeof(ODBCShellColumn))))
+
+      // allocates memory for array of column information
+      if (cnf->cols)
+         free(cnf->cols);
+      if (!(cnf->cols = malloc(sizeof(ODBCShellColumn) * cols_count)))
       {
          odbcshell_error(cnf, "out of virtual memory\n");
          return(-2);
       };
+      memset(cnf->cols, 0, (sizeof(ODBCShellColumn) * cols_count));
 
       // retrieve name of column
       for(col_index = 0; col_index < cols_count; col_index++)
@@ -616,7 +613,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
                break;
 
             default:
-               displayWidths[col_index] = 0;	/* skip other data types */
+               col->width = 0;	/* skip other data types */
                continue;
          };
 
@@ -624,7 +621,6 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             col->width = strlen((char *)col->name);
          if (col->width > sizeof(fetchBuffer) - 1)
             col->width = sizeof(fetchBuffer) - 1;
-         displayWidths[col_index] = col->width;
 
          odbcshell_fprintf(cnf, "\"%s\"", col->name);
          if (col_index < (cols_count-1))
