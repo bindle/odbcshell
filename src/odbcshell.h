@@ -205,7 +205,6 @@ struct odbcshell_column
    SQLSMALLINT   scale;
    SQLSMALLINT   nullable;
    SQLSMALLINT   pad;
-   SQLLEN        indicator;
    SQLULEN       precision;
    size_t        width;   ///< width of display required to print value
    SQLTCHAR      name[64];    ///< name of column
