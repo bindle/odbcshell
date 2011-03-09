@@ -499,7 +499,6 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    size_t          displayWidth;
    short           cols_count;
    short           col_index;
-   SQLULEN         colPrecision;
    unsigned long   totalRows;
    unsigned long   totalSets;
    SQLLEN          nrows;
@@ -539,7 +538,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
       {
          memset(&col, 0, sizeof(ODBCShellColumn));
          err = SQLDescribeCol(cnf->current->hstmt, col_index+1, col.name,
-                              sizeof(col.name), NULL, &col.type, &colPrecision,
+                              sizeof(col.name), NULL, &col.type, &col.precision,
                               &col.scale, &col.nullable);
          if (err != SQL_SUCCESS)
          {
@@ -554,11 +553,11 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             case SQL_WVARCHAR:
             case SQL_WCHAR:
             case SQL_GUID:
-               displayWidth = colPrecision;
+               displayWidth = col.precision;
                break;
 
             case SQL_BINARY:
-               displayWidth = colPrecision * 2;
+               displayWidth = col.precision * 2;
                break;
 
             case SQL_LONGVARCHAR:
@@ -575,7 +574,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             case SQL_SMALLINT:
             case SQL_INTEGER:
             case SQL_BIGINT:
-               displayWidth = colPrecision + 1;	/* sign */
+               displayWidth = col.precision + 1;	/* sign */
                break;
 
             case SQL_DOUBLE:
@@ -583,7 +582,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             case SQL_NUMERIC:
             case SQL_FLOAT:
             case SQL_REAL:
-               displayWidth = colPrecision + 2;	/* sign, comma */
+               displayWidth = col.precision + 2;	/* sign, comma */
             break;
 
 #ifdef SQL_TYPE_DATE

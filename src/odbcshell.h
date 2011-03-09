@@ -206,6 +206,7 @@ struct odbcshell_column
    SQLSMALLINT   nullable;
    SQLSMALLINT   pad;
    SQLLEN        indicator;
+   SQLULEN       precision;
    SQLTCHAR      name[64];    ///< name of column
 };
 
