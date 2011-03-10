@@ -91,10 +91,6 @@ void odbcshell_free(ODBCShell * cnf)
       free(cnf->exec_strs);
    cnf->exec_strs = NULL;
 
-   if (cnf->cols)
-      free(cnf->cols);
-   cnf->cols = NULL;
-
    odbcshell_fclose(cnf);
 
    free(cnf);

@@ -174,10 +174,11 @@ struct odbcshell_column
 typedef struct odbcshell_connection ODBCShellConn;
 struct odbcshell_connection
 {
-   char  * name;
-   char  * dsn;
-   HDBC    hdbc;
-   HSTMT   hstmt;
+   char             * name;
+   char             * dsn;
+   HDBC               hdbc;
+   HSTMT              hstmt;
+   ODBCShellColumn  * cols;
 };
 
 
@@ -208,7 +209,6 @@ struct odbcshell_config_data
    HDBC               hdbc;        ///< iODBC connection state
    ODBCShellConn    * current;     ///< current connection to use for SQL
    ODBCShellConn   ** conns;       ///< list of active connections
-   ODBCShellColumn  * cols;
 };
 
 

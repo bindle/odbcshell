@@ -390,6 +390,10 @@ void odbcshell_odbc_free(ODBCShell * cnf, ODBCShellConn  ** connp)
       if (cnf->current == (*connp))
          cnf->current = NULL;
 
+   if ((*connp)->cols)
+      free((*connp)->cols);
+   (*connp)->cols      = NULL;
+
    if ((*connp)->hstmt)
    {
       SQLCloseCursor((*connp)->hstmt);
@@ -526,19 +530,19 @@ int odbcshell_odbc_result(ODBCShell * cnf)
       };
 
       // allocates memory for array of column information
-      if (cnf->cols)
-         free(cnf->cols);
-      if (!(cnf->cols = malloc(sizeof(ODBCShellColumn) * col_count)))
+      if (cnf->current->cols)
+         free(cnf->current->cols);
+      if (!(cnf->current->cols = malloc(sizeof(ODBCShellColumn) * col_count)))
       {
          odbcshell_error(cnf, "out of virtual memory\n");
          return(-2);
       };
-      memset(cnf->cols, 0, (sizeof(ODBCShellColumn) * col_count));
+      memset(cnf->current->cols, 0, (sizeof(ODBCShellColumn) * col_count));
 
       // retrieve name of column
       for(col_index = 0; col_index < col_count; col_index++)
       {
-         col = &cnf->cols[col_index];
+         col = &cnf->current->cols[col_index];
          err = SQLDescribeCol(cnf->current->hstmt, col_index+1, col->name,
                               sizeof(col->name), NULL, &col->type, &col->precision,
                               &col->scale, &col->nullable);
@@ -624,7 +628,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
       // displays name of columns
       for(col_index = 0; col_index < col_count; col_index++)
       {
-         odbcshell_fprintf(cnf, "\"%s\"", cnf->cols[col_index].name);
+         odbcshell_fprintf(cnf, "\"%s\"", cnf->current->cols[col_index].name);
          if (col_index < (col_count-1))
             odbcshell_fprintf(cnf, ",");
       };
