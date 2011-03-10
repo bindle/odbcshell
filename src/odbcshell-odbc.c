@@ -493,7 +493,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
 {
    int             err;
    SQLRETURN       sts;
-   SQLTCHAR        fetchBuffer[1024];
+   SQLTCHAR        buff[1024];
    SQLLEN          indicator;
    short           col_count;
    short           col_index;
@@ -618,8 +618,8 @@ int odbcshell_odbc_result(ODBCShell * cnf)
 
          if (col->width < strlen((char *)col->name))
             col->width = strlen((char *)col->name);
-         if (col->width > sizeof(fetchBuffer) - 1)
-            col->width = sizeof(fetchBuffer) - 1;
+         if (col->width > sizeof(buff) - 1)
+            col->width = sizeof(buff) - 1;
       };
 
       // displays name of columns
@@ -646,7 +646,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
          for(col_index = 0; col_index < col_count; col_index++)
          {
             sts = SQLGetData(cnf->current->hstmt, col_index+1, SQL_C_CHAR,
-                             fetchBuffer, sizeof(fetchBuffer), &indicator);
+                             buff, sizeof(buff), &indicator);
             if ((sts != SQL_SUCCESS_WITH_INFO) && (sts != SQL_SUCCESS))
             {
                odbcshell_odbc_errors("SQLGetData", cnf, cnf->current);
@@ -654,8 +654,8 @@ int odbcshell_odbc_result(ODBCShell * cnf)
                return(-1);
             };
             if (indicator == SQL_NULL_DATA)
-               fetchBuffer[0] = '\0';
-            odbcshell_fprintf(cnf, "\"%s\"", fetchBuffer);
+               buff[0] = '\0';
+            odbcshell_fprintf(cnf, "\"%s\"", buff);
             if (col_index < (col_count-1))
                odbcshell_fprintf(cnf, ",");
          };
