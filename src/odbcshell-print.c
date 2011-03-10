@@ -132,7 +132,7 @@ int odbcshell_fopen(ODBCShell * cnf, const char * path)
    };
    if (!(cnf->output = fopen(path, "w")))
    {
-      odbcshell_error(cnf, "%s", strerror(errno));
+      odbcshell_error(cnf, "%s: %s\n", path, strerror(errno));
       return(-1);
    };
    return(0);
