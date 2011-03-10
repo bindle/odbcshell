@@ -495,7 +495,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    SQLRETURN       sts;
    SQLTCHAR        fetchBuffer[1024];
    SQLLEN          indicator;
-   short           cols_count;
+   short           col_count;
    short           col_index;
    unsigned long   row_count;
    unsigned long   set_count;
@@ -510,14 +510,14 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    while (sts == SQL_SUCCESS)
    {
       // retrieve number of columns
-      err = SQLNumResultCols(cnf->current->hstmt, &cols_count);
+      err = SQLNumResultCols(cnf->current->hstmt, &col_count);
       if (err != SQL_SUCCESS)
       {
          odbcshell_odbc_errors("SQLNumResultCols", cnf, cnf->current);
          SQLCloseCursor(cnf->current->hstmt);
          return(-1);
       };
-      if (cols_count == 0)
+      if (col_count == 0)
       {
          nrows = 0;
          SQLRowCount(cnf->current->hstmt, &nrows);
@@ -529,15 +529,15 @@ int odbcshell_odbc_result(ODBCShell * cnf)
       // allocates memory for array of column information
       if (cnf->cols)
          free(cnf->cols);
-      if (!(cnf->cols = malloc(sizeof(ODBCShellColumn) * cols_count)))
+      if (!(cnf->cols = malloc(sizeof(ODBCShellColumn) * col_count)))
       {
          odbcshell_error(cnf, "out of virtual memory\n");
          return(-2);
       };
-      memset(cnf->cols, 0, (sizeof(ODBCShellColumn) * cols_count));
+      memset(cnf->cols, 0, (sizeof(ODBCShellColumn) * col_count));
 
       // retrieve name of column
-      for(col_index = 0; col_index < cols_count; col_index++)
+      for(col_index = 0; col_index < col_count; col_index++)
       {
          col = &cnf->cols[col_index];
          err = SQLDescribeCol(cnf->current->hstmt, col_index+1, col->name,
@@ -623,10 +623,10 @@ int odbcshell_odbc_result(ODBCShell * cnf)
       };
 
       // displays name of columns
-      for(col_index = 0; col_index < cols_count; col_index++)
+      for(col_index = 0; col_index < col_count; col_index++)
       {
          odbcshell_fprintf(cnf, "\"%s\"", cnf->cols[col_index].name);
-         if (col_index < (cols_count-1))
+         if (col_index < (col_count-1))
             odbcshell_fprintf(cnf, ",");
       };
       odbcshell_fprintf(cnf, "\n");
@@ -643,7 +643,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             break;
          };
 
-         for(col_index = 0; col_index < cols_count; col_index++)
+         for(col_index = 0; col_index < col_count; col_index++)
          {
             sts = SQLGetData(cnf->current->hstmt, col_index+1, SQL_C_CHAR,
                              fetchBuffer, sizeof(fetchBuffer), &indicator);
@@ -656,7 +656,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             if (indicator == SQL_NULL_DATA)
                fetchBuffer[0] = '\0';
             odbcshell_fprintf(cnf, "\"%s\"", fetchBuffer);
-            if (col_index < (cols_count-1))
+            if (col_index < (col_count-1))
                odbcshell_fprintf(cnf, ",");
          };
          odbcshell_fprintf(cnf, "\n");
