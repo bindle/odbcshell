@@ -499,7 +499,6 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    short           col_index;
    unsigned long   row_count;
    unsigned long   set_count;
-   SQLLEN          nrows;
    ODBCShellColumn * col;
 
    set_count = 1;
@@ -519,9 +518,9 @@ int odbcshell_odbc_result(ODBCShell * cnf)
       };
       if (col_count == 0)
       {
-         nrows = 0;
-         SQLRowCount(cnf->current->hstmt, &nrows);
-         printf("Statement executed. %ld rows affected.\n", (long)nrows);
+         row_count = 0;
+         SQLRowCount(cnf->current->hstmt, (long *)&row_count);
+         printf("Statement executed. %ld rows affected.\n", row_count);
          SQLCloseCursor(cnf->current->hstmt);
          return(0);
       };
