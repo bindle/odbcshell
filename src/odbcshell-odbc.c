@@ -498,11 +498,11 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    short           cols_count;
    short           col_index;
    unsigned long   row_count;
-   unsigned long   totalSets;
+   unsigned long   set_count;
    SQLLEN          nrows;
    ODBCShellColumn * col;
 
-   totalSets = 1;
+   set_count = 1;
 
    odbcshell_verbose(cnf, "preparing SQL results...\n");
 
@@ -663,8 +663,8 @@ int odbcshell_odbc_result(ODBCShell * cnf)
          row_count++;
       };
 
-      printf("\nresult set %lu returned %lu rows.\n\n", totalSets, row_count);
-      totalSets++;
+      printf("\nresult set %lu returned %lu rows.\n\n", set_count, row_count);
+      set_count++;
 
       sts = SQLMoreResults(cnf->current->hstmt);
    };
