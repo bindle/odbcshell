@@ -178,6 +178,7 @@ struct odbcshell_connection
    char             * dsn;
    HDBC               hdbc;
    HSTMT              hstmt;
+   long long          col_count;
    ODBCShellColumn  * cols;
 };
 
