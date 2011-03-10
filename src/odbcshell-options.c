@@ -135,7 +135,7 @@ int odbcshell_get_option(ODBCShell * cnf, int opt, void * ptr)
          *((int *)ptr) = (int)cnf->verbose;
          break;
       default:
-         fprintf(stderr, "%s: unknown option\n", PROGRAM_NAME);
+         odbcshell_error(cnf, "unknown option\n");
          return(-1);
    };
    return(0);
@@ -153,8 +153,8 @@ int odbcshell_initialize(ODBCShell ** cnfp)
 
    if (!(cnf = malloc(sizeof(ODBCShell))))
    {
-      fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-      return(-1);
+      odbcshell_fatal(cnf, "out of virtual memory\n");
+      return(-2);
    };
    memset(cnf, 0, sizeof(ODBCShell));
 
@@ -206,8 +206,8 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
             return(0);
          if (!(cnf->conffile = strdup((const char *)ptr)))
          {
-            fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-            return(-1);
+            odbcshell_fatal(cnf, "out of virtual memory\n");
+            return(-2);
          };
          break;
 
@@ -246,8 +246,8 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
          };
          if (!(cnf->histfile = strdup((const char *)ptr)))
          {
-            fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-            return(-1);
+            odbcshell_fatal(cnf, "out of virtual memory\n");
+            return(-2);
          };
          break;
 
@@ -279,8 +279,8 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
             ptr = "odbcshell> ";
          if (!(cnf->prompt = strdup((const char *)ptr)))
          {
-            fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-            return(-1);
+            odbcshell_fatal(cnf, "out of virtual memory\n");
+            return(-2);
          };
          break;
 
@@ -299,7 +299,7 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
          break;
 
       default:
-         fprintf(stderr, "%s: unknown option\n", PROGRAM_NAME);
+         odbcshell_error(cnf, "unknown option\n");
          return(-1);
    };
    return(0);

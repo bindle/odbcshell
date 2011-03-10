@@ -76,8 +76,8 @@ int odbcshell_odbc_array_add(ODBCShell * cnf, ODBCShellConn * conn)
 
    if (!(ptr = realloc(cnf->conns, conns_size)))
    {
-      fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-      return(-1);
+      odbcshell_fatal(cnf, "out of virtual memory\n");
+      return(-2);
    };
    cnf->conns = ptr;
 
@@ -180,20 +180,20 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
    // allocates memory for storing internal connection information
    if (!(conn = malloc(sizeof(ODBCShellConn))))
    {
-      fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-      return(-1);
+      odbcshell_fatal(cnf, "out of virtual memory\n");
+      return(-2);
    };
    memset(conn, 0, sizeof(ODBCShellConn));
    name = name ? name : "";
    if (!(conn->name = strdup(name)))
    {
-      fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-      return(-1);
+      odbcshell_fatal(cnf, "out of virtual memory\n");
+      return(-2);
    };
    if (!(conn->dsn = (char *)strdup(dsn)))
    {
-      fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
-      return(-1);
+      odbcshell_fatal(cnf, "out of virtual memory\n");
+      return(-2);
    };
 
    // allocates iODBC handle for connection
@@ -532,7 +532,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
          free(cnf->current->cols);
       if (!(cnf->current->cols = malloc(sizeof(ODBCShellColumn) * cnf->current->col_count)))
       {
-         odbcshell_error(cnf, "out of virtual memory\n");
+         odbcshell_fatal(cnf, "out of virtual memory\n");
          return(-2);
       };
       memset(cnf->current->cols, 0, (sizeof(ODBCShellColumn) * cnf->current->col_count));
