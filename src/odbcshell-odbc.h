@@ -97,7 +97,7 @@ int odbcshell_odbc_reconnect(ODBCShell * cnf, const char * name);
 // displays result from ODBC operation
 int odbcshell_odbc_result(ODBCShell * cnf);
 
-// displays result from ODBC operation
+// displays result from ODBC operation as CSV output
 int odbcshell_odbc_result_csv(ODBCShell * cnf, unsigned long * row_countp);
 
 // displays list of ODBC datatypes

@@ -652,7 +652,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
 }
 
 
-/// displays result from ODBC operation
+/// displays result from ODBC operation as CSV output
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  set_count set number being processed
 int odbcshell_odbc_result_csv(ODBCShell * cnf, unsigned long * row_countp)
