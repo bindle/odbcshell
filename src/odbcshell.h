@@ -156,17 +156,6 @@ struct odbcshell_option_data
 };
 
 
-/// ODBC connection information
-typedef struct odbcshell_connection ODBCShellConn;
-struct odbcshell_connection
-{
-   char  * name;
-   char  * dsn;
-   HDBC    hdbc;
-   HSTMT   hstmt;
-};
-
-
 /// information describing a column returned with a result
 typedef struct odbcshell_column ODBCShellColumn;
 struct odbcshell_column
@@ -178,6 +167,17 @@ struct odbcshell_column
    SQLULEN       precision;
    size_t        width;   ///< width of display required to print value
    SQLTCHAR      name[64];    ///< name of column
+};
+
+
+/// ODBC connection information
+typedef struct odbcshell_connection ODBCShellConn;
+struct odbcshell_connection
+{
+   char  * name;
+   char  * dsn;
+   HDBC    hdbc;
+   HSTMT   hstmt;
 };
 
 
