@@ -100,6 +100,10 @@ int odbcshell_odbc_result(ODBCShell * cnf);
 // displays result from ODBC operation as CSV output
 int odbcshell_odbc_result_csv(ODBCShell * cnf, unsigned long * row_countp);
 
+// displays result from ODBC operation as Fixed Width output
+int odbcshell_odbc_result_fixedwidth(ODBCShell * cnf,
+   unsigned long * row_countp);
+
 // displays list of ODBC datatypes
 int odbcshell_odbc_show_datatypes(ODBCShell * cnf);
 

@@ -498,7 +498,6 @@ int odbcshell_odbc_result(ODBCShell * cnf)
 {
    int             err;
    SQLRETURN       sts;
-   SQLTCHAR        buff[1024];
    short           col_index;
    unsigned long   row_count;
    unsigned long   set_count;
@@ -620,12 +619,12 @@ int odbcshell_odbc_result(ODBCShell * cnf)
 
          if (col->width < strlen((char *)col->name))
             col->width = strlen((char *)col->name);
-         if (col->width > sizeof(buff) - 1)
-            col->width = sizeof(buff) - 1;
+         if (col->width > 1023)
+            col->width = 1023;
       };
 
       // processes result as CSV output
-      if ((err = odbcshell_odbc_result_csv(cnf, &row_count)))
+      if ((err = odbcshell_odbc_result_fixedwidth(cnf, &row_count)))
       {
          SQLCloseCursor(cnf->current->hstmt);
          return(err);
@@ -702,6 +701,91 @@ int odbcshell_odbc_result_csv(ODBCShell * cnf, unsigned long * row_countp)
          odbcshell_fprintf(cnf, "\"%s\"", buff);
          if (col_index < (cnf->current->col_count-1))
             odbcshell_fprintf(cnf, ",");
+      };
+      odbcshell_fprintf(cnf, "\n");
+      (*row_countp)++;
+   };
+
+   return(0);
+}
+
+
+/// displays result from ODBC operation as CSV output
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  set_count set number being processed
+int odbcshell_odbc_result_fixedwidth(ODBCShell * cnf, unsigned long * row_countp)
+{
+   unsigned        x;
+   unsigned        y;
+   short           col_index;
+   SQLLEN          indicator;
+   SQLTCHAR        buff[1024];
+   SQLRETURN       sts;
+
+   *row_countp = 0;
+
+   // display deivider between header and content
+   for(x = 0; x < cnf->current->col_count; x++)
+   {
+      for(y = 0; y < cnf->current->cols[x].width; y++)
+         odbcshell_fprintf(cnf, "-");
+      if (x < (cnf->current->col_count-1))
+         odbcshell_fprintf(cnf, "+");
+   };
+   odbcshell_fprintf(cnf, "\n");
+
+   // displays name of columns
+   for(col_index = 0; col_index < cnf->current->col_count; col_index++)
+   {
+      odbcshell_fprintf(cnf, "%-*.*s", (int)cnf->current->cols[col_index].width,
+          (int)cnf->current->cols[col_index].width,
+          cnf->current->cols[col_index].name);
+      if (col_index < (cnf->current->col_count-1))
+         odbcshell_fprintf(cnf, "|");
+   };
+   odbcshell_fprintf(cnf, "\n");
+
+   // display deivider between header and content
+   for(x = 0; x < cnf->current->col_count; x++)
+   {
+      for(y = 0; y < cnf->current->cols[x].width; y++)
+         odbcshell_fprintf(cnf, "-");
+      if (x < (cnf->current->col_count-1))
+         odbcshell_fprintf(cnf, "+");
+   };
+   odbcshell_fprintf(cnf, "\n");
+
+   // loops through results
+   while(1)
+   {
+      // fetches next record
+      sts = SQLFetchScroll(cnf->current->hstmt, SQL_FETCH_NEXT, 1);
+      if (sts == SQL_NO_DATA_FOUND)
+         return(0);
+      if (sts != SQL_SUCCESS)
+      {
+         odbcshell_odbc_errors("SQLFetchScroll", cnf, cnf->current);
+         return(-1);
+      };
+
+      // displays record
+      for(col_index = 0; col_index < cnf->current->col_count; col_index++)
+      {
+         sts = SQLGetData(cnf->current->hstmt, col_index+1, SQL_C_CHAR,
+                          buff, sizeof(buff), &indicator);
+         if ((sts != SQL_SUCCESS_WITH_INFO) && (sts != SQL_SUCCESS))
+         {
+            odbcshell_odbc_errors("SQLGetData", cnf, cnf->current);
+            SQLCloseCursor(cnf->current->hstmt);
+            return(-1);
+         };
+         if (indicator == SQL_NULL_DATA)
+            buff[0] = '\0';
+         odbcshell_fprintf(cnf, "%-*.*s", (int)cnf->current->cols[col_index].width,
+            (int)cnf->current->cols[col_index].width,
+            buff);
+         if (col_index < (cnf->current->col_count-1))
+            odbcshell_fprintf(cnf, "|");
       };
       odbcshell_fprintf(cnf, "\n");
       (*row_countp)++;
