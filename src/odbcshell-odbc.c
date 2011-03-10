@@ -497,7 +497,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    SQLLEN          indicator;
    short           cols_count;
    short           col_index;
-   unsigned long   totalRows;
+   unsigned long   row_count;
    unsigned long   totalSets;
    SQLLEN          nrows;
    ODBCShellColumn * col;
@@ -631,7 +631,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
       };
       odbcshell_fprintf(cnf, "\n");
 
-      totalRows = 0;
+      row_count = 0;
       while(1)
       {
          sts = SQLFetchScroll(cnf->current->hstmt, SQL_FETCH_NEXT, 1);
@@ -660,10 +660,10 @@ int odbcshell_odbc_result(ODBCShell * cnf)
                odbcshell_fprintf(cnf, ",");
          };
          odbcshell_fprintf(cnf, "\n");
-         totalRows++;
+         row_count++;
       };
 
-      printf("\nresult set %lu returned %lu rows.\n\n", totalSets, totalRows);
+      printf("\nresult set %lu returned %lu rows.\n\n", totalSets, row_count);
       totalSets++;
 
       sts = SQLMoreResults(cnf->current->hstmt);
