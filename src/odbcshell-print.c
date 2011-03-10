@@ -130,9 +130,9 @@ int odbcshell_fopen(ODBCShell * cnf, const char * path)
       odbcshell_fatal(cnf, "out of virtual memory\n");
       return(-1);
    };
-   if (!(cnf->output = fopen(path, "w")))
+   if (!(cnf->output = fopen(cnf->outputfile, "w")))
    {
-      odbcshell_error(cnf, "%s: %s\n", path, strerror(errno));
+      odbcshell_error(cnf, "%s: %s\n", cnf->outputfile, strerror(errno));
       return(-1);
    };
    return(0);
