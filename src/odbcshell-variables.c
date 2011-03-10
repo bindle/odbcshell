@@ -89,6 +89,7 @@ ODBCShellOption odbcshell_opt_strings[] =
 {
    { ODBCSHELL_OPT_CONFFILE,  1,  1, "conffile",   "configuration file used to set initial settings", NULL },
    { ODBCSHELL_OPT_CONTINUE,  1,  1, "continue",   "continue if non-fatal errors are encountered", NULL },
+   { ODBCSHELL_OPT_FORMAT,    1,  1, "format",     "output format of results (CSV, Fixed)", NULL },
    { ODBCSHELL_OPT_HISTFILE,  1,  1, "histfile",   "file used for saving command history", NULL },
    { ODBCSHELL_OPT_HISTORY,   1,  1, "history",    "enable history file", NULL },
    { ODBCSHELL_OPT_NOSHELL,   1,  1, "noshell",    "disable calling external programs/scripts", NULL },

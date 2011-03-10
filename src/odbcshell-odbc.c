@@ -624,7 +624,19 @@ int odbcshell_odbc_result(ODBCShell * cnf)
       };
 
       // processes result as CSV output
-      if ((err = odbcshell_odbc_result_fixedwidth(cnf, &row_count)))
+      switch(cnf->format)
+      {
+         case ODBCSHELL_FORMAT_FIXED:
+            err = odbcshell_odbc_result_fixedwidth(cnf, &row_count);
+            break;
+         case ODBCSHELL_FORMAT_CSV:
+            err = odbcshell_odbc_result_csv(cnf, &row_count);
+            break;
+         default:
+            err = 0;
+            break;
+      };
+      if ((err))
       {
          SQLCloseCursor(cnf->current->hstmt);
          return(err);

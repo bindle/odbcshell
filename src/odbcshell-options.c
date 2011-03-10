@@ -218,6 +218,21 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
             cnf->continues = *((const int *)ptr);
          break;
 
+      case ODBCSHELL_OPT_FORMAT:
+         cnf->format = ODBCSHELL_FORMAT_CSV;
+         if (!(ptr))
+            return(0);
+         if (!(strcasecmp("csv", ((const char *)ptr))))
+            cnf->format = ODBCSHELL_FORMAT_CSV;
+         else if (!(strcasecmp("fixed", ((const char *)ptr))))
+            cnf->format = ODBCSHELL_FORMAT_FIXED;
+         else
+         {
+            odbcshell_error(cnf, "invalid value for option \"format\"\n");
+            return(-1);
+         }
+         break;
+
       case ODBCSHELL_OPT_HISTFILE:
          if (cnf->histfile)
             free(cnf->histfile);
@@ -305,6 +320,19 @@ int odbcshell_show_option(ODBCShell * cnf, int opt)
       case ODBCSHELL_OPT_CONTINUE:
          printf("%-15s %s\n", "continue", cnf->continues ? "yes" : "no");
          break;
+
+      case ODBCSHELL_OPT_FORMAT:
+         printf("%-15s ", "format");
+         switch(cnf->format)
+         {
+            case ODBCSHELL_FORMAT_FIXED:
+               printf("fixed\n");
+               return(0);
+            default:
+               printf("csv\n");
+               return(0);
+         };
+         return(0);
 
       case ODBCSHELL_OPT_HISTFILE:
          printf("%-15s \"%s\"\n", "histfile", cnf->histfile ? cnf->histfile : "");

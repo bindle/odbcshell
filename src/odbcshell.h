@@ -97,6 +97,10 @@
 #define ODBSHELL_OTYPE_BOOL       0x02
 #define ODBSHELL_OTYPE_CHAR       0x03
 
+// output formats
+#define ODBCSHELL_FORMAT_CSV       0x00
+#define ODBCSHELL_FORMAT_FIXED     0x01
+
 // option IDs
 #define ODBCSHELL_OPT_CONFFILE    (0x010 | ODBSHELL_OTYPE_CHAR)
 #define ODBCSHELL_OPT_CONTINUE    (0x020 | ODBSHELL_OTYPE_BOOL)
@@ -107,6 +111,7 @@
 #define ODBCSHELL_OPT_SILENT      (0x070 | ODBSHELL_OTYPE_BOOL)
 #define ODBCSHELL_OPT_VERBOSE     (0x080 | ODBSHELL_OTYPE_BOOL)
 #define ODBCSHELL_OPT_ODBCPROMPT  (0x090 | ODBSHELL_OTYPE_BOOL)
+#define ODBCSHELL_OPT_FORMAT      (0x0A0 | ODBSHELL_OTYPE_CHAR)
 
 // command IDs
 #define ODBCSHELL_CMD_ALIAS       0x01
@@ -194,6 +199,7 @@ struct odbcshell_config_data
    long long          silent;      ///< toggle for silent mode
    long long          verbose;     ///< toggle for verbose mode
    long long          odbcprompt;  ///< instructs ODBC to not prompt for information
+   long long          format;      ///< output format of ODBC results
    long long          conns_count; ///< toggle for verbose mode
    long long          exec_count;  ///< toggle for verbose mode
    FILE             * output;      ///< file to save results
