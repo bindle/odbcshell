@@ -499,7 +499,6 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    int             err;
    SQLRETURN       sts;
    SQLTCHAR        buff[1024];
-   SQLLEN          indicator;
    short           col_index;
    unsigned long   row_count;
    unsigned long   set_count;
@@ -625,51 +624,19 @@ int odbcshell_odbc_result(ODBCShell * cnf)
             col->width = sizeof(buff) - 1;
       };
 
-      // displays name of columns
-      for(col_index = 0; col_index < cnf->current->col_count; col_index++)
+      // processes result as CSV output
+      if ((err = odbcshell_odbc_result_csv(cnf, &row_count)))
       {
-         odbcshell_fprintf(cnf, "\"%s\"", cnf->current->cols[col_index].name);
-         if (col_index < (cnf->current->col_count-1))
-            odbcshell_fprintf(cnf, ",");
-      };
-      odbcshell_fprintf(cnf, "\n");
-
-      row_count = 0;
-      while(1)
-      {
-         sts = SQLFetchScroll(cnf->current->hstmt, SQL_FETCH_NEXT, 1);
-         if (sts == SQL_NO_DATA_FOUND)
-            break;
-         if (sts != SQL_SUCCESS)
-         {
-            odbcshell_odbc_errors("SQLFetchScroll", cnf, cnf->current);
-            break;
-         };
-
-         for(col_index = 0; col_index < cnf->current->col_count; col_index++)
-         {
-            sts = SQLGetData(cnf->current->hstmt, col_index+1, SQL_C_CHAR,
-                             buff, sizeof(buff), &indicator);
-            if ((sts != SQL_SUCCESS_WITH_INFO) && (sts != SQL_SUCCESS))
-            {
-               odbcshell_odbc_errors("SQLGetData", cnf, cnf->current);
-               SQLCloseCursor(cnf->current->hstmt);
-               return(-1);
-            };
-            if (indicator == SQL_NULL_DATA)
-               buff[0] = '\0';
-            odbcshell_fprintf(cnf, "\"%s\"", buff);
-            if (col_index < (cnf->current->col_count-1))
-               odbcshell_fprintf(cnf, ",");
-         };
-         odbcshell_fprintf(cnf, "\n");
-         row_count++;
+         SQLCloseCursor(cnf->current->hstmt);
+         return(err);
       };
 
+      // prints summary
       printf("\nresult set %lu returned %lu rows.\n\n", set_count, row_count);
-      set_count++;
 
+      // retrieves next set of results
       sts = SQLMoreResults(cnf->current->hstmt);
+      set_count++;
    };
 
    if (sts == SQL_ERROR)
@@ -680,6 +647,65 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    };
 
    SQLCloseCursor(cnf->current->hstmt);
+
+   return(0);
+}
+
+
+/// displays result from ODBC operation
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  set_count set number being processed
+int odbcshell_odbc_result_csv(ODBCShell * cnf, unsigned long * row_countp)
+{
+   short           col_index;
+   SQLLEN          indicator;
+   SQLTCHAR        buff[1024];
+   SQLRETURN       sts;
+
+   *row_countp = 0;
+
+   // displays name of columns
+   for(col_index = 0; col_index < cnf->current->col_count; col_index++)
+   {
+      odbcshell_fprintf(cnf, "\"%s\"", cnf->current->cols[col_index].name);
+      if (col_index < (cnf->current->col_count-1))
+         odbcshell_fprintf(cnf, ",");
+   };
+   odbcshell_fprintf(cnf, "\n");
+
+   // loops through results
+   while(1)
+   {
+      // fetches next record
+      sts = SQLFetchScroll(cnf->current->hstmt, SQL_FETCH_NEXT, 1);
+      if (sts == SQL_NO_DATA_FOUND)
+         return(0);
+      if (sts != SQL_SUCCESS)
+      {
+         odbcshell_odbc_errors("SQLFetchScroll", cnf, cnf->current);
+         return(-1);
+      };
+
+      // displays record
+      for(col_index = 0; col_index < cnf->current->col_count; col_index++)
+      {
+         sts = SQLGetData(cnf->current->hstmt, col_index+1, SQL_C_CHAR,
+                          buff, sizeof(buff), &indicator);
+         if ((sts != SQL_SUCCESS_WITH_INFO) && (sts != SQL_SUCCESS))
+         {
+            odbcshell_odbc_errors("SQLGetData", cnf, cnf->current);
+            SQLCloseCursor(cnf->current->hstmt);
+            return(-1);
+         };
+         if (indicator == SQL_NULL_DATA)
+            buff[0] = '\0';
+         odbcshell_fprintf(cnf, "\"%s\"", buff);
+         if (col_index < (cnf->current->col_count-1))
+            odbcshell_fprintf(cnf, ",");
+      };
+      odbcshell_fprintf(cnf, "\n");
+      (*row_countp)++;
+   };
 
    return(0);
 }
