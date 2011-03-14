@@ -48,6 +48,7 @@
 #include "odbcshell.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "odbcshell-print.h"
@@ -511,7 +512,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    while (sts == SQL_SUCCESS)
    {
       // retrieve number of columns
-      err = SQLNumResultCols(cnf->current->hstmt, (short *)&cnf->current->col_count);
+      err = SQLNumResultCols(cnf->current->hstmt, (SQLSMALLINT *)&cnf->current->col_count);
       if (err != SQL_SUCCESS)
       {
          odbcshell_odbc_errors("SQLNumResultCols", cnf, cnf->current);
@@ -521,7 +522,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
       if (cnf->current->col_count == 0)
       {
          row_count = 0;
-         SQLRowCount(cnf->current->hstmt, (long *)&row_count);
+         SQLRowCount(cnf->current->hstmt, (SQLLEN *)&row_count);
          printf("Statement executed. %ld rows affected.\n", row_count);
          SQLCloseCursor(cnf->current->hstmt);
          return(0);
