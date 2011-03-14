@@ -57,7 +57,9 @@
 #include <sql.h>
 #include <sqlext.h>
 #include <sqlucode.h>
+#ifdef HAVE_IODBCEXT_H
 #include <iodbcext.h>
+#endif
 
 
 ///////////////////
