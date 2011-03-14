@@ -50,7 +50,9 @@
 #include <config.h>
 #endif
 
+#include <stdio.h>
 #include <inttypes.h>
+#include <sys/types.h>
 
 #include <sql.h>
 #include <sqlext.h>
