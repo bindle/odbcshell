@@ -66,11 +66,6 @@
 #include <string.h>
 #include <getopt.h>
 
-#include <sql.h>
-#include <sqlext.h>
-#include <sqlucode.h>
-#include <iodbcext.h>
-
 #include "odbcshell-cli.h"
 #include "odbcshell-commands.h"
 #include "odbcshell-exec.h"
