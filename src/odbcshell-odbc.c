@@ -48,6 +48,7 @@
 #include "odbcshell.h"
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "odbcshell-print.h"
@@ -202,7 +203,9 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
       odbcshell_odbc_free(cnf, &conn);
       return(-1);
    };
+#ifdef SQL_APPLICATION_NAME
    SQLSetConnectOption(conn->hdbc, SQL_APPLICATION_NAME, (SQLULEN)PROGRAM_NAME);
+#endif
 
    // connects to data source
    if (cnf->odbcprompt)
@@ -436,7 +439,9 @@ int odbcshell_odbc_initialize(ODBCShell * cnf)
    if (SQLAllocHandle(SQL_HANDLE_DBC, cnf->henv, &cnf->hdbc) != SQL_SUCCESS)
       return(-1);
 
+#ifdef SQL_APPLICATION_NAME
    SQLSetConnectOption(cnf->hdbc, SQL_APPLICATION_NAME, (SQLULEN)PROGRAM_NAME);
+#endif
 
    return(0);
 }
@@ -497,8 +502,8 @@ int odbcshell_odbc_result(ODBCShell * cnf)
 {
    int             err;
    SQLRETURN       sts;
-   short           col_index;
-   unsigned long   row_count;
+   SQLSMALLINT     col_index;
+   SQLLEN          row_count;
    unsigned long   set_count;
    ODBCShellColumn * col;
 
@@ -510,17 +515,19 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    while (sts == SQL_SUCCESS)
    {
       // retrieve number of columns
-      err = SQLNumResultCols(cnf->current->hstmt, (short *)&cnf->current->col_count);
+      col_index = 0;
+      err = SQLNumResultCols(cnf->current->hstmt, &col_index);
       if (err != SQL_SUCCESS)
       {
          odbcshell_odbc_errors("SQLNumResultCols", cnf, cnf->current);
          SQLCloseCursor(cnf->current->hstmt);
          return(-1);
       };
+      cnf->current->col_count = (unsigned long) col_index;
       if (cnf->current->col_count == 0)
       {
          row_count = 0;
-         SQLRowCount(cnf->current->hstmt, (long *)&row_count);
+         SQLRowCount(cnf->current->hstmt, &row_count);
          printf("Statement executed. %ld rows affected.\n", row_count);
          SQLCloseCursor(cnf->current->hstmt);
          return(0);
@@ -666,7 +673,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
 /// displays result from ODBC operation as CSV output
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  set_count set number being processed
-int odbcshell_odbc_result_csv(ODBCShell * cnf, unsigned long * row_countp)
+int odbcshell_odbc_result_csv(ODBCShell * cnf, SQLLEN * row_countp)
 {
    short           col_index;
    SQLLEN          indicator;
@@ -725,7 +732,7 @@ int odbcshell_odbc_result_csv(ODBCShell * cnf, unsigned long * row_countp)
 /// displays result from ODBC operation as CSV output
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  set_count set number being processed
-int odbcshell_odbc_result_fixedwidth(ODBCShell * cnf, unsigned long * row_countp)
+int odbcshell_odbc_result_fixedwidth(ODBCShell * cnf, SQLLEN * row_countp)
 {
    unsigned        x;
    unsigned        y;

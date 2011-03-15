@@ -244,14 +244,14 @@ int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
                pos++;
             if (pos >= len)
                return(0);
-            arglen = pos - start;
+            arglen = 1 + pos - start;
             if (!(arg = malloc(arglen)))
             {
                fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
                return(-2);
             };
             memset(arg, 0, arglen);
-            strncat(arg, &line[start], arglen);
+            strncpy(arg, &line[start], arglen-1);
             break;
 
          // processes arguments contained within double quotes
@@ -262,14 +262,14 @@ int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
                pos++;
             if (pos >= len)
                return(0);
-            arglen = pos - start;
+            arglen = 1 + pos - start;
             if (!(arg = malloc(arglen)))
             {
                fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
                return(-2);
             };
             memset(arg, 0, arglen);
-            strncat(arg, &line[start], arglen);
+            strncpy(arg, &line[start], arglen-1);
             break;
 
          // processes unquoted arguments
@@ -284,14 +284,14 @@ int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
                     (line[pos+1] != '\n') &&
                     (line[pos+1] != '\r') )
                pos++;
-            arglen = 1 + pos - start;
+            arglen = 2 + pos - start;
             if (!(arg = malloc(arglen)))
             {
                fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
                return(-2);
             };
             memset(arg, 0, arglen);
-            strncat(arg, &line[start], arglen);
+            strncpy(arg, &line[start], arglen-1);
             break;
       };
 

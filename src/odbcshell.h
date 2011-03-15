@@ -50,12 +50,16 @@
 #include <config.h>
 #endif
 
+#include <stdio.h>
 #include <inttypes.h>
+#include <sys/types.h>
 
 #include <sql.h>
 #include <sqlext.h>
 #include <sqlucode.h>
+#ifdef HAVE_IODBCEXT_H
 #include <iodbcext.h>
+#endif
 
 
 ///////////////////
