@@ -267,7 +267,7 @@ int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv)
    {
       printf("ODBC Shell Parameters:\n");
       for(i = 0; odbcshell_opt_strings[i].name; i++)
-         odbcshell_show_option(cnf, odbcshell_opt_strings[i].val);
+         odbcshell_show_option(cnf, (int)odbcshell_opt_strings[i].val);
       return(0);
    };
 
