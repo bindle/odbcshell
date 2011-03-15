@@ -204,7 +204,9 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
       odbcshell_odbc_free(cnf, &conn);
       return(-1);
    };
+#ifdef SQL_APPLICATION_NAME
    SQLSetConnectOption(conn->hdbc, SQL_APPLICATION_NAME, (SQLULEN)PROGRAM_NAME);
+#endif
 
    // connects to data source
    if (cnf->odbcprompt)
@@ -438,7 +440,9 @@ int odbcshell_odbc_initialize(ODBCShell * cnf)
    if (SQLAllocHandle(SQL_HANDLE_DBC, cnf->henv, &cnf->hdbc) != SQL_SUCCESS)
       return(-1);
 
+#ifdef SQL_APPLICATION_NAME
    SQLSetConnectOption(cnf->hdbc, SQL_APPLICATION_NAME, (SQLULEN)PROGRAM_NAME);
+#endif
 
    return(0);
 }
