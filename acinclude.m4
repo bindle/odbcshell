@@ -183,7 +183,7 @@ AC_DEFUN([AC_ODBCSHELL_ENABLE_WARNINGS],[dnl
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wunreachable-code"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Winvalid-pch"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wpacked"
-      ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wpadded"
+      #ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wpadded"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wnested-externs"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Wenum-clash"
       ac_odbcshell_warnings_list="${ac_odbcshell_warnings_list} -Winline"
