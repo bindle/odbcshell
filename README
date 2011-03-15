@@ -44,11 +44,17 @@ Software Requirements
    GNU Automake 1.11.1
    GNU Readline 6.1
    Git 1.7.2.3
-   iODBC 2.52.6
+   Driver Manager:
+      iODBC 2.52.6 
+      unixODBC 2.3.0
 
 
 Tested Platforms
 ================
+
+   FreeBSD 8.1
+      - MyODBC 3.51.26
+      - SQLite ODBC 0.88
 
    OS X 10.6.6
       - FileMaker xDBC 11.3.76
