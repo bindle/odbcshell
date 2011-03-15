@@ -185,7 +185,6 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
       return(-2);
    };
    memset(conn, 0, sizeof(ODBCShellConn));
-   name = name ? name : "";
    if (!(conn->name = strdup(name)))
    {
       odbcshell_fatal(cnf, "out of virtual memory\n");
