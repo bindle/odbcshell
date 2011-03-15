@@ -630,6 +630,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
       };
 
       // processes result as CSV output
+      row_count = 0;
       switch(cnf->format)
       {
          case ODBCSHELL_FORMAT_FIXED:
