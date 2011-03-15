@@ -72,6 +72,7 @@
 #include "odbcshell-options.h"
 #include "odbcshell-odbc.h"
 #include "odbcshell-print.h"
+#include "odbcshell-script.h"
 
 
 //////////////////
@@ -248,6 +249,9 @@ int main(int argc, char * argv[])
 
    if (!(cnf->mode))
       cnf->mode = ODBCSHELL_MODE_SHELL;
+   if (cnf->mode == ODBCSHELL_MODE_SHELL)
+      if (optind < argc)
+         cnf->mode = ODBCSHELL_MODE_SCRIPT;
 
    if ((cnf->dflt_output))
    {
@@ -268,6 +272,12 @@ int main(int argc, char * argv[])
    switch(cnf->mode)
    {
       case ODBCSHELL_MODE_SCRIPT:
+         if (cnf->dflt_dsn)
+            if (odbcshell_odbc_connect(cnf, cnf->dflt_dsn, NULL))
+               return(1);
+         for(c = optind; c < argc; c++)
+            if (odbcshell_script_loop(cnf, argv[c]))
+               return(1);
          break;
 
       case ODBCSHELL_MODE_EXEC:
