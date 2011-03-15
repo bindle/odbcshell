@@ -503,8 +503,8 @@ int odbcshell_odbc_result(ODBCShell * cnf)
 {
    int             err;
    SQLRETURN       sts;
-   short           col_index;
-   unsigned long   row_count;
+   SQLSMALLINT     col_index;
+   SQLLEN          row_count;
    unsigned long   set_count;
    ODBCShellColumn * col;
 
@@ -516,17 +516,19 @@ int odbcshell_odbc_result(ODBCShell * cnf)
    while (sts == SQL_SUCCESS)
    {
       // retrieve number of columns
-      err = SQLNumResultCols(cnf->current->hstmt, (SQLSMALLINT *)&cnf->current->col_count);
+      col_index = 0;
+      err = SQLNumResultCols(cnf->current->hstmt, &col_index);
       if (err != SQL_SUCCESS)
       {
          odbcshell_odbc_errors("SQLNumResultCols", cnf, cnf->current);
          SQLCloseCursor(cnf->current->hstmt);
          return(-1);
       };
+      cnf->current->col_count = (unsigned long) col_index;
       if (cnf->current->col_count == 0)
       {
          row_count = 0;
-         SQLRowCount(cnf->current->hstmt, (SQLLEN *)&row_count);
+         SQLRowCount(cnf->current->hstmt, &row_count);
          printf("Statement executed. %ld rows affected.\n", row_count);
          SQLCloseCursor(cnf->current->hstmt);
          return(0);
