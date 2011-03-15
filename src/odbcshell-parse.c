@@ -72,6 +72,7 @@ int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,
    int           code;
    int           argc;
    char       ** argv;
+   char          delim;
    size_t        pos;
    size_t        offset;
 
@@ -90,16 +91,21 @@ int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,
       if (!(argc))
          return(0);
 
-      *offsetp += offset;
+      delim             = buff[offset+pos];
+      buff[offset+pos]  = '\0';
+      *offsetp         += offset;
 
       switch((code = odbcshell_interpret_line(cnf, &buff[pos], argc, argv)))
       {
          case 1:
+            buff[offset+pos] = delim;
             return(code);
          case -1:
+            buff[offset+pos] = delim;
             if ( (!(code)) || (!(cnf->continues)) )
                return(code);
          default:
+            buff[offset+pos] = delim;
             break;
       };
 
