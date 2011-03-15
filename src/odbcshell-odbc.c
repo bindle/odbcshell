@@ -511,6 +511,12 @@ int odbcshell_odbc_result(ODBCShell * cnf)
 
    odbcshell_verbose(cnf, "preparing SQL results...\n");
 
+   if (cnf->format == ODBCSHELL_FORMAT_XML)
+   {
+      odbcshell_fprintf(cnf, "<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>\n");
+      odbcshell_fprintf(cnf, "<result>\n");
+   };
+
    sts = SQL_SUCCESS;
    while (sts == SQL_SUCCESS)
    {
@@ -639,6 +645,9 @@ int odbcshell_odbc_result(ODBCShell * cnf)
          case ODBCSHELL_FORMAT_CSV:
             err = odbcshell_odbc_result_csv(cnf, &row_count);
             break;
+         case ODBCSHELL_FORMAT_XML:
+            err = odbcshell_odbc_result_xml(cnf, &row_count);
+            break;
          default:
             err = 0;
             break;
@@ -650,12 +659,16 @@ int odbcshell_odbc_result(ODBCShell * cnf)
       };
 
       // prints summary
-      printf("\nresult set %lu returned %lu rows.\n\n", set_count, row_count);
+      if ((cnf->format != ODBCSHELL_FORMAT_XML) || (cnf->output))
+         printf("\nresult set %lu returned %lu rows.\n\n", set_count, row_count);
 
       // retrieves next set of results
       sts = SQLMoreResults(cnf->current->hstmt);
       set_count++;
    };
+
+   if (cnf->format == ODBCSHELL_FORMAT_XML)
+      odbcshell_fprintf(cnf, "</result>\n");
 
    if (sts == SQL_ERROR)
    {
@@ -807,6 +820,58 @@ int odbcshell_odbc_result_fixedwidth(ODBCShell * cnf, SQLLEN * row_countp)
             odbcshell_fprintf(cnf, "|");
       };
       odbcshell_fprintf(cnf, "\n");
+      (*row_countp)++;
+   };
+
+   return(0);
+}
+
+
+/// displays result from ODBC operation as XML output
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  set_count set number being processed
+int odbcshell_odbc_result_xml(ODBCShell * cnf, SQLLEN * row_countp)
+{
+   short           col_index;
+   SQLLEN          indicator;
+   SQLTCHAR        buff[1024];
+   SQLRETURN       sts;
+
+   *row_countp = 0;
+
+   // loops through results
+   while(1)
+   {
+      // fetches next record
+      sts = SQLFetchScroll(cnf->current->hstmt, SQL_FETCH_NEXT, 1);
+      if (sts == SQL_NO_DATA_FOUND)
+         return(0);
+      if (sts != SQL_SUCCESS)
+      {
+         odbcshell_odbc_errors("SQLFetchScroll", cnf, cnf->current);
+         return(-1);
+      };
+
+      odbcshell_fprintf(cnf, "\t<row>\n");
+
+      // displays record
+      for(col_index = 0; col_index < cnf->current->col_count; col_index++)
+      {
+         sts = SQLGetData(cnf->current->hstmt, col_index+1, SQL_C_CHAR,
+                          buff, sizeof(buff), &indicator);
+         if ((sts != SQL_SUCCESS_WITH_INFO) && (sts != SQL_SUCCESS))
+         {
+            odbcshell_odbc_errors("SQLGetData", cnf, cnf->current);
+            SQLCloseCursor(cnf->current->hstmt);
+            return(-1);
+         };
+         if (indicator == SQL_NULL_DATA)
+            buff[0] = '\0';
+         odbcshell_fprintf(cnf, "\t\t<%s>%s</%s>\n",
+            cnf->current->cols[col_index].name, buff,
+            cnf->current->cols[col_index].name);
+      };
+      odbcshell_fprintf(cnf, "\t</row>\n");
       (*row_countp)++;
    };
 

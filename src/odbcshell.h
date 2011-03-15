@@ -104,6 +104,7 @@
 // output formats
 #define ODBCSHELL_FORMAT_CSV       0x00
 #define ODBCSHELL_FORMAT_FIXED     0x01
+#define ODBCSHELL_FORMAT_XML       0x02
 
 // option IDs
 #define ODBCSHELL_OPT_CONFFILE    (0x010 | ODBSHELL_OTYPE_CHAR)

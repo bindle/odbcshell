@@ -226,6 +226,8 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
             cnf->format = ODBCSHELL_FORMAT_CSV;
          else if (!(strcasecmp("fixed", ((const char *)ptr))))
             cnf->format = ODBCSHELL_FORMAT_FIXED;
+         else if (!(strcasecmp(((const char *)ptr), "xml")))
+            cnf->format = ODBCSHELL_FORMAT_XML;
          else
          {
             odbcshell_error(cnf, "invalid value for option \"format\"\n");
@@ -327,6 +329,9 @@ int odbcshell_show_option(ODBCShell * cnf, int opt)
          {
             case ODBCSHELL_FORMAT_FIXED:
                printf("fixed\n");
+               return(0);
+            case ODBCSHELL_FORMAT_XML:
+               printf("xml\n");
                return(0);
             default:
                printf("csv\n");
