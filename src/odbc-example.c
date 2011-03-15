@@ -67,7 +67,9 @@
 #include <sql.h>
 #include <sqlext.h>
 #include <sqlucode.h>
+#ifdef HAVE_IODBCEXT_H
 #include <iodbcext.h>
+#endif
 
 
 //////////////////
@@ -147,7 +149,9 @@ int main(int argc, char * argv[])
       my_free(henv, hdbc, hstmt);
       return(1);
    };
+#ifdef SQL_APPLICATION_NAME
    SQLSetConnectOption(hdbc, SQL_APPLICATION_NAME, (SQLULEN)argv[0]);
+#endif
 
    // displays driver manager version
    err = SQLGetInfo(hdbc, SQL_DM_VER, driverInfo, sizeof(driverInfo), &len1);
