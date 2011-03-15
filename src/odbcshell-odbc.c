@@ -673,7 +673,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
 /// displays result from ODBC operation as CSV output
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  set_count set number being processed
-int odbcshell_odbc_result_csv(ODBCShell * cnf, unsigned long * row_countp)
+int odbcshell_odbc_result_csv(ODBCShell * cnf, SQLLEN * row_countp)
 {
    short           col_index;
    SQLLEN          indicator;
@@ -732,7 +732,7 @@ int odbcshell_odbc_result_csv(ODBCShell * cnf, unsigned long * row_countp)
 /// displays result from ODBC operation as CSV output
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  set_count set number being processed
-int odbcshell_odbc_result_fixedwidth(ODBCShell * cnf, unsigned long * row_countp)
+int odbcshell_odbc_result_fixedwidth(ODBCShell * cnf, SQLLEN * row_countp)
 {
    unsigned        x;
    unsigned        y;
