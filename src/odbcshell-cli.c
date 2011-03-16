@@ -162,7 +162,6 @@ int odbcshell_cli_loop(ODBCShell * cnf)
             {
                if (cnf->history)
                   write_history(cnf->histfile);
-               //free(buffer);
                return(code);
             };
          case 2:
