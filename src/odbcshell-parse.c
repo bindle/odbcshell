@@ -52,6 +52,7 @@
 #include <string.h>
 
 #include "odbcshell-commands.h"
+#include "odbcshell-print.h"
 #include "odbcshell-variables.h"
 
 
@@ -84,7 +85,7 @@ int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,
 
    while(pos < len)
    {
-      if (odbcshell_parse_line(&buff[pos], &argc, &argv, &offset))
+      if (odbcshell_parse_line(cnf, &buff[pos], &argc, &argv, &offset))
          return(-1);
       if ((offset == -1))
          return(2);
@@ -136,15 +137,15 @@ int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
 
    if (cmd->min_arg > argc)
    {
-      printf("%s: missing required arguments.\n", argv[0]);
-      printf("try `help %s;' for more information.\n", argv[0]);
-      return(0);
+      odbcshell_error(cnf, "%s: missing required arguments.\n", argv[0]);
+      odbcshell_error(cnf, "try `help %s;' for more information.\n", argv[0]);
+      return(-1);
    };
    if ( (cmd->max_arg < argc) && (cmd->max_arg != -1) )
    {
-      printf("%s: unknown arguments\n", argv[0]);
-      printf("try `help %s;' for more information.\n", argv[0]);
-      return(0);
+      odbcshell_error(cnf, "%s: unknown arguments\n", argv[0]);
+      odbcshell_error(cnf, "try `help %s;' for more information.\n", argv[0]);
+      return(-1);
    };
 
    cnf->active_cmd = cmd;
@@ -178,8 +179,8 @@ int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
 /// @param[out] argcp
 /// @param[out] argvp
 /// @param[out] eolp
-int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
-   ssize_t * eolp)
+int odbcshell_parse_line(ODBCShell * cnf, char * line, int * argcp,
+   char *** argvp, ssize_t * eolp)
 {
    int       i;
    char    * arg;
@@ -191,7 +192,7 @@ int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
 
    if ( (!(line)) || (!(argcp)) || (!(argvp)) || (!(eolp)) )
    {
-      fprintf(stderr, "%s: internal error\n", PROGRAM_NAME);
+      odbcshell_fatal(cnf, "%s: internal error\n", PROGRAM_NAME);
       return(-2);
    };
 
@@ -257,7 +258,7 @@ int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
             arglen = 1 + pos - start;
             if (!(arg = malloc(arglen)))
             {
-               fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
+               odbcshell_fatal(cnf, "%s: out of virtual memory\n", PROGRAM_NAME);
                return(-2);
             };
             memset(arg, 0, arglen);
@@ -275,7 +276,7 @@ int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
             arglen = 1 + pos - start;
             if (!(arg = malloc(arglen)))
             {
-               fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
+               odbcshell_fatal(cnf, "%s: out of virtual memory\n", PROGRAM_NAME);
                return(-2);
             };
             memset(arg, 0, arglen);
@@ -297,7 +298,7 @@ int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
             arglen = 2 + pos - start;
             if (!(arg = malloc(arglen)))
             {
-               fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
+               odbcshell_fatal(cnf, "%s: out of virtual memory\n", PROGRAM_NAME);
                return(-2);
             };
             memset(arg, 0, arglen);
@@ -312,7 +313,7 @@ int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
       // stores argument in array
       if (!(ptr = realloc(*argvp, sizeof(char *) * ((*argcp)+1))))
       {
-         fprintf(stderr, "%s: out of virtual memory\n", PROGRAM_NAME);
+         odbcshell_fatal(cnf, "%s: out of virtual memory\n", PROGRAM_NAME);
          return(-2);
       };
       *argvp = ptr;

@@ -133,7 +133,7 @@ int odbcshell_odbc_close(ODBCShell * cnf)
 
    for(i = 0;i < (int)cnf->conns_count; i++)
    {
-      printf("closing connection \"%s\"\n", cnf->conns[i]->name);
+      odbcshell_printf(cnf, "closing connection \"%s\"\n", cnf->conns[i]->name);
       odbcshell_odbc_free(cnf, &cnf->conns[i]);
    };
    free(cnf->conns);
@@ -534,7 +534,7 @@ int odbcshell_odbc_result(ODBCShell * cnf)
       {
          row_count = 0;
          SQLRowCount(cnf->current->hstmt, &row_count);
-         printf("Statement executed. %ld rows affected.\n", row_count);
+         odbcshell_printf(cnf, "Statement executed. %ld rows affected.\n", row_count);
          SQLCloseCursor(cnf->current->hstmt);
          return(0);
       };
@@ -660,7 +660,8 @@ int odbcshell_odbc_result(ODBCShell * cnf)
 
       // prints summary
       if ((cnf->format != ODBCSHELL_FORMAT_XML) || (cnf->output))
-         printf("\nresult set %lu returned %lu rows.\n\n", set_count, row_count);
+         odbcshell_printf(cnf, "\nresult set %lu returned %lu rows.\n\n",
+            set_count, row_count);
 
       // retrieves next set of results
       sts = SQLMoreResults(cnf->current->hstmt);
@@ -1100,19 +1101,19 @@ int odbcshell_odbc_version(ODBCShell * cnf)
 
    sts = SQLGetInfo(cnf->hdbc, SQL_DM_VER, info, sizeof(info), &len);
    if (sts == SQL_SUCCESS)
-      printf("iODBC Driver Manager %s\n", info);
+      odbcshell_fprintf(cnf, "iODBC Driver Manager %s\n", info);
 
    for(i = 0; i < (int)cnf->conns_count; i++)
    {
-      printf("connection: %s", cnf->conns[i]->name);
+      odbcshell_fprintf(cnf, "connection: %s", cnf->conns[i]->name);
       sts = SQLGetInfo(cnf->conns[i]->hdbc, SQL_DRIVER_NAME, info, sizeof(info), &len);
       if (sts == SQL_SUCCESS)
       {
-         printf(" (%s)", info);
+         odbcshell_fprintf(cnf, " (%s)", info);
          sts = SQLGetInfo(cnf->conns[i]->hdbc, SQL_DRIVER_VER, info, sizeof(info), &len);
          if (sts == SQL_SUCCESS)
-            printf(" %s", info);
-         printf("\n");
+            odbcshell_fprintf(cnf, " %s", info);
+         odbcshell_fprintf(cnf, "\n");
       };
    };
 

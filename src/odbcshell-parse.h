@@ -70,8 +70,8 @@ int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
    char ** argv);
 
 // splits a line into multiple arguments
-int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
-   ssize_t * eolp);
+int odbcshell_parse_line(ODBCShell * cnf, char * line, int * argcp,
+   char *** argvp, ssize_t * eolp);
 
 
 #endif

@@ -173,13 +173,13 @@ int odbcshell_cmd_help(ODBCShell * cnf, int argc, char ** argv)
 
    if (!(cmd = odbcshell_lookup_opt_by_name(odbcshell_cmd_strings, argv[1])))
    {
-      printf("HELP topic \"%s\" unknown.\n", argv[1]);
-      return(0);
+      odbcshell_error(cnf, "HELP topic \"%s\" unknown.\n", argv[1]);
+      return(-1);
    };
    if (!(cmd->name))
    {
-      printf("HELP topic \"%s\" unknown.\n", argv[1]);
-      return(0);
+      odbcshell_error(cnf, "HELP topic \"%s\" unknown.\n", argv[1]);
+      return(-1);
    };
 
    printf("Command:\n   %s\n", cmd->name);
@@ -208,7 +208,7 @@ int odbcshell_cmd_help(ODBCShell * cnf, int argc, char ** argv)
 /// @param[in]  line     unmodified line sent to ODBC shell
 int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv)
 {
-   printf("WARNING: \"%s\" is not implemented.\n", argv[0]);
+   odbcshell_error(cnf, "WARNING: \"%s\" is not implemented.\n", argv[0]);
    if ( (!(argc)) || (!(cnf)) || (!(argv)) )
       return(0);
    return(0);
@@ -299,7 +299,7 @@ int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv)
 
    if (!(opt = odbcshell_lookup_opt_by_name(odbcshell_opt_strings, argv[1])))
    {
-      printf("%s: set %s: unknown option\n", PROGRAM_NAME, argv[1]);
+      odbcshell_error(cnf, "%s: set %s: unknown option\n", PROGRAM_NAME, argv[1]);
       return(-1);
    };
 
