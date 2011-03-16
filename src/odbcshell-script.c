@@ -47,6 +47,8 @@
 
 #include "odbcshell.h"
 
+#include <errno.h>
+#include <fcntl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -54,6 +56,7 @@
 #include "odbcshell-commands.h"
 #include "odbcshell-odbc.h"
 #include "odbcshell-parse.h"
+#include "odbcshell-print.h"
 #include "odbcshell-variables.h"
 
 
@@ -71,10 +74,58 @@
 /// @param[in]  cnf      pointer to configuration struct
 int odbcshell_script_loop(ODBCShell * cnf, const char * script)
 {
+   int       fd;
+   int       code;
+   char      buff[4096];
+   ssize_t    offset;
+   ssize_t    len;
+   ssize_t    pos;
+
    if (!(cnf))
       return(-1);
 
-   printf("script: %s\n", script);
+   offset = 0;
+
+   if ((fd = open(script, O_RDONLY)) == -1)
+   {
+      odbcshell_error(cnf, "%s: open(%s)\n", script, strerror(errno));
+      return(-1);
+   };
+
+   while((len = read(fd, &buff[offset], 4095-offset)) > 0)
+   {
+      buff[len] = '\0';
+
+      switch((code = odbcshell_interpret_buffer(cnf, buff, 0L, &offset)))
+      {
+         case 1:
+            code = 0;
+         case -1:
+            if ( (!(code)) || (!(cnf->continues)) )
+            {
+               close(fd);
+               return(code);
+            };
+         case 2:
+            continue;
+         default:
+            break;
+      };
+
+      for(pos = 0; pos < (1 + len - offset); pos++)
+         buff[pos] = buff[1+offset+pos];
+      buff[pos] = '\0';
+      offset = len - offset;
+   };
+
+   if (len == -1)
+   {
+      odbcshell_error(cnf, "%s: read(): %s\n", script, strerror(errno));
+      close(fd);
+      return(-1);
+   };
+
+   close(fd);
 
    return(0);
 }
