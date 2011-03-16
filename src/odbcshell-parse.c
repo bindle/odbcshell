@@ -250,7 +250,7 @@ int odbcshell_parse_line(ODBCShell * cnf, char * line, int * argcp,
          // processes arguments contained within single quotes
          case '\'':
             start = pos + 1;
-            pos += 2;
+            pos += 1;
             while((line[pos] != '\'') && (pos < len))
                pos++;
             if (pos >= len)
@@ -268,7 +268,7 @@ int odbcshell_parse_line(ODBCShell * cnf, char * line, int * argcp,
          // processes arguments contained within double quotes
          case '"':
             start = pos + 1;
-            pos += 2;
+            pos += 1;
             while((line[pos] != '"') && (pos < len))
                pos++;
             if (pos >= len)
