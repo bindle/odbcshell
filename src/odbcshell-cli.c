@@ -88,9 +88,6 @@ int odbcshell_cli_loop(ODBCShell * cnf)
    char        * ptr;
    char        * input;
    char        * buffer;
-   char       ** argv;
-   int           argc;
-   size_t        offset;
    ssize_t       offset;
    size_t        bufflen;
 
@@ -113,8 +110,6 @@ int odbcshell_cli_loop(ODBCShell * cnf)
    if (cnf->dflt_dsn)
       odbcshell_odbc_connect(cnf, cnf->dflt_dsn, NULL);
 
-   argv   = NULL;
-   argc   = 0;
    buffer = strdup("");
 
    while((input = readline((!(buffer[0])) ? cnf->prompt : "> ")))
@@ -136,28 +131,12 @@ int odbcshell_cli_loop(ODBCShell * cnf)
       if (buffer[strlen(buffer)-1] == '\\')
          continue;
 
-      if (odbcshell_parse_line(buffer, &argc, &argv, &offset))
-      {
-         free(buffer);
-         return(-1);
-      };
-
-      if (!(offset))
-         continue;
-
-      if (!(argc))
-      {
-         buffer[0] = '\0';
-         continue;
-      };
-
-      add_history(buffer);
-
       switch((code = odbcshell_interpret_buffer(cnf, buffer, 0L, &offset)))
       {
          case 1:
             code = 0;
          case -1:
+            add_history(buffer);
             if ( (!(code)) || (!(cnf->continues)) )
             {
                if (cnf->history)
@@ -167,11 +146,14 @@ int odbcshell_cli_loop(ODBCShell * cnf)
          case 2:
             continue;
          default:
+            add_history(buffer);
             break;
       };
 
-      buffer[0] = '\0';
+      if (offset == -1)
+         continue;
 
+      buffer[0] = '\0';
    };
 
    return(0);
