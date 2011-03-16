@@ -67,14 +67,14 @@
 
 /// interprets the string buffer
 int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,
-   size_t * offsetp)
+   ssize_t * offsetp)
 {
    int           code;
    int           argc;
    char       ** argv;
    char          delim;
    size_t        pos;
-   size_t        offset;
+   ssize_t       offset;
 
    argc     = 0;
    argv     = NULL;
@@ -86,7 +86,7 @@ int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,
    {
       if (odbcshell_parse_line(&buff[pos], &argc, &argv, &offset))
          return(-1);
-      if (!(offset))
+      if ((offset == -1))
          return(2);
       if (!(argc))
          return(0);
@@ -175,7 +175,7 @@ int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
 /// @param[out] argvp
 /// @param[out] eolp
 int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
-   size_t * eolp)
+   ssize_t * eolp)
 {
    int       i;
    char    * arg;
@@ -195,7 +195,7 @@ int odbcshell_parse_line(char * line, int * argcp, char *** argvp,
    for(i = 0; i < *argcp; i++)
       free((*argvp)[i]);
    *argcp = 0;
-   *eolp  = 0;
+   *eolp  = -1;
 
    if (!(len = strlen(line)))
       return(0);

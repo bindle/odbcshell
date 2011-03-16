@@ -91,6 +91,7 @@ int odbcshell_cli_loop(ODBCShell * cnf)
    char       ** argv;
    int           argc;
    size_t        offset;
+   ssize_t       offset;
    size_t        bufflen;
 
    buffer = NULL;
