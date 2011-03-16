@@ -89,7 +89,11 @@ int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,
       if ((offset == -1))
          return(2);
       if (!(argc))
-         return(0);
+      {
+         pos              += offset+1;
+         *offsetp         += offset;
+         continue;
+      };
 
       delim             = buff[offset+pos];
       buff[offset+pos]  = '\0';
