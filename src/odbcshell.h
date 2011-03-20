@@ -140,7 +140,7 @@
 #define ODBCSHELL_CMD_OPEN        0x14
 #define ODBCSHELL_CMD_CLOSE       0x15
 #define ODBCSHELL_CMD_SHOW        0x16
-#define ODBCSHELL_CMD_SQL         -1
+#define ODBCSHELL_CMD_SQL         0x17
 
 
 /////////////////

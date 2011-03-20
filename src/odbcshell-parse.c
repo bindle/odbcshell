@@ -133,7 +133,11 @@ int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
       return(0);
 
    if (!(cmd = odbcshell_lookup_opt_by_name(odbcshell_cmd_strings, argv[0])))
-      return(odbcshell_cmd_exec(cnf, str));
+   {
+      odbcshell_error(cnf, "%s: unknown ODBC command.\n", argv[0]);
+      odbcshell_error(cnf, "try `help;' for more information.\n");
+      return(-1);
+   };
 
    if (cmd->min_arg > argc)
    {
@@ -162,6 +166,7 @@ int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
       case ODBCSHELL_CMD_RECONNECT:  code = odbcshell_cmd_reconnect(cnf, argc, argv); break;
       case ODBCSHELL_CMD_RESET:      code = odbcshell_cmd_reset(cnf); break;
       case ODBCSHELL_CMD_SET:        code = odbcshell_cmd_set(cnf, argc, argv); break;
+      case ODBCSHELL_CMD_SQL:        code = odbcshell_cmd_exec(cnf, str); break;
       case ODBCSHELL_CMD_SHOW:       code = odbcshell_cmd_show(cnf, argv[1]); break;
       case ODBCSHELL_CMD_UNSET:      code = odbcshell_cmd_unset(cnf, argv); break;
       case ODBCSHELL_CMD_USE:        code = odbcshell_cmd_use(cnf, argc, argv); break;
