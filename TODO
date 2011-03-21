@@ -2,8 +2,5 @@
 ODBC Shell
 Copyright (C) 2011 Bindle Binaries <syzdek@bindlebinaries.com>.
 
-- Add support for .odbcshellrc settings. (syzdek)
 - Add ability to list drivers. (syzdek)
-- Add ability to list available databases. (syzdek)
-- Add ability to source commands/settings from external file. (syzdek)
 - Add support for variables. (syzdek)
