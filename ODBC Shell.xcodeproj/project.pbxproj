@@ -37,6 +37,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A00F66541337E770007C2D45 /* Makefile */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
+		A00F66551337E770007C2D45 /* pkg-descr */ = {isa = PBXFileReference; lastKnownFileType = text; path = "pkg-descr"; sourceTree = "<group>"; };
 		A0287F41131C79B900A06C03 /* odbcshell */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = odbcshell; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0287F5B131C7A2100A06C03 /* libiodbc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiodbc.dylib; path = usr/lib/libiodbc.dylib; sourceTree = SDKROOT; };
 		A0287F5D131C7AAE00A06C03 /* libreadline.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libreadline.dylib; path = usr/lib/libreadline.dylib; sourceTree = SDKROOT; };
@@ -92,6 +94,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A00F66521337E770007C2D45 /* ports */ = {
+			isa = PBXGroup;
+			children = (
+				A00F66531337E770007C2D45 /* freebsd */,
+			);
+			path = ports;
+			sourceTree = "<group>";
+		};
+		A00F66531337E770007C2D45 /* freebsd */ = {
+			isa = PBXGroup;
+			children = (
+				A00F66541337E770007C2D45 /* Makefile */,
+				A00F66551337E770007C2D45 /* pkg-descr */,
+			);
+			path = freebsd;
+			sourceTree = "<group>";
+		};
 		A0287F42131C79B900A06C03 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +139,7 @@
 				A06CE3E112E7BBD500AD1C66 /* COPYING */,
 				A06CE3E212E7BBD500AD1C66 /* Makefile.am */,
 				A06CE3E312E7BBD500AD1C66 /* NEWS */,
+				A00F66521337E770007C2D45 /* ports */,
 				A06CE3E412E7BBD500AD1C66 /* README */,
 				A06CE3E512E7BBD500AD1C66 /* src */,
 				A0BFC656131DCA8A006FBFDE /* TODO */,

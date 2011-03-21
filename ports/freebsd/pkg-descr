@@ -1,0 +1,6 @@
+ODBC Shell is a command line ODBC client and script interpreter for Unix
+environments using either the iODBC or unixODBC driver manager. The goal of
+ODBC Shell is to provide an easy and polished utility for accessing databases
+from the commandline.
+
+WWW: http://www.bindlebinaries.com/products/nix/odbcshell/
