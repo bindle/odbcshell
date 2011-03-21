@@ -54,6 +54,7 @@
 #include "odbcshell-commands.h"
 #include "odbcshell-options.h"
 #include "odbcshell-print.h"
+#include "odbcshell-script.h"
 #include "odbcshell-variables.h"
 #include "odbcshell-odbc.h"
 
@@ -366,6 +367,15 @@ int odbcshell_cmd_show(ODBCShell * cnf, const char * data)
       return(-1);
    };
    return(0);
+}
+
+
+/// imports script into session
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  data     data to retrieve
+int odbcshell_cmd_source(ODBCShell * cnf, const char * file)
+{
+   return(odbcshell_script_loop(cnf, file));
 }
 
 

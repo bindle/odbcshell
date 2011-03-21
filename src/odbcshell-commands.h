@@ -101,6 +101,9 @@ int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv);
 // shows database information
 int odbcshell_cmd_show(ODBCShell * cnf, const char * data);
 
+// imports script into session
+int odbcshell_cmd_source(ODBCShell * cnf, const char * file);
+
 // unsets internal value of configuration parameter
 int odbcshell_cmd_unset(ODBCShell * cnf, char ** argv);
 
