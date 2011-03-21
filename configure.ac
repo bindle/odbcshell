@@ -146,7 +146,7 @@ AC_SEARCH_LIBS([SQLSetConnectOption],     [iodbc odbc],,[have_iodbc=no])
 AC_SEARCH_LIBS([SQLSetEnvAttr],           [iodbc odbc],,[have_iodbc=no])
 AC_SEARCH_LIBS([SQLTables ],              [iodbc odbc],,[have_iodbc=no])
 if test "x${have_iodbc}" == "xno";then
-   AC_MSG_ERROR([ODBC Shell requires iODBC.])
+   AC_MSG_ERROR([ODBC Shell requires iODBC or unixODBC.])
 fi
 
 # check for GNU readline
