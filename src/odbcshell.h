@@ -204,6 +204,7 @@ struct odbcshell_config_data
    long long          noshell;     ///< disables ability to call shell commands
    long long          silent;      ///< toggle for silent mode
    long long          verbose;     ///< toggle for verbose mode
+   long long          noprofile;   ///< disables loading of profile
    long long          odbcprompt;  ///< instructs ODBC to not prompt for information
    long long          format;      ///< output format of ODBC results
    long long          conns_count; ///< toggle for verbose mode

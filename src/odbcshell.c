@@ -72,6 +72,7 @@
 #include "odbcshell-options.h"
 #include "odbcshell-odbc.h"
 #include "odbcshell-print.h"
+#include "odbcshell-profile.h"
 #include "odbcshell-script.h"
 
 
@@ -112,6 +113,7 @@ void odbcshell_usage(void)
          "  -e sql                    execute SQL statement\n"
          "  -h, --help                print this help and exit\n"
          "  -l                        print list of DSN\n"
+         "  -N, --noprofile           disables reading .odbcshellrc\n"
          "  -n                        disables prompting by driver\n"
          "  -o file                   file to write output\n"
          "  -q, --quiet, --silent     do not print messages\n"
@@ -152,10 +154,11 @@ int main(int argc, char * argv[])
    int           opt_index;
    ODBCShell   * cnf;
 
-   static char   short_opt[] = "cD:e:hlno:qs:Vv";
+   static char   short_opt[] = "cD:e:hlNno:qs:Vv";
    static struct option long_opt[] =
    {
       {"help",          no_argument, 0, 'h'},
+      {"noprofile",     no_argument, 0, 'N'},
       {"silent",        no_argument, 0, 'q'},
       {"quiet",         no_argument, 0, 'q'},
       {"verbose",       no_argument, 0, 'v'},
@@ -208,6 +211,9 @@ int main(int argc, char * argv[])
                return(1);
             };
             cnf->mode = ODBCSHELL_MODE_LISTDSN;
+            break;
+         case 'N':
+            cnf->noprofile = 1;
             break;
          case 'n':
             ival = 0;
@@ -263,6 +269,12 @@ int main(int argc, char * argv[])
    };
 
    if ((odbcshell_odbc_initialize(cnf)))
+   {
+      odbcshell_free(cnf);
+      return(1);
+   };
+
+   if ((odbcshell_profile(cnf)))
    {
       odbcshell_free(cnf);
       return(1);
