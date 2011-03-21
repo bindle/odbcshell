@@ -103,7 +103,7 @@ int odbcshell_exec_loop(ODBCShell * cnf)
    if (odbcshell_odbc_connect(cnf, cnf->dflt_dsn, NULL))
       return(-1);
    for(l = 0; l < cnf->exec_count; l++)
-      if (odbcshell_cmd_exec(cnf, cnf->exec_strs[l]))
+      if (odbcshell_cmd_exec(cnf, cnf->exec_strs[l], 0))
          return(-1);
    return(0);
 }

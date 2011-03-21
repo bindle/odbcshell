@@ -91,6 +91,7 @@ ODBCShellOption odbcshell_cmd_strings[] =
    { ODBCSHELL_CMD_SET,         1,  3, "SET",        "sets configuration option",     (const char *[4]){"", " variable", " variable value", NULL} },
    { ODBCSHELL_CMD_ODBC,        1, -1, "SELECT",     "internal SQL command (queries)",  NULL },
    { ODBCSHELL_CMD_SHOW,        2,  2, "SHOW",       "shows database information",    (const char *[7]){" dsn", " tables", " qualifiers", " owners", " types", " datatypes", NULL} },
+   { ODBCSHELL_CMD_SQL,         2, -1, "SQL",        "pass statement to ODBC data source",     (const char *[2]){" <statement>", NULL} },
    { ODBCSHELL_CMD_ODBC,        1, -1, "START",      "internal SQL command (transaction controls)",  NULL },
    { ODBCSHELL_CMD_ODBC,        1, -1, "TRUNCATE",   "internal SQL command (data definition)",  NULL },
    { ODBCSHELL_CMD_UNSET,       2,  2, "UNSET",      "unsets configuration option",   (const char *[2]){" variable", NULL} },

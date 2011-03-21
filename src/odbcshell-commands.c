@@ -131,9 +131,22 @@ int odbcshell_cmd_echo(ODBCShell * cnf, int argc, char ** argv)
 /// executes SQL statement
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  cnf      pointer to configuration struct
-int odbcshell_cmd_exec(ODBCShell * cnf, char * sql)
+int odbcshell_cmd_exec(ODBCShell * cnf, char * sql, int skip)
 {
-   return(odbcshell_odbc_exec(cnf, sql));
+   size_t pos;
+
+   pos = 0;
+
+   while(skip)
+   {
+      while ((sql[pos] == ' ') || (sql[pos] == '\t'))
+         pos++;
+      while ((sql[pos] != ' ') && (sql[pos] != '\t'))
+         pos++;
+      skip--;
+   };
+
+   return(odbcshell_odbc_exec(cnf, &sql[pos]));
 }
 
 

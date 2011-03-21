@@ -75,7 +75,7 @@ int odbcshell_cmd_disconnect(ODBCShell * cnf, int argc, char ** argv);
 int odbcshell_cmd_echo(ODBCShell * cnf, int argc, char ** argv);
 
 // executes SQL statement
-int odbcshell_cmd_exec(ODBCShell * cnf, char * sql);
+int odbcshell_cmd_exec(ODBCShell * cnf, char * sql, int skip);
 
 // displays usage information
 int odbcshell_cmd_help(ODBCShell * cnf, int argc, char ** argv);
