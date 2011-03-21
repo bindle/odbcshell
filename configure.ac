@@ -105,27 +105,6 @@ AC_CHECK_LIB([aundry],[clean socks],,[AC_MSG_NOTICE([No clean socks found.])])
 # enables getopt_long if header and functions were found
 AC_CHECK_HEADERS([getopt.h], [AC_DEFINE_UNQUOTED(USE_GETOPT_LONG, 1, [Use GNU getopt_long])])
 
-# checks for cross compile (need to verify the following checks)
-test "x$host" == "x$build"  && COMPILE_MODE='native compile';
-test "x$host" != "x$build"  && COMPILE_MODE='cross compile';
-test "x$host" != "x$target" && COMPILE_MODE='Canadian cross compile';
-
-# checks for build variants in order to include system specific source files
-case $host in
-   *cygwin*)  COMPILE_CYGWIN=true;;
-   *darwin*)  COMPILE_DARWIN=true;;
-   *freebsd*) COMPILE_FREEBSD=true;;
-   *linux*)   COMPILE_LINUX=true;;
-   *mingw*)   COMPILE_MINGW=true;;
-   *solaris*) COMPILE_SOLARIS=true;;
-esac
-AM_CONDITIONAL([COMPILE_CYGWIN],  [test "x$COMPILE_CYGWIN"  == "xtrue"])
-AM_CONDITIONAL([COMPILE_DARWIN],  [test "x$COMPILE_DARWIN"  == "xtrue"])
-AM_CONDITIONAL([COMPILE_FREEBSD], [test "x$COMPILE_FREEBSD" == "xtrue"])
-AM_CONDITIONAL([COMPILE_LINUX],   [test "x$COMPILE_LINUX"   == "xtrue"])
-AM_CONDITIONAL([COMPILE_MINGW],   [test "x$COMPILE_MINGW"   == "xtrue"])
-AM_CONDITIONAL([COMPILE_SOLARIS], [test "x$COMPILE_SOLARIS" == "xtrue"])
-
 # check for iODBC
 have_iodbc=yes
 AC_CHECK_HEADERS([sql.h]                                   ,,[have_iodbc=no])
