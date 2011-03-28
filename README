@@ -112,7 +112,7 @@ Source Code
    Preparing Source:
 
       $ cd odbcshell
-      $ autoreconf -i -f -I m4
+      $ ./build-aux/autogen.sh
 
    Git Branches:
       master - Current release of packages.

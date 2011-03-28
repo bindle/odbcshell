@@ -137,7 +137,8 @@ BUILT_SOURCES				=
 TESTS					=
 XFAIL_TESTS				=
 EXTRA_MANS				=
-EXTRA_DIST				= build-aux/git-package-version \
+EXTRA_DIST				= build-aux/autogen.sh \
+					  build-aux/git-package-version \
 					  build-aux/git-package-version.sh
 CLEANFILES				= \
 					  $(builddir)/a.out   $(srcdir)/a.out \
@@ -160,7 +161,8 @@ autoreconf:
 
 update:
 	git --git-dir=$(top_srcdir)/.git pull 2> /dev/null || exit 0
-	autoreconf -i -f $(ACLOCAL_AMFLAGS) $(top_srcdir)
+	$(top_srcdir)/build-aux/autogen.sh
+	test -x ./config.status && { ./config.status --recheck || exit $?; } || exit 0
 
 gitclean:
 	$(MAKE) -f Makefile distclean
