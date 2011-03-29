@@ -66,8 +66,8 @@
 #pragma mark Functions
 #endif
 
-/// frees resources
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief frees resources
+/// @param cnf      pointer to configuration struct
 void odbcshell_free(ODBCShell * cnf)
 {
    if (!(cnf))
@@ -99,9 +99,9 @@ void odbcshell_free(ODBCShell * cnf)
 }
 
 
-/// retrieves configuration option
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  opt      numeric ID of option to retrieve
+/// @brief retrieves configuration option
+/// @param cnf      pointer to configuration struct
+/// @param opt      numeric ID of option to retrieve
 /// @param[out] ptr      pointer buffer to store value of option
 int odbcshell_get_option(ODBCShell * cnf, int opt, void * ptr)
 {
@@ -142,8 +142,8 @@ int odbcshell_get_option(ODBCShell * cnf, int opt, void * ptr)
 }
 
 
-/// initializes ODBC Shell options
-/// @param[in]  cnfp     pointer to configuration struct
+/// @brief initializes ODBC Shell options
+/// @param[out] cnfp     pointer to configuration struct
 int odbcshell_initialize(ODBCShell ** cnfp)
 {
    ODBCShell       * cnf;
@@ -172,7 +172,8 @@ int odbcshell_initialize(ODBCShell ** cnfp)
 }
 
 
-// sets default values for configuration options
+/// @brief sets default values for configuration options
+/// @param cnf      pointer to configuration struct
 int odbcshell_set_defaults(ODBCShell * cnf)
 {
    odbcshell_odbc_close(cnf);
@@ -189,10 +190,10 @@ int odbcshell_set_defaults(ODBCShell * cnf)
 }
 
 
-/// sets configuration option
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  opt      numeric ID of option to retrieve
-/// @param[in]  ptr      pointer buffer containing new value of option
+/// @brief sets configuration option
+/// @param cnf      pointer to configuration struct
+/// @param opt      numeric ID of option to retrieve
+/// @param ptr      pointer buffer containing new value of option
 int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
 {
    char   buff[2048];
@@ -308,9 +309,9 @@ int odbcshell_set_option(ODBCShell * cnf, int opt, const void * ptr)
 }
 
 
-/// displays configuration option value
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  opt      numeric ID of option to retrieve
+/// @brief displays configuration option value
+/// @param cnf      pointer to configuration struct
+/// @param opt      numeric ID of option to retrieve
 int odbcshell_show_option(ODBCShell * cnf, int opt)
 {
    switch(opt)
@@ -375,8 +376,8 @@ int odbcshell_show_option(ODBCShell * cnf, int opt)
 }
 
 
-/// converts a string to a boolean value
-/// @param[in]  str      string to convert
+/// @brief converts a string to a boolean value
+/// @param str      string to convert
 int odbcshell_strtob(const char * str)
 {
    if (!(strcasecmp(str, "TRUE")))
