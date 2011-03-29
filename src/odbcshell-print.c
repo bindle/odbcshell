@@ -64,10 +64,10 @@
 #pragma mark Functions
 #endif
 
-/// displays error messages
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  format   format string for message
-/// @param[in]  ...      
+/// @brief displays error messages
+/// @param cnf      pointer to configuration struct
+/// @param format   format string for message
+/// @param ...      variable arguments for string format
 void odbcshell_error(ODBCShell * cnf, const char * format, ...)
 {
    va_list ap;
@@ -86,10 +86,10 @@ void odbcshell_error(ODBCShell * cnf, const char * format, ...)
 }
 
 
-/// displays fatal error messages
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  format   format string for message
-/// @param[in]  ...  
+/// @brief displays fatal error messages
+/// @param cnf      pointer to configuration struct
+/// @param format   format string for message
+/// @param ...      variable arguments for string format
 void odbcshell_fatal(ODBCShell * cnf, const char * format, ...)
 {
    va_list ap;
@@ -105,8 +105,8 @@ void odbcshell_fatal(ODBCShell * cnf, const char * format, ...)
 }
 
 
-/// close file
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief close file
+/// @param cnf      pointer to configuration struct
 int odbcshell_fclose(ODBCShell * cnf)
 {
    if (cnf->outputfile)
@@ -120,9 +120,9 @@ int odbcshell_fclose(ODBCShell * cnf)
 }
 
 
-/// open file for writing
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  path     file to open for writing
+/// @brief open file for writing
+/// @param cnf      pointer to configuration struct
+/// @param path     file to open for writing
 int odbcshell_fopen(ODBCShell * cnf, const char * path)
 {
    odbcshell_fclose(cnf);
@@ -140,10 +140,10 @@ int odbcshell_fopen(ODBCShell * cnf, const char * path)
 }
 
 
-/// prints message to file
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  format   format string for message
-/// @param[in]  ...
+/// @brief prints message to file
+/// @param cnf      pointer to configuration struct
+/// @param format   format string for message
+/// @param ...      variable arguments for string format
 void odbcshell_fprintf(ODBCShell * cnf, const char * format, ...)
 {
    FILE    * fs;
@@ -159,10 +159,10 @@ void odbcshell_fprintf(ODBCShell * cnf, const char * format, ...)
 }
 
 
-/// prints message to stdout
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  format   format string for message
-/// @param[in]  ...
+/// @brief prints message to stdout
+/// @param cnf      pointer to configuration struct
+/// @param format   format string for message
+/// @param ...      variable arguments for string format
 void odbcshell_printf(ODBCShell * cnf, const char * format, ...)
 {
    va_list ap;
@@ -178,10 +178,10 @@ void odbcshell_printf(ODBCShell * cnf, const char * format, ...)
 }
 
 
-/// displays verbose messages
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  format   format string for message
-/// @param[in]  ...      
+/// @brief displays verbose messages
+/// @param cnf      pointer to configuration struct
+/// @param format   format string for message
+/// @param ...      variable arguments for string format
 void odbcshell_verbose(ODBCShell * cnf, const char * format, ...)
 {
    va_list ap;
