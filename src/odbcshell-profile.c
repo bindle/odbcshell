@@ -78,8 +78,8 @@
 #pragma mark Functions
 #endif
 
-/// loads system, user, and local profiles for ODBC Shell
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief loads system, user, and local profiles for ODBC Shell
+/// @param cnf      pointer to configuration struct
 int odbcshell_profile(ODBCShell * cnf)
 {
    int           sts;
