@@ -134,6 +134,11 @@ int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
 
    if (!(cmd = odbcshell_lookup_opt_by_name(odbcshell_cmd_strings, argv[0])))
    {
+      if ( (argc > 1) && (!(strcmp(argv[1], "="))) )
+         cmd = odbcshell_lookup_opt_by_name(odbcshell_cmd_strings, "setenv");
+   };
+   if (!(cmd))
+   {
       odbcshell_error(cnf, "%s: unknown ODBC command.\n", argv[0]);
       odbcshell_error(cnf, "try `help;' for more information.\n");
       return(-1);
@@ -168,9 +173,11 @@ int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
       case ODBCSHELL_CMD_RESET:      code = odbcshell_cmd_reset(cnf); break;
       case ODBCSHELL_CMD_SEND:       code = odbcshell_cmd_exec(cnf, str, 1); break;
       case ODBCSHELL_CMD_SET:        code = odbcshell_cmd_set(cnf, argc, argv); break;
+      case ODBCSHELL_CMD_SETENV:     code = odbcshell_cmd_setenv(cnf, argc, argv); break;
       case ODBCSHELL_CMD_SHOW:       code = odbcshell_cmd_show(cnf, argv[1]); break;
       case ODBCSHELL_CMD_SOURCE:     code = odbcshell_cmd_source(cnf, argv[1]); break;
       case ODBCSHELL_CMD_UNSET:      code = odbcshell_cmd_unset(cnf, argv); break;
+      case ODBCSHELL_CMD_UNSETENV:   code = odbcshell_cmd_unsetenv(argc, argv); break;
       case ODBCSHELL_CMD_USE:        code = odbcshell_cmd_use(cnf, argc, argv); break;
       case ODBCSHELL_CMD_VERSION:    code = odbcshell_cmd_version(cnf); break;
       default:                       code = odbcshell_cmd_incomplete(cnf, argc, argv); break;
@@ -254,6 +261,18 @@ int odbcshell_parse_line(ODBCShell * cnf, char * line, int * argcp,
             };
             break;
 
+         // processes variable assignment operator
+         case '=':
+            arglen = 2;
+            if (!(arg = malloc(arglen)))
+            {
+               odbcshell_fatal(cnf, "%s: out of virtual memory\n", PROGRAM_NAME);
+               return(-2);
+            };
+            memset(arg, 0, arglen);
+            strncpy(arg, &line[pos], arglen-1);
+            break;
+
          // processes arguments contained within single quotes
          case '\'':
             start = pos + 1;
@@ -294,6 +313,7 @@ int odbcshell_parse_line(ODBCShell * cnf, char * line, int * argcp,
          default:
             start = pos;
             while ( ((pos+1) < len) &&
+                    (line[pos+1] != '=') &&
                     (line[pos+1] != ';') &&
                     (line[pos+1] != '#') &&
                     (line[pos+1] != ' ') &&

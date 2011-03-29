@@ -98,6 +98,9 @@ int odbcshell_cmd_reset(ODBCShell * cnf);
 // sets internal value of configuration parameter
 int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv);
 
+// sets the value of an environment variable
+int odbcshell_cmd_setenv(ODBCShell * cnf, int argc, char ** argv);
+
 // shows database information
 int odbcshell_cmd_show(ODBCShell * cnf, const char * data);
 
@@ -106,6 +109,9 @@ int odbcshell_cmd_source(ODBCShell * cnf, const char * file);
 
 // unsets internal value of configuration parameter
 int odbcshell_cmd_unset(ODBCShell * cnf, char ** argv);
+
+// sets the value of an environment variable
+int odbcshell_cmd_unsetenv(int argc, char ** argv);
 
 // switches active database connection
 int odbcshell_cmd_use(ODBCShell * cnf, int argc, char ** argv);

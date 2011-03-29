@@ -50,6 +50,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "odbcshell-commands.h"
 #include "odbcshell-options.h"
@@ -57,6 +58,20 @@
 #include "odbcshell-script.h"
 #include "odbcshell-variables.h"
 #include "odbcshell-odbc.h"
+
+
+/////////////////
+//             //
+//  Variables  //
+//             //
+/////////////////
+#ifdef PMARK
+#pragma mark -
+#pragma mark Variables
+#endif
+
+// defines pointer used to access environment variable list
+extern char ** environ;
 
 
 /////////////////
@@ -342,6 +357,70 @@ int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv)
 }
 
 
+/// sets the value of an environment variable
+/// @param[in]  argc     number of arguments passed to command
+/// @param[in]  argv     array of arguments passed to command
+int odbcshell_cmd_setenv(ODBCShell * cnf, int argc, char ** argv)
+{
+   int          x;
+   int          y;
+   char       * name;
+   char         buff[1024];
+   const char * value;
+
+   // lists available variables
+   switch(argc)
+   {
+      // lists available variables
+      case 1:
+         name = buff;
+         printf("Envrionment Variables:\n");
+         for(x = 0; ((environ[x]) && (environ[x][0])); x++)
+         {
+            memset(name, 0, 1024);
+            for(y = 0; ((y < 1023) && (environ[x][y] != '=')); y++)
+               name[y] = environ[x][y];
+            printf("   %-20s %s\n", name, &environ[x][y+1]);
+         };
+         printf("\n");
+         break;
+
+      // displays specified variable
+      case 2:
+         if (!(value = getenv(argv[1])))
+            value = "";
+         printf("   %-20s %s\n", argv[1], value);
+         break;
+
+      // processes variable assignments not prefixed with keyword "var"
+      case 3:
+         name = argv[1];
+         if (!(strcmp(argv[1], "=")))
+            name = argv[0];
+         for(x = 0; name[x]; x++)
+         {
+            if ( ((name[x] < 'a') || (name[x] > 'z')) &&
+                 ((name[x] < 'A') || (name[x] > 'Z')) &&
+                 ((name[x] < '0') || (name[x] > '9')) &&
+                                     (name[x] != '_') )
+            {
+               odbcshell_error(cnf, "invalid variable name\n");
+               return(-1);
+            };
+         };
+         unsetenv(name);
+         setenv(name, argv[2], 1);
+         break;
+
+      // catches invalid syntax
+      default:
+         break;
+   };
+
+   return(0);
+}
+
+
 /// shows database information
 /// @param[in]  cnf      pointer to configuration struct
 /// @param[in]  data     data to retrieve
@@ -386,6 +465,48 @@ int odbcshell_cmd_unset(ODBCShell * cnf, char ** argv)
       return(-1);
 
    return(odbcshell_set_option(cnf, (int)opt->val, NULL));
+}
+
+
+/// sets the value of an environment variable
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[in]  argc     number of arguments passed to command
+/// @param[in]  argv     array of arguments passed to command
+int odbcshell_cmd_unsetenv(int argc, char ** argv)
+{
+   int          x;
+   int          y;
+   char         name[1024];
+
+   memset(name, 0, 1024);
+
+   // lists available variables
+   switch(argc)
+   {
+      // lists available variables
+      case 1:
+         printf("Envrionment Variables:\n");
+         for(x = 0; ((environ[x]) && (environ[x][0])); x++)
+         {
+            memset(name, 0, 1024);
+            for(y = 0; ((y < 1023) && (environ[x][y] != '=')); y++)
+               name[y] = environ[x][y];
+            printf("   %-30s %s\n", name, &environ[x][y+1]);
+         };
+         printf("\n");
+         break;
+
+      // displays specified variable
+      case 2:
+         unsetenv(argv[1]);
+         break;
+
+      // catches invalid syntax
+      default:
+         break;
+   };
+
+   return(0);
 }
 
 

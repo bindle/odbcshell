@@ -105,6 +105,11 @@ AC_CHECK_LIB([aundry],[clean socks],,[AC_MSG_NOTICE([No clean socks found.])])
 # enables getopt_long if header and functions were found
 AC_CHECK_HEADERS([getopt.h], [AC_DEFINE_UNQUOTED(USE_GETOPT_LONG, 1, [Use GNU getopt_long])])
 
+# checks for environement variable functions
+AC_SEARCH_LIBS([getenv],   ,,AC_MSG_ERROR([ODBC Shell requires a C library with getenv().]))
+AC_SEARCH_LIBS([setenv],   ,,AC_MSG_ERROR([ODBC Shell requires a C library with setenv().]))
+AC_SEARCH_LIBS([unsetenv], ,,AC_MSG_ERROR([ODBC Shell requires a C library with unsetenv().]))
+
 # check for iODBC
 have_iodbc=yes
 AC_CHECK_HEADERS([sql.h]                                   ,,[have_iodbc=no])
