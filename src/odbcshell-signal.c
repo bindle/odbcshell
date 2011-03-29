@@ -60,7 +60,7 @@
 #pragma mark Functions
 #endif
 
-/// sets initial signal handlers
+/// @brief sets initial signal handlers
 void odbcshell_signal_init(void)
 {
    //signal(SIGTERM,   SIG_IGN);
