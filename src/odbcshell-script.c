@@ -73,8 +73,9 @@
 #pragma mark Functions
 #endif
 
-/// master loop for interactive shell
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief master loop for interactive shell
+/// @param cnf      pointer to configuration struct
+/// @param script   name of script to process
 int odbcshell_script_loop(ODBCShell * cnf, const char * script)
 {
    int       fd;
