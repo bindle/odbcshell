@@ -60,7 +60,7 @@
 #pragma mark Variables
 #endif
 
-/// numeric values for command names
+/// @brief numeric values for command names
 ODBCShellOption odbcshell_cmd_strings[] =
 {
    { ODBCSHELL_CMD_ODBC,        1, -1, "ALTER",      "internal SQL command (data definition)",        NULL },
@@ -105,7 +105,7 @@ ODBCShellOption odbcshell_cmd_strings[] =
 };
 
 
-/// numeric values for command names
+/// @brief numeric values for configuration options
 ODBCShellOption odbcshell_opt_strings[] =
 {
    { ODBCSHELL_OPT_CONFFILE,  1,  1, "conffile",   "configuration file used to set initial settings", NULL },
@@ -132,9 +132,9 @@ ODBCShellOption odbcshell_opt_strings[] =
 #pragma mark Functions
 #endif
 
-/// looks up option by name
-/// @param[in]  opts   array of optins to search
-/// @param[in]  name   name to use as lookup key
+/// @brief looks up option by name
+/// @param opts   array of optins to search
+/// @param name   name to use as lookup key
 ODBCShellOption * odbcshell_lookup_opt_by_name(ODBCShellOption * opts,
    const char * name)
 {
@@ -148,9 +148,9 @@ ODBCShellOption * odbcshell_lookup_opt_by_name(ODBCShellOption * opts,
 }
 
 
-/// looks up option by value
-/// @param[in]  opts   array of optins to search
-/// @param[in]  val    value to use as lookup key
+/// @brief looks up option by value
+/// @param opts   array of optins to search
+/// @param val    value to use as lookup key
 ODBCShellOption * odbcshell_lookup_opt_by_value(ODBCShellOption * opts,
    int val)
 {
