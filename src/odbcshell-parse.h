@@ -61,6 +61,9 @@
 #pragma mark Prototypes
 #endif
 
+// expands variables within strings
+int odbcshell_expand_string(ODBCShell * cnf, char ** strp);
+
 // interprets the arguments from a command line
 int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,
    ssize_t * offset);

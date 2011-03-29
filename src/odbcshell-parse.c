@@ -66,6 +66,96 @@
 #pragma mark Functions
 #endif
 
+/// expands variables within strings
+/// @param[in]  cnf      pointer to configuration struct
+/// @param[out] strp     pointer string to expand
+int odbcshell_expand_string(ODBCShell * cnf, char ** strp)
+{
+   size_t       old_len;
+   size_t       new_len;
+   size_t       pos;
+   size_t       start;
+   size_t       offset;
+   void       * ptr;
+   char       * str;
+   const char * value;
+
+   old_len = strlen(*strp);
+   new_len = old_len + 2;
+
+   if (!(str = malloc(old_len)))
+   {
+      odbcshell_fatal(cnf, "out of virtual memory\n");
+      return(-2);
+   };
+
+   // loops through string looking for variables to expand
+   offset = 0;
+   for(pos = 0; pos < old_len; pos++)
+   {
+      switch((*strp)[pos])
+      {
+         // inserts variable into string
+         case '$':
+            // check for false variable start
+            pos++;
+            if ((pos >= old_len) || ((*strp)[pos] != '{'))
+            {
+               str[offset+0] = (*strp)[pos-1];
+               str[offset+1] = (*strp)[pos-0];
+               offset += 2;
+               break;
+            };
+            pos++;
+
+            // NULL terminates end of variable name
+            for(start = pos; ((pos < old_len) && ((*strp)[pos] != '}')); pos++);
+            (*strp)[pos] = '\0';
+
+            // retrieves variable's value
+            value = getenv(&(*strp)[start]);
+            value = value ? value : "";
+
+            // increases size of buffer to make space for variable's value
+            new_len += strlen(value);
+            if (!(ptr = realloc(str, new_len)))
+            {
+               free(str);
+               odbcshell_fatal(cnf, "out of virtual memory\n");
+               return(-2);
+            };
+            str = ptr;
+
+            // copies variable value into buffer
+            str[offset] = '\0';
+            strcat(str, value);
+            offset += strlen(value);
+            break;
+
+         // handles escaped character
+         case '\\':
+            pos++;
+            str[offset] = (*strp)[pos];
+            offset++;
+            break;
+
+         // saves characters to string
+         default:
+            str[offset] = (*strp)[pos];
+            offset++;
+            break;
+      };
+   };
+
+   // stores expanded string
+   str[offset] = '\0';
+   free(*strp);
+   *strp = str;
+
+   return(0);
+}
+
+
 /// interprets the string buffer
 int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,
    ssize_t * offsetp)
@@ -197,6 +287,7 @@ int odbcshell_parse_line(ODBCShell * cnf, char * line, int * argcp,
    char *** argvp, ssize_t * eolp)
 {
    int       i;
+   int       code;
    char    * arg;
    void    * ptr;
    size_t    len;    // line length
@@ -295,7 +386,7 @@ int odbcshell_parse_line(ODBCShell * cnf, char * line, int * argcp,
          case '"':
             start = pos + 1;
             pos += 1;
-            while((line[pos] != '"') && (pos < len))
+            while( ((line[pos] != '"') || (line[pos-1] == '\\')) && (pos < len))
                pos++;
             if (pos >= len)
                return(0);
@@ -307,6 +398,11 @@ int odbcshell_parse_line(ODBCShell * cnf, char * line, int * argcp,
             };
             memset(arg, 0, arglen);
             strncpy(arg, &line[start], arglen-1);
+            if ((code = odbcshell_expand_string(cnf, &arg)))
+            {
+               free(arg);
+               return(code);
+            };
             break;
 
          // processes unquoted arguments
@@ -330,6 +426,11 @@ int odbcshell_parse_line(ODBCShell * cnf, char * line, int * argcp,
             };
             memset(arg, 0, arglen);
             strncpy(arg, &line[start], arglen-1);
+            if ((code = odbcshell_expand_string(cnf, &arg)))
+            {
+               free(arg);
+               return(code);
+            };
             break;
       };
 
