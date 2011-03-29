@@ -64,9 +64,9 @@
 #pragma mark Functions
 #endif
 
-/// adds ODBC connection to list
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  connp    pointer to pointer to connection struct
+/// @brief adds ODBC connection to list
+/// @param cnf      pointer to configuration struct
+/// @param conn     pointer to pointer to connection struct
 int odbcshell_odbc_array_add(ODBCShell * cnf, ODBCShellConn * conn)
 {
    void      * ptr;
@@ -92,9 +92,9 @@ int odbcshell_odbc_array_add(ODBCShell * cnf, ODBCShellConn * conn)
 }
 
 
-/// retrieves an ODBC connection from the list
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  name     internal name of connection
+/// @brief retrieves an ODBC connection from the list
+/// @param cnf      pointer to configuration struct
+/// @param name     internal name of connection
 int odbcshell_odbc_array_findindex(ODBCShell * cnf, const char * name)
 {
    int i;
@@ -107,9 +107,9 @@ int odbcshell_odbc_array_findindex(ODBCShell * cnf, const char * name)
 }
 
 
-/// removes an ODBC connection from the list
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  name     internal name of connection
+/// @brief removes an ODBC connection from the list
+/// @param cnf      pointer to configuration struct
+/// @param name     internal name of connection
 int odbcshell_odbc_array_rm(ODBCShell * cnf, const char * name)
 {
    int i;
@@ -130,8 +130,8 @@ int odbcshell_odbc_array_rm(ODBCShell * cnf, const char * name)
 }
 
 
-/// closes all ODBC connections
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief closes all ODBC connections
+/// @param cnf      pointer to configuration struct
 int odbcshell_odbc_close(ODBCShell * cnf)
 {
    int i;
@@ -157,10 +157,10 @@ int odbcshell_odbc_close(ODBCShell * cnf)
 }
 
 
-/// connects to ODBC data source
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  dsn      data source to connect
-/// @param[in]  name     internal name of connect
+/// @brief connects to ODBC data source
+/// @param cnf      pointer to configuration struct
+/// @param dsn      data source to connect
+/// @param name     internal name of connect
 int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
    const char * name)
 {
@@ -249,9 +249,9 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
 }
 
 
-/// disconnects a session
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  name     internal name of connect
+/// @brief disconnects a session
+/// @param cnf      pointer to configuration struct
+/// @param name     internal name of connect
 int odbcshell_odbc_disconnect(ODBCShell * cnf, const char * name)
 {
    int             conn_index;
@@ -288,10 +288,10 @@ int odbcshell_odbc_disconnect(ODBCShell * cnf, const char * name)
 }
 
 
-/// displays iODBC errors
-/// @param[in]  s        descriptive string
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  conn     pointer to connection struct
+/// @brief displays iODBC errors
+/// @param s        descriptive string
+/// @param cnf      pointer to configuration struct
+/// @param conn     pointer to connection struct
 void odbcshell_odbc_errors(const char * s, ODBCShell * cnf,
    ODBCShellConn  * conn)
 {
@@ -347,9 +347,9 @@ void odbcshell_odbc_errors(const char * s, ODBCShell * cnf,
 }
 
 
-/// execute SQL statement
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  sql      SQL string to execute
+/// @brief execute SQL statement
+/// @param cnf      pointer to configuration struct
+/// @param sql      SQL string to execute
 int odbcshell_odbc_exec(ODBCShell * cnf, char * sql)
 {
    int err;
@@ -384,9 +384,9 @@ int odbcshell_odbc_exec(ODBCShell * cnf, char * sql)
 }
 
 
-/// frees resources from an iODBC connection
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  connp    pointer to pointer to connection struct
+/// @brief frees resources from an iODBC connection
+/// @param cnf      pointer to configuration struct
+/// @param connp    pointer to pointer to connection struct
 void odbcshell_odbc_free(ODBCShell * cnf, ODBCShellConn  ** connp)
 {
    if (!(connp))
@@ -432,8 +432,8 @@ void odbcshell_odbc_free(ODBCShell * cnf, ODBCShellConn  ** connp)
 }
 
 
-/// initializes ODBC library
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief initializes ODBC library
+/// @param cnf      pointer to configuration struct
 int odbcshell_odbc_initialize(ODBCShell * cnf)
 {
    if (SQLAllocHandle((SQLSMALLINT)SQL_HANDLE_ENV, NULL, &cnf->henv) != SQL_SUCCESS)
@@ -453,9 +453,9 @@ int odbcshell_odbc_initialize(ODBCShell * cnf)
 }
 
 
-/// reconnects a session
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  name     internal name of connect
+/// @brief reconnects a session
+/// @param cnf      pointer to configuration struct
+/// @param name     internal name of connect
 int odbcshell_odbc_reconnect(ODBCShell * cnf, const char * name)
 {
    SQLTCHAR        dsnOut[512];
@@ -504,8 +504,8 @@ int odbcshell_odbc_reconnect(ODBCShell * cnf, const char * name)
 }
 
 
-/// displays result from ODBC operation
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief displays result from ODBC operation
+/// @param cnf      pointer to configuration struct
 int odbcshell_odbc_result(ODBCShell * cnf)
 {
    int             err;
@@ -692,9 +692,9 @@ int odbcshell_odbc_result(ODBCShell * cnf)
 }
 
 
-/// displays result from ODBC operation as CSV output
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  set_count set number being processed
+/// @brief displays result from ODBC operation as CSV output
+/// @param cnf        pointer to configuration struct
+/// @param row_countp pointer to number of row being processed
 int odbcshell_odbc_result_csv(ODBCShell * cnf, SQLLEN * row_countp)
 {
    short           col_index;
@@ -751,9 +751,9 @@ int odbcshell_odbc_result_csv(ODBCShell * cnf, SQLLEN * row_countp)
 }
 
 
-/// displays result from ODBC operation as CSV output
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  set_count set number being processed
+/// @brief displays result from ODBC operation as CSV output
+/// @param cnf        pointer to configuration struct
+/// @param row_countp pointer to number of row being processed
 int odbcshell_odbc_result_fixedwidth(ODBCShell * cnf, SQLLEN * row_countp)
 {
    unsigned        x;
@@ -836,9 +836,9 @@ int odbcshell_odbc_result_fixedwidth(ODBCShell * cnf, SQLLEN * row_countp)
 }
 
 
-/// displays result from ODBC operation as XML output
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  set_count set number being processed
+/// @brief displays result from ODBC operation as XML output
+/// @param cnf        pointer to configuration struct
+/// @param row_countp pointer to number of row being processed
 int odbcshell_odbc_result_xml(ODBCShell * cnf, SQLLEN * row_countp)
 {
    short           col_index;
@@ -888,8 +888,8 @@ int odbcshell_odbc_result_xml(ODBCShell * cnf, SQLLEN * row_countp)
 }
 
 
-/// displays list of ODBC datatypes
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief displays list of ODBC datatypes
+/// @param cnf      pointer to configuration struct
 int odbcshell_odbc_show_datatypes(ODBCShell * cnf)
 {
    SQLRETURN       sts;
@@ -913,8 +913,8 @@ int odbcshell_odbc_show_datatypes(ODBCShell * cnf)
 }
 
 
-/// displays list of ODBC data sources
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief displays list of ODBC data sources
+/// @param cnf      pointer to configuration struct
 int odbcshell_odbc_show_dsn(ODBCShell * cnf)
 {
    int err;
@@ -945,8 +945,8 @@ int odbcshell_odbc_show_dsn(ODBCShell * cnf)
 }
 
 
-/// displays list of ODBC owners
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief displays list of ODBC owners
+/// @param cnf      pointer to configuration struct
 int odbcshell_odbc_show_owners(ODBCShell * cnf)
 {
    SQLRETURN       sts;
@@ -973,8 +973,8 @@ int odbcshell_odbc_show_owners(ODBCShell * cnf)
 }
 
 
-/// displays list of ODBC tables
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief displays list of ODBC tables
+/// @param cnf      pointer to configuration struct
 int odbcshell_odbc_show_tables(ODBCShell * cnf)
 {
    SQLRETURN       sts;
@@ -998,8 +998,8 @@ int odbcshell_odbc_show_tables(ODBCShell * cnf)
 }
 
 
-/// displays list of ODBC types
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief displays list of ODBC types
+/// @param cnf      pointer to configuration struct
 int odbcshell_odbc_show_types(ODBCShell * cnf)
 {
    SQLRETURN       sts;
@@ -1026,8 +1026,8 @@ int odbcshell_odbc_show_types(ODBCShell * cnf)
 }
 
 
-/// displays list of ODBC qualifiers
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief displays list of ODBC qualifiers
+/// @param cnf      pointer to configuration struct
 int odbcshell_odbc_show_qualifiers(ODBCShell * cnf)
 {
    SQLRETURN       sts;
@@ -1054,9 +1054,9 @@ int odbcshell_odbc_show_qualifiers(ODBCShell * cnf)
 }
 
 
-/// updates current connection
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  conn     pointer to connection struct
+/// @brief updates current connection
+/// @param cnf      pointer to configuration struct
+/// @param conn     pointer to connection struct
 int odbcshell_odbc_update_current(ODBCShell * cnf, ODBCShellConn  * conn)
 {
    if ( (!(conn)) && ((cnf->current)) )
@@ -1075,9 +1075,9 @@ int odbcshell_odbc_update_current(ODBCShell * cnf, ODBCShellConn  * conn)
 }
 
 
-/// switches active connection
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  name     internal name of connect
+/// @brief switches active connection
+/// @param cnf      pointer to configuration struct
+/// @param name     internal name of connect
 int odbcshell_odbc_use(ODBCShell * cnf, const char * name)
 {
    int i;
@@ -1110,8 +1110,8 @@ int odbcshell_odbc_use(ODBCShell * cnf, const char * name)
 }
 
 
-/// displays ODBC version
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief displays ODBC version
+/// @param cnf      pointer to configuration struct
 int odbcshell_odbc_version(ODBCShell * cnf)
 {
    int         i;
