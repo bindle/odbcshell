@@ -80,8 +80,9 @@
 #pragma mark Functions
 #endif
 
-/// master loop for interactive shell
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief master loop for interactive shell
+/// @param cnf      pointer to configuration struct
+/// @return indicates if an unignored error occurred
 int odbcshell_cli_loop(ODBCShell * cnf)
 {
    int           code;
