@@ -66,8 +66,8 @@
 #pragma mark Functions
 #endif
 
-/// expands variables within strings
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief expands variables within strings
+/// @param  cnf      pointer to configuration struct
 /// @param[out] strp     pointer string to expand
 int odbcshell_expand_string(ODBCShell * cnf, char ** strp)
 {
@@ -156,7 +156,11 @@ int odbcshell_expand_string(ODBCShell * cnf, char ** strp)
 }
 
 
-/// interprets the string buffer
+/// @brief interprets the string buffer
+/// @param  cnf          pointer to configuration struct
+/// @param  buff         string buffer to process
+/// @param  len          length of buffer
+/// @param[out] offsetp  number of bytes interpreted by function
 int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,
    ssize_t * offsetp)
 {
@@ -209,10 +213,11 @@ int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,
    return(0);
 }
 
-/// interprets the arguments from a command line
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[out] argcp
-/// @param[out] argvp
+/// @brief interprets the arguments from a command line
+/// @param cnf      pointer to configuration struct
+/// @param str      original string from buffer
+/// @param argc     number of arguments in string buffer
+/// @param argv     array of arguments from string buffer
 int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
    char ** argv)
 {
@@ -278,11 +283,12 @@ int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
 }
 
 
-/// splits a line into multiple arguments
-/// @param[in]  line
-/// @param[out] argcp
-/// @param[out] argvp
-/// @param[out] eolp
+/// @brief splits a line into multiple arguments
+/// @param cnf         pointer to configuration struct
+/// @param line        string buffer to process as a command line string
+/// @param[out] argcp  returns number of arguments parsed from string
+/// @param[out] argvp  returns array of arguments parsed from string
+/// @param[out] eolp   returns end of line within the string
 int odbcshell_parse_line(ODBCShell * cnf, char * line, int * argcp,
    char *** argvp, ssize_t * eolp)
 {
