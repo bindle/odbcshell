@@ -104,7 +104,7 @@ int main(int argc, char * argv[]);
 #endif
 
 
-/// displays usage
+/// @brief displays usage
 void odbcshell_usage(void)
 {
    printf(("Usage: %s [OPTIONS]\n"
@@ -128,7 +128,7 @@ void odbcshell_usage(void)
 }
 
 
-/// displays version information
+/// @brief displays version information
 void odbcshell_version(void)
 {
    printf(("%s (%s) %s\n"
@@ -143,9 +143,10 @@ void odbcshell_version(void)
 }
 
 
-/// main statement
-/// @param[in]  argc  number of arguments passed to program
-/// @param[in]  argv  array of arguments passed to program
+/// @brief main statement
+/// @param argc  number of arguments passed to program
+/// @param argv  array of arguments passed to program
+/// @return exit code of program
 int main(int argc, char * argv[])
 {
    int           c;

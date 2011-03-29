@@ -156,7 +156,7 @@
 #pragma mark Datatypes
 #endif
 
-/// internal map for switching between an directive's ASCII and numeric values
+/// @brief internal map for switching between an directive's ASCII and numeric values
 typedef struct odbcshell_option_data ODBCShellOption;
 struct odbcshell_option_data
 {
@@ -169,7 +169,7 @@ struct odbcshell_option_data
 };
 
 
-/// information describing a column returned with a result
+/// @brief information describing a column returned with a result
 typedef struct odbcshell_column ODBCShellColumn;
 struct odbcshell_column
 {
@@ -183,7 +183,7 @@ struct odbcshell_column
 };
 
 
-/// ODBC connection information
+/// @brief ODBC connection information
 typedef struct odbcshell_connection ODBCShellConn;
 struct odbcshell_connection
 {
@@ -196,7 +196,7 @@ struct odbcshell_connection
 };
 
 
-/// contains configuration data
+/// @brief contains configuration data
 typedef struct odbcshell_config_data ODBCShell;
 struct odbcshell_config_data
 {
