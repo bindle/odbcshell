@@ -72,6 +72,8 @@ int odbcshell_odbc_array_add(ODBCShell * cnf, ODBCShellConn * conn)
    void      * ptr;
    size_t      conns_size;
 
+   odbcshell_verbose(cnf, "adding \"%s\" connection to list...\n", conn->name);
+
    conns_size  = sizeof(ODBCShellConn *);
    conns_size *= (cnf->conns_count + 1);
 
@@ -116,6 +118,9 @@ int odbcshell_odbc_array_rm(ODBCShell * cnf, const char * name)
    if (((conn_index = odbcshell_odbc_array_findindex(cnf, name))) == -1)
       return(0);
 
+   odbcshell_verbose(cnf, "removing \"%s\" connection from list...\n",
+      cnf->conns[conn_index]->name);
+
    for(i = (conn_index+1); i < (int)cnf->conns_count; i++)
       cnf->conns[i-1] = cnf->conns[i];
 
@@ -132,10 +137,7 @@ int odbcshell_odbc_close(ODBCShell * cnf)
    int i;
 
    for(i = 0;i < (int)cnf->conns_count; i++)
-   {
-      odbcshell_printf(cnf, "closing connection \"%s\"\n", cnf->conns[i]->name);
       odbcshell_odbc_free(cnf, &cnf->conns[i]);
-   };
    free(cnf->conns);
    cnf->conns = NULL;
    cnf->conns_count = 0;
@@ -177,6 +179,8 @@ int odbcshell_odbc_connect(ODBCShell * cnf, const char * dsn,
       odbcshell_error(cnf, "connection with name \"%s\" already exists\n", name);
       return(-1);
    };
+
+   odbcshell_verbose(cnf, "connecting to datasource...\n");
 
    // allocates memory for storing internal connection information
    if (!(conn = malloc(sizeof(ODBCShellConn))))
@@ -392,6 +396,8 @@ void odbcshell_odbc_free(ODBCShell * cnf, ODBCShellConn  ** connp)
       if (cnf->current == (*connp))
          cnf->current = NULL;
 
+   odbcshell_verbose(cnf, "disconnecting \"%s\"...\n", (*connp)->name);
+
    if ((*connp)->cols)
       free((*connp)->cols);
    (*connp)->cols      = NULL;
@@ -472,11 +478,13 @@ int odbcshell_odbc_reconnect(ODBCShell * cnf, const char * name)
 
    conn = cnf->conns[conn_index];
 
+   odbcshell_verbose(cnf, "disconnecting \"%s\"...\n", conn->name);
    SQLCloseCursor(conn->hstmt);
    SQLFreeHandle(SQL_HANDLE_STMT, conn->hstmt);
    conn->hstmt = NULL;
    SQLDisconnect(conn->hdbc);
 
+   odbcshell_verbose(cnf, "connecting to datasource...\n");
    sts = SQLDriverConnect(conn->hdbc, 0, (SQLTCHAR *)conn->dsn, SQL_NTS, dsnOut,
       sizeof(dsnOut), &buflen, SQL_DRIVER_NOPROMPT);
    if ((sts != SQL_SUCCESS) && (sts != SQL_SUCCESS_WITH_INFO))
@@ -892,6 +900,8 @@ int odbcshell_odbc_show_datatypes(ODBCShell * cnf)
       return(-1);
    };
 
+   odbcshell_verbose(cnf, "sending request...\n");
+
    sts = SQLGetTypeInfo(cnf->current->hstmt, 0);
    if (sts != SQL_SUCCESS)
    {
@@ -921,6 +931,8 @@ int odbcshell_odbc_show_dsn(ODBCShell * cnf)
       return(-1);
    };
 
+   odbcshell_verbose(cnf, "preparing list of data sources...\n");
+
    printf("%-32s   %-40s\n", "DSN:", "Driver:");
    while (err == SQL_SUCCESS)
    {
@@ -948,6 +960,8 @@ int odbcshell_odbc_show_owners(ODBCShell * cnf)
       return(-1);
    };
 
+   odbcshell_verbose(cnf, "sending request...\n");
+
    sts = SQLTables(cnf->current->hstmt, NULL, 0, strwild, SQL_NTS, NULL, 0, NULL, 0);
    if (sts != SQL_SUCCESS)
    {
@@ -970,6 +984,8 @@ int odbcshell_odbc_show_tables(ODBCShell * cnf)
       odbcshell_error(cnf, "not connected to a database\n");
       return(-1);
    };
+
+   odbcshell_verbose(cnf, "sending request...\n");
 
    sts = SQLTables(cnf->current->hstmt, NULL, 0, NULL, 0, NULL, 0, NULL, 0);
    if (sts != SQL_SUCCESS)
@@ -997,6 +1013,8 @@ int odbcshell_odbc_show_types(ODBCShell * cnf)
       return(-1);
    };
 
+   odbcshell_verbose(cnf, "sending request...\n");
+
    sts = SQLTables(cnf->current->hstmt, NULL, 0, NULL, 0, NULL, 0, strwild, SQL_NTS);
    if (sts != SQL_SUCCESS)
    {
@@ -1022,6 +1040,8 @@ int odbcshell_odbc_show_qualifiers(ODBCShell * cnf)
       odbcshell_error(cnf, "not connected to a database\n");
       return(-1);
    };
+
+   odbcshell_verbose(cnf, "sending request...\n");
 
    sts = SQLTables(cnf->current->hstmt, strwild, SQL_NTS, NULL, 0, NULL, 0, NULL, 0);
    if (sts != SQL_SUCCESS)
