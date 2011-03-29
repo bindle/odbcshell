@@ -84,7 +84,8 @@ extern char ** environ;
 #pragma mark Functions
 #endif
 
-/// clears the screen
+/// @brief clears the screen
+/// @return always returns zero
 int odbcshell_cmd_clear(void)
 {
    printf("\033[2J\033[1;1H");
@@ -92,18 +93,20 @@ int odbcshell_cmd_clear(void)
 }
 
 
-/// closes output file
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief closes output file
+/// @param cnf      pointer to configuration struct
+/// @return exit code
 int odbcshell_cmd_close(ODBCShell * cnf)
 {
    return(odbcshell_fclose(cnf));
 }
 
 
-/// connects to database
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  argc     number of arguments passed to command
-/// @param[in]  argv     array of arguments passed to command
+/// @brief connects to database
+/// @param cnf      pointer to configuration struct
+/// @param argc     number of arguments passed to command
+/// @param argv     array of arguments passed to command
+/// @return exit code
 int odbcshell_cmd_connect(ODBCShell * cnf, int argc, char ** argv)
 {
    if (argc == 3)
@@ -112,10 +115,11 @@ int odbcshell_cmd_connect(ODBCShell * cnf, int argc, char ** argv)
 }
 
 
-/// disconnects from database
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  argc     number of arguments passed to command
-/// @param[in]  argv     array of arguments passed to command
+/// @brief disconnects from database
+/// @param cnf      pointer to configuration struct
+/// @param argc     number of arguments passed to command
+/// @param argv     array of arguments passed to command
+/// @return exit code
 int odbcshell_cmd_disconnect(ODBCShell * cnf, int argc, char ** argv)
 {
    if (argc == 2)
@@ -124,10 +128,11 @@ int odbcshell_cmd_disconnect(ODBCShell * cnf, int argc, char ** argv)
 }
 
 
-/// prints strings to screen
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  argc     number of arguments passed to command
-/// @param[in]  argv     array of arguments passed to command
+/// @brief prints strings to screen
+/// @param cnf      pointer to configuration struct
+/// @param argc     number of arguments passed to command
+/// @param argv     array of arguments passed to command
+/// @return exit code
 int odbcshell_cmd_echo(ODBCShell * cnf, int argc, char ** argv)
 {
    int i;
@@ -144,9 +149,11 @@ int odbcshell_cmd_echo(ODBCShell * cnf, int argc, char ** argv)
 }
 
 
-/// executes SQL statement
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief executes SQL statement
+/// @param cnf      pointer to configuration struct
+/// @param sql      SQL string to send to data source
+/// @param skip     bool to toggle skipping first argument
+/// @return exit code
 int odbcshell_cmd_exec(ODBCShell * cnf, char * sql, int skip)
 {
    size_t pos;
@@ -166,10 +173,11 @@ int odbcshell_cmd_exec(ODBCShell * cnf, char * sql, int skip)
 }
 
 
-/// displays usage information
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  argc     number of arguments passed to command
-/// @param[in]  argv     array of arguments passed to command
+/// @brief displays usage information
+/// @param cnf      pointer to configuration struct
+/// @param argc     number of arguments passed to command
+/// @param argv     array of arguments passed to command
+/// @return exit code
 int odbcshell_cmd_help(ODBCShell * cnf, int argc, char ** argv)
 {
    unsigned          u;
@@ -228,11 +236,11 @@ int odbcshell_cmd_help(ODBCShell * cnf, int argc, char ** argv)
 }
 
 
-/// displays information stating the function is incomplete
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  argc     number of arguments passed to command
-/// @param[in]  argv     array of arguments passed to command
-/// @param[in]  line     unmodified line sent to ODBC shell
+/// @brief displays information stating the function is incomplete
+/// @param cnf      pointer to configuration struct
+/// @param argc     number of arguments passed to command
+/// @param argv     array of arguments passed to command
+/// @return exit code
 int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv)
 {
    odbcshell_error(cnf, "WARNING: \"%s\" is not implemented.\n", argv[0]);
@@ -242,10 +250,11 @@ int odbcshell_cmd_incomplete(ODBCShell * cnf, int argc, char ** argv)
 }
 
 
-/// opens file for writing results
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  argc     number of arguments passed to command
-/// @param[in]  argv     array of arguments passed to comman
+/// @brief opens file for writing results
+/// @param cnf      pointer to configuration struct
+/// @param argc     number of arguments passed to command
+/// @param argv     array of arguments passed to comman
+/// @return exit code
 int odbcshell_cmd_open(ODBCShell * cnf, int argc, char ** argv)
 {
    if (argc < 2)
@@ -260,10 +269,11 @@ int odbcshell_cmd_open(ODBCShell * cnf, int argc, char ** argv)
 }
 
 
-/// reconnects to a database
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  argc     number of arguments passed to command
-/// @param[in]  argv     array of arguments passed to command
+/// @brief reconnects to a database
+/// @param cnf      pointer to configuration struct
+/// @param argc     number of arguments passed to command
+/// @param argv     array of arguments passed to command
+/// @return exit code
 int odbcshell_cmd_reconnect(ODBCShell * cnf, int argc, char ** argv)
 {
    if (argc == 2)
@@ -272,18 +282,20 @@ int odbcshell_cmd_reconnect(ODBCShell * cnf, int argc, char ** argv)
 }
 
 
-/// resets internal configuration
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief resets internal configuration
+/// @param cnf      pointer to configuration struct
+/// @return exit code
 int odbcshell_cmd_reset(ODBCShell * cnf)
 {
    return(odbcshell_set_defaults(cnf));
 }
 
 
-/// sets internal value of configuration parameter
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  argc     number of arguments passed to command
-/// @param[in]  argv     array of arguments passed to command
+/// @brief sets internal value of configuration parameter
+/// @param cnf      pointer to configuration struct
+/// @param argc     number of arguments passed to command
+/// @param argv     array of arguments passed to command
+/// @return exit code
 int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv)
 {
    int               i;
@@ -357,9 +369,11 @@ int odbcshell_cmd_set(ODBCShell * cnf, int argc, char ** argv)
 }
 
 
-/// sets the value of an environment variable
-/// @param[in]  argc     number of arguments passed to command
-/// @param[in]  argv     array of arguments passed to command
+/// @brief sets the value of an environment variable
+/// @param cnf      pointer to configuration struct
+/// @param argc     number of arguments passed to command
+/// @param argv     array of arguments passed to command
+/// @return exit code
 int odbcshell_cmd_setenv(ODBCShell * cnf, int argc, char ** argv)
 {
    int          x;
@@ -421,9 +435,10 @@ int odbcshell_cmd_setenv(ODBCShell * cnf, int argc, char ** argv)
 }
 
 
-/// shows database information
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  data     data to retrieve
+/// @brief shows database information
+/// @param cnf      pointer to configuration struct
+/// @param data     data to retrieve
+/// @return exit code
 int odbcshell_cmd_show(ODBCShell * cnf, const char * data)
 {
    if (!(strcasecmp(data, "datatypes")))
@@ -447,16 +462,20 @@ int odbcshell_cmd_show(ODBCShell * cnf, const char * data)
 }
 
 
-/// imports script into session
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  data     data to retrieve
+/// @brief imports script into session
+/// @param cnf      pointer to configuration struct
+/// @param file     name of file to import into environment
+/// @return exit code
 int odbcshell_cmd_source(ODBCShell * cnf, const char * file)
 {
    return(odbcshell_script_loop(cnf, file));
 }
 
 
-// unsets internal value of configuration parameter
+/// @brief unsets internal value of configuration parameter
+/// @param cnf      pointer to configuration struct
+/// @param argv     array of arguments passed to command
+/// @return exit code
 int odbcshell_cmd_unset(ODBCShell * cnf, char ** argv)
 {
    ODBCShellOption * opt;
@@ -468,10 +487,10 @@ int odbcshell_cmd_unset(ODBCShell * cnf, char ** argv)
 }
 
 
-/// sets the value of an environment variable
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  argc     number of arguments passed to command
-/// @param[in]  argv     array of arguments passed to command
+/// @brief sets the value of an environment variable
+/// @param argc     number of arguments passed to command
+/// @param argv     array of arguments passed to command
+/// @return exit code
 int odbcshell_cmd_unsetenv(int argc, char ** argv)
 {
    int          x;
@@ -510,10 +529,11 @@ int odbcshell_cmd_unsetenv(int argc, char ** argv)
 }
 
 
-/// switches active database connection
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  argc     number of arguments passed to command
-/// @param[in]  argv     array of arguments passed to command
+/// @brief switches active database connection
+/// @param cnf      pointer to configuration struct
+/// @param argc     number of arguments passed to command
+/// @param argv     array of arguments passed to command
+/// @return exit code
 int odbcshell_cmd_use(ODBCShell * cnf, int argc, char ** argv)
 {
    if (argc == 2)
@@ -524,8 +544,9 @@ int odbcshell_cmd_use(ODBCShell * cnf, int argc, char ** argv)
 }
 
 
-/// exits from shell
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief exits from shell
+/// @param cnf      pointer to configuration struct
+/// @return exit code
 int odbcshell_cmd_quit(ODBCShell * cnf)
 {
    if (!(cnf))
@@ -539,8 +560,9 @@ int odbcshell_cmd_quit(ODBCShell * cnf)
 }
 
 
-/// displays version information
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief displays version information
+/// @param cnf      pointer to configuration struct
+/// @return exit code
 int odbcshell_cmd_version(ODBCShell * cnf)
 {
    if (!(cnf))
