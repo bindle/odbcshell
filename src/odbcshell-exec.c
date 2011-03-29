@@ -70,9 +70,9 @@
 #pragma mark Functions
 #endif
 
-/// append exec string to list
-/// @param[in]  cnf      pointer to configuration struct
-/// @param[in]  str      string to execute
+/// @brief append exec string to list
+/// @param cnf      pointer to configuration struct
+/// @param str      string to execute
 int odbcshell_exec_append_str(ODBCShell * cnf, char * str)
 {
    void * ptr;
@@ -89,8 +89,8 @@ int odbcshell_exec_append_str(ODBCShell * cnf, char * str)
 }
 
 
-/// master loop for interactive shell
-/// @param[in]  cnf      pointer to configuration struct
+/// @brief master loop for interactive shell
+/// @param cnf      pointer to configuration struct
 int odbcshell_exec_loop(ODBCShell * cnf)
 {
    long long l;
