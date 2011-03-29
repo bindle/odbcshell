@@ -181,7 +181,7 @@ int odbcshell_cmd_help(ODBCShell * cnf, int argc, char ** argv)
       if ((u%5) != 0)
          printf("\n");
 
-      printf("For more info use \"HELP <topic>\".\n");
+      printf("For more info use \"HELP <topic>\".\n\n");
       return(0);
    };
 
@@ -196,20 +196,18 @@ int odbcshell_cmd_help(ODBCShell * cnf, int argc, char ** argv)
       return(-1);
    };
 
-   printf("Command:\n   %s\n", cmd->name);
+   //printf("Command:\n   %s\n", cmd->name);
    if (cmd->desc)
-   {
-      printf("Description:\n");
-      printf("   %s\n", cmd->desc);
-   };
+      printf("%s Description:\n   %s\n\n", cmd->name, cmd->desc);
    if (cmd->usage)
    {
-      printf("Usage:\n");
+      printf("%s Usage:\n", cmd->name);
       for(u = 0; cmd->usage[u]; u++)
-         printf("   %s%s\n", cmd->name, cmd->usage[u]);
+         printf("   shell> %s;\n", cmd->usage[u]);
+      printf("\n");
    };
    if ( (!(cmd->usage)) && (!(cmd->desc)) )
-      printf("   Help information for this topic is unavailable.\n");
+      printf("   Help information for this topic is unavailable for \"%s\".\n", cmd->name);
 
    return(0);
 }
