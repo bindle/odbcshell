@@ -6,7 +6,7 @@
 #
 
 PORTNAME=      odbcshell
-PORTVERSION=   0.0.247.gbad10b6
+PORTVERSION=   0.1
 CATEGORIES=    databases
 MASTER_SITES=  http://scm.bindlebinaries.com/pub/software/odbcshell/
 
