@@ -36,6 +36,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A008F8EC1343A4A800F16CA6 /* autogen.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = autogen.sh; sourceTree = "<group>"; };
 		A00F66541337E770007C2D45 /* Makefile */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		A00F66551337E770007C2D45 /* pkg-descr */ = {isa = PBXFileReference; lastKnownFileType = text; path = "pkg-descr"; sourceTree = "<group>"; };
 		A0287F41131C79B900A06C03 /* odbcshell */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = odbcshell; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,7 +49,7 @@
 		A061EE4612F108E900277649 /* odbcshell-odbc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "odbcshell-odbc.c"; sourceTree = "<group>"; };
 		A06CE3DD12E7BBD500AD1C66 /* acinclude.m4 */ = {isa = PBXFileReference; explicitFileType = text.script; fileEncoding = 4; path = acinclude.m4; sourceTree = "<group>"; };
 		A06CE3DE12E7BBD500AD1C66 /* AUTHORS */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AUTHORS; sourceTree = "<group>"; };
-		A06CE3DF12E7BBD500AD1C66 /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
+		A06CE3DF12E7BBD500AD1C66 /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 4; indentWidth = 8; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; tabWidth = 8; usesTabs = 1; };
 		A06CE3E012E7BBD500AD1C66 /* configure.ac */ = {isa = PBXFileReference; explicitFileType = text.script; fileEncoding = 4; path = configure.ac; sourceTree = "<group>"; };
 		A06CE3E112E7BBD500AD1C66 /* COPYING */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = COPYING; sourceTree = "<group>"; };
 		A06CE3E212E7BBD500AD1C66 /* Makefile.am */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; fileEncoding = 4; indentWidth = 8; path = Makefile.am; sourceTree = "<group>"; tabWidth = 8; };
@@ -180,6 +181,7 @@
 		A0D7191712F0D2C0004AFD89 /* build-aux */ = {
 			isa = PBXGroup;
 			children = (
+				A008F8EC1343A4A800F16CA6 /* autogen.sh */,
 				A0D7191F12F0D2C0004AFD89 /* git-package-version.sh */,
 			);
 			path = "build-aux";
