@@ -177,8 +177,10 @@ int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,
    pos      = 0L;
    *offsetp = 0L;
 
+   // processes buffer one "line" at a time
    while(pos < len)
    {
+      // extracts next line in buffer
       if (odbcshell_parse_line(cnf, &buff[pos], &argc, &argv, &offset))
          return(-1);
       if ((offset == -1))
@@ -190,21 +192,29 @@ int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,
          continue;
       };
 
+      // replaces line delimiter with '\0'
       delim             = buff[offset+pos];
       buff[offset+pos]  = '\0';
       *offsetp         += offset;
 
       switch((code = odbcshell_interpret_line(cnf, &buff[pos], argc, argv)))
       {
+         // command requested ODBC Shell exits (I.E. logout, quit, exit)
          case 1:
             buff[offset+pos] = delim;
             return(code);
+
+         // indicates that an error was encountered
          case -1:
             buff[offset+pos] = delim;
             if ( (!(code)) || (!(cnf->continues)) )
                return(code);
+
+         // indicates that a fatal error was encountered
          case -2:
             return(code);
+
+         // restores line delimiter
          default:
             buff[offset+pos] = delim;
             break;
@@ -229,6 +239,7 @@ int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
    if (!(argc))
       return(0);
 
+   // retrieves command information
    if (!(cmd = odbcshell_lookup_opt_by_name(odbcshell_cmd_strings, argv[0])))
    {
       if ( (argc > 1) && (!(strcmp(argv[1], "="))) )
@@ -241,6 +252,7 @@ int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
       return(-1);
    };
 
+   // checks for permitted number of arguments
    if (cmd->min_arg > argc)
    {
       odbcshell_error(cnf, "%s: missing required arguments.\n", argv[0]);
@@ -254,6 +266,7 @@ int odbcshell_interpret_line(ODBCShell * cnf, char * str, int argc,
       return(-1);
    };
 
+   // executes command
    cnf->active_cmd = cmd;
    switch(cmd->val)
    {
@@ -318,6 +331,7 @@ int odbcshell_parse_line(ODBCShell * cnf, char * line, int * argcp,
    if (!(len = strlen(line)))
       return(0);
 
+   // processes each character of the line
    for(pos = 0; pos < len+1; pos++)
    {
       arg = NULL;
