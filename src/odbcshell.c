@@ -176,6 +176,7 @@ int main(int argc, char * argv[])
    if ((odbcshell_initialize(&cnf)))
       return(1);
 
+   // processes command line arguments
    while((c = getopt_long(argc, argv, short_opt, long_opt, &opt_index)) != -1)
    {
       switch(c)
@@ -254,12 +255,14 @@ int main(int argc, char * argv[])
       };
    };
 
+   // sets default runtime mode
    if (!(cnf->mode))
       cnf->mode = ODBCSHELL_MODE_SHELL;
    if (cnf->mode == ODBCSHELL_MODE_SHELL)
       if (optind < argc)
          cnf->mode = ODBCSHELL_MODE_SCRIPT;
 
+   // opens default output file
    if ((cnf->dflt_output))
    {
       if ((odbcshell_fopen(cnf, cnf->dflt_output)))
@@ -269,18 +272,21 @@ int main(int argc, char * argv[])
       };
    };
 
+   // initializes iODBC/unixODBC library
    if ((odbcshell_odbc_initialize(cnf)))
    {
       odbcshell_free(cnf);
       return(1);
    };
 
+   // loads ODBC Shell init scripts
    if ((odbcshell_profile(cnf)))
    {
       odbcshell_free(cnf);
       return(1);
    };
 
+   // starts specified runtime mode
    sts = 0;
    switch(cnf->mode)
    {
