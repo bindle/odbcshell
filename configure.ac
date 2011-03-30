@@ -167,17 +167,6 @@ if test "x${have_readline}" == "xno";then
    AC_MSG_ERROR([ODBC Shell requires GNU Readline library.])
 fi
 
-# check for regular expressions
-have_regex=yes
-AC_CHECK_HEADERS([regex.h]         ,,[have_regex=no])
-AC_SEARCH_LIBS([regcomp],   [regex],,[have_regex=no])
-AC_SEARCH_LIBS([regexec],   [regex],,[have_regex=no])
-AC_SEARCH_LIBS([regfree],   [regex],,[have_regex=no])
-AC_SEARCH_LIBS([regerror],  [regex],,[have_regex=no])
-if test "x${have_regex}" == "xno";then
-   AC_MSG_ERROR([ODBC Shell requires POSIX regular expressions.])
-fi
-
 # determine PACKAGE_VERSION via Git
 AC_DMS_GIT_PACKAGE_VERSION
 
