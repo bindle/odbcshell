@@ -82,13 +82,13 @@ Community
 
    Mailing List:
       odbc-shell@lists.bindlebinaries.com
-      https://lists.bindlebinaries.com/mailman/listinfo/odbc-shell
+      https://lists.bindlebinaries.com/mailman/listinfo/odbcshell
 
    Bug Reports:
       https://support.bindlebinaries.com/projects/odbcshell
 
    Downloads:
-      http://scm.bindlebinaries.com/pub/software/odbcshell/
+      http://sourceforge.net/projects/odbcshell/files/
 
 
 Source Code
@@ -141,6 +141,6 @@ Package Maintence Notes
    Creating Source Distribution Archives:
 
       $ ./configure
-      $ make autoreconf
+      $ make update
       $ make distcheck
       $ make dist-bzip2
