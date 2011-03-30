@@ -2,5 +2,15 @@
 ODBC Shell
 Copyright (C) 2011 Bindle Binaries <syzdek@bindlebinaries.com>.
 
-- Add ability to list drivers. (syzdek)
-- Add support for variables. (syzdek)
+- Write man page for ODBC Shell. (syzdek)
+- Write user's manual for ODBC Shell with iODBC/unixODBC. (syzdek)
+- Add ability to create aliases for DSNs. (syzdek)
+- Add support for Unicode results. (syzdek)
+- Add line number to script errors. (syzdek)
+- Fix output for CSV format. (syzdek)
+- Fix output for XML format. (syzdek)
+- Add ability call exec(). (syzdek)
+- Create FreeBSD ports files. (syzdek)
+- Create MacPorts ports files. (syzdek)
+- Create Ubuntu package. (syzdek)
+- Port to MinGW. (syzdek)
