@@ -37,6 +37,8 @@
 
 /* Begin PBXFileReference section */
 		A008F8EC1343A4A800F16CA6 /* autogen.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = autogen.sh; sourceTree = "<group>"; };
+		A008F8FD1343B46300F16CA6 /* odbcshell.texi */ = {isa = PBXFileReference; lastKnownFileType = text; path = odbcshell.texi; sourceTree = "<group>"; };
+		A008F8FE1343B73D00F16CA6 /* copyright.texi */ = {isa = PBXFileReference; lastKnownFileType = text; path = copyright.texi; sourceTree = "<group>"; };
 		A00F66541337E770007C2D45 /* Makefile */ = {isa = PBXFileReference; explicitFileType = sourcecode.make; path = Makefile; sourceTree = "<group>"; };
 		A00F66551337E770007C2D45 /* pkg-descr */ = {isa = PBXFileReference; lastKnownFileType = text; path = "pkg-descr"; sourceTree = "<group>"; };
 		A0287F41131C79B900A06C03 /* odbcshell */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = odbcshell; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -92,6 +94,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A008F8FB1343B43600F16CA6 /* doc */ = {
+			isa = PBXGroup;
+			children = (
+				A008F8FE1343B73D00F16CA6 /* copyright.texi */,
+				A008F8FD1343B46300F16CA6 /* odbcshell.texi */,
+			);
+			path = doc;
+			sourceTree = "<group>";
+		};
 		A00F66521337E770007C2D45 /* ports */ = {
 			isa = PBXGroup;
 			children = (
@@ -135,6 +146,7 @@
 				A06CE3DF12E7BBD500AD1C66 /* ChangeLog */,
 				A06CE3E012E7BBD500AD1C66 /* configure.ac */,
 				A06CE3E112E7BBD500AD1C66 /* COPYING */,
+				A008F8FB1343B43600F16CA6 /* doc */,
 				A06CE3E212E7BBD500AD1C66 /* Makefile.am */,
 				A06CE3E312E7BBD500AD1C66 /* NEWS */,
 				A00F66521337E770007C2D45 /* ports */,

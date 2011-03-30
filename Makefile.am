@@ -48,6 +48,7 @@ AM_CXXFLAGS				= -O2 @AM_CXXFLAGS@
 AM_OBJCFLAGS				= -O2 @AM_OBJCFLAGS@
 AM_CPPFLAGS				= -O2 -UPMARK -DHAVE_CONFIG_H=1 -I$(top_builddir)/include -I$(top_srcdir)/include -DSYSCONFDIR=\"$(sysconfdir)\"
 ACLOCAL_AMFLAGS				= -I m4 -W all -W error
+AM_MAKEINFOFLAGS                        = --no-split
 DEFS					=
 
 
@@ -57,10 +58,16 @@ doc_DATA				=
 include_HEADERS				=
 lib_LTLIBRARIES				=
 man_MANS				=
+info_TEXINFOS				= doc/odbcshell.texi
 noinst_LTLIBRARIES			=
 noinst_HEADERS				=
 noinst_PROGRAMS				= src/odbc-example
 bin_PROGRAMS				= src/odbcshell
+
+
+# macros for doc/readme.info
+doc_odbcshell_TEXINFOS			= doc/copyright.texi \
+                                          doc/odbcshell.texi
 
 
 # macros for src/odbc-example
