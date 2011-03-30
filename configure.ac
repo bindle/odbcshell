@@ -40,7 +40,7 @@ AC_COPYRIGHT([Copyright (c) 2011 Bindle Binaries <syzdek@bindlebinaries.com>.])
 AC_REVISION(0.1)
 AC_INIT([ODBC Shell],[0.1],[syzdek@bindlebinaries.com],[odbcshell])
 
-AC_SUBST([RELEASE_MONTH],["January 2011"])
+AC_SUBST([RELEASE_MONTH],["March 2011"])
 
 # Version Info:
 #    Current    -- the current version number of this API
