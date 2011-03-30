@@ -81,9 +81,9 @@ int odbcshell_expand_string(ODBCShell * cnf, char ** strp)
    const char * value;
 
    old_len = strlen(*strp);
-   new_len = old_len + 2;
+   new_len = old_len + 1;
 
-   if (!(str = malloc(old_len)))
+   if (!(str = malloc(new_len)))
    {
       odbcshell_fatal(cnf, "out of virtual memory\n");
       return(-2);
