@@ -203,6 +203,8 @@ int odbcshell_interpret_buffer(ODBCShell * cnf, char * buff, size_t len,
             buff[offset+pos] = delim;
             if ( (!(code)) || (!(cnf->continues)) )
                return(code);
+         case -2:
+            return(code);
          default:
             buff[offset+pos] = delim;
             break;
