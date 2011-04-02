@@ -98,6 +98,11 @@ Source Code
    (http://git-scm.com).  The following contains information to checkout the
    source code from the git repository.
 
+   Browse Source:
+      https://github.com/bindle/odbcshell
+      http://odbcshell.git.sourceforge.net/
+      http://scm.bindlebinaries.com/scm/com.bindlebinaries/odbcshell.git
+
    Git URLs:
       git://github.com/bindle/odbcshell.git
       git://odbcshell.git.sourceforge.net/gitroot/odbcshell/odbcshell
