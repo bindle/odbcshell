@@ -158,18 +158,18 @@ DISTCHECK_CONFIGURE_FLAGS		= --enable-strictwarnings
 
 
 # custom targets
-.PHONY: autoreconf update gitclean build-aux/git-package-version
+.PHONY: autogen update gitclean build-aux/git-package-version
 
 build-aux/git-package-version:
 	$(top_srcdir)/build-aux/git-package-version.sh $(top_srcdir)
 
-autoreconf:
-	autoreconf -i -f $(ACLOCAL_AMFLAGS) $(top_srcdir)
+autogen:
+	$(top_srcdir)/build-aux/autogen.sh
+	test -x ./config.status && { ./config.status --recheck || exit $?; } || exit 0
 
 update:
 	git --git-dir=$(top_srcdir)/.git pull 2> /dev/null || exit 0
-	$(top_srcdir)/build-aux/autogen.sh
-	test -x ./config.status && { ./config.status --recheck || exit $?; } || exit 0
+	$(MAKE) -f Makefile autogen
 
 gitclean:
 	$(MAKE) -f Makefile distclean
@@ -196,5 +196,6 @@ clean-local:
 
 distclean-local:
 	rm -fR $(srcdir)/autom4te.cache
+	rm -f  $(srcdir)/GTAGS $(srcdir)/GRTAGS $(srcdir)/GPATH
 
 # end of automake file
