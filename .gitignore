@@ -8,6 +8,9 @@
 .deps
 .dirstamp
 /ABOUT-NLS
+/GPATH
+/GRTAGS
+/GTAGS
 /INSTALL
 /Makefile
 /Makefile.in
