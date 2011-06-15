@@ -144,6 +144,7 @@ int odbcshell_cli_loop(ODBCShell * cnf)
                   write_history(cnf->histfile);
                return(code);
             };
+            break;
          case 2:
             continue;
          default:
