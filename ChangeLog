@@ -2,5 +2,9 @@
 ODBC Shell
 Copyright (C) 2011 Bindle Binaries <syzdek@bindlebinaries.com>.
 
+0.2	2011/06/15
+	- fixing infinite loop when invalid command is entered in interactive
+          mode (syzdek)
+
 0.1	2011/03/30
 	- starting project (syzdek)
